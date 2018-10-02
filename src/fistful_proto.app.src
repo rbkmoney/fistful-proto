@@ -1,0 +1,11 @@
+{application, fistful_proto, [
+    {description, "Thrift proto for fistful"},
+    {vsn, "0.1.0"},
+    {applications, [
+        kernel,
+        stdlib
+    ]},
+    {maintainers, [
+        "Anton Belyaev <a.belyaev@rbkmoney.com>"
+    ]}
+]}.
