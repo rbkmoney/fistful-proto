@@ -8,7 +8,6 @@ namespace erlang fistful
 include "context.thrift"
 
 typedef string ID
-typedef ID AccountID
 typedef ID SourceID
 typedef ID DepositID
 typedef ID IdentityID
@@ -42,9 +41,10 @@ struct DepositStatusSucceeded    {}
 struct DepositStatusFailed       { 1: optional string details }
 
 struct SourceParams {
-    1: required IdentityID       identity_id
-    2: required CurrencyRef      currency
-    3: required SourceResource   resource
+    1: required SourceName       name
+    2: required IdentityID       identity_id
+    3: required CurrencyRef      currency
+    4: required SourceResource   resource
 
     99: optional context.ContextSet    context
 }
@@ -52,9 +52,10 @@ struct SourceParams {
 struct Source {
     1: required SourceID         id
     2: required SourceName       name
-    3: required AccountID        account_id
-    4: required SourceResource   resource
-    5: required SourceStatus     status
+    3: required IdentityID       identity_id
+    4: required CurrencyRef      currency
+    5: required SourceResource   resource
+    6: required SourceStatus     status
 
     99: optional context.ContextSet    context
 }
@@ -78,27 +79,31 @@ struct Deposit {
 }
 
 exception IdentityNotFound       {}
+exception CurrencyNotFound       {}
 exception SourceNotFound         {}
-exception WalletNotFound         {}
+exception DestinationNotFound    {}
 exception DepositNotFound        {}
 exception SourceUnauthorized     {}
 
 service FistfulAdmin {
 
     Source CreateSource (1: SourceParams params)
-        throws (1: IdentityNotFound ex1)
+        throws (
+            1: IdentityNotFound ex1
+            2: CurrencyNotFound ex2
+        )
 
     Source GetSource (1: SourceID id)
         throws (1: SourceNotFound ex1)
 
     Deposit CreateDeposit (1: DepositParams params)
         throws (
-            1: SourceNotFound      ex1
-            2: WalletNotFound  ex2
-            3: SourceUnauthorized ex3
-    )
+            1: SourceNotFound       ex1
+            2: DestinationNotFound  ex2
+            3: SourceUnauthorized   ex3
+        )
 
-    Deposit GetDepsoit (1: DepositID id)
+    Deposit GetDeposit (1: DepositID id)
         throws (1: DepositNotFound ex1)
 
 }
