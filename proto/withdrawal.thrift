@@ -4,6 +4,7 @@
 
 include "base.thrift"
 include "fistful.thrift"
+include "cashflow.thrift"
 
 typedef base.ID               SessionID
 typedef fistful.WalletID      WalletID
@@ -32,19 +33,7 @@ struct WithdrawalFailed {
 }
 
 struct Transfer {
-    1: required list<TransferPosting> postings
-}
-
-struct TransferPosting {
-    1: required TransferAccount source
-    2: required TransferAccount destination
-    3: required base.Cash       volume
-    4: optional string          details
-}
-
-struct TransferAccount {
-    1: required AccountID account
-    // TODO
+    1: required cashflow.FinalCashFlow cashflow
 }
 
 union TransferStatus {
