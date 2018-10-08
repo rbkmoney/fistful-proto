@@ -5,16 +5,22 @@
 namespace java com.rbkmoney.fistful
 namespace erlang fistful
 
+include "base.thrift"
 include "context.thrift"
 
-typedef string ID
+typedef base.ID ID
+typedef ID AccountID
 typedef ID SourceID
+typedef ID DestinationID
 typedef ID DepositID
+typedef ID WithdrawalID
 typedef ID IdentityID
 typedef ID WalletID
-typedef string CurrencySymbolicCode
 typedef i64 Amount
 typedef string SourceName
+
+typedef base.CurrencyRef CurrencyRef
+typedef base.Cash DepositBody
 
 struct SourceResource { 1: optional string details }
 
@@ -22,13 +28,6 @@ enum SourceStatus {
     unauthorized = 1
     authorized   = 2
 }
-
-struct DepositBody {
-    1: required Amount          amount
-    2: required CurrencyRef     currency
-}
-
-struct CurrencyRef { 1: required CurrencySymbolicCode symbolic_code }
 
 union DepositStatus {
     1: DepositStatusPending      pending
