@@ -1,5 +1,5 @@
-namespace java com.rbkmoney.identity.msgpack
-namespace erlang identity_msgpack
+namespace java   com.rbkmoney.fistful.msgpack
+namespace erlang msgp
 
 /**
  * Значение в msgpack, согласно [спецификации](https://github.com/msgpack/msgpack/blob/master/spec.md).

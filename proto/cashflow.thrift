@@ -4,6 +4,9 @@
  * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1518
  */
 
+namespace java   com.rbkmoney.fistful.cashflow
+namespace erlang cashflow
+
 include "base.thrift"
 include "fistful.thrift"
 

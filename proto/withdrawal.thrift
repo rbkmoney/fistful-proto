@@ -2,14 +2,19 @@
  * Выводы
  */
 
+namespace java   com.rbkmoney.fistful.withdrawal
+namespace erlang wthd
+
 include "base.thrift"
 include "fistful.thrift"
 include "cashflow.thrift"
+include "eventsink.thrift"
+
+typedef fistful.WithdrawalID  ID
 
 typedef base.ID               SessionID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
-typedef fistful.WithdrawalID  WithdrawalID
 typedef fistful.AccountID     AccountID
 
 /// Domain
@@ -87,28 +92,19 @@ struct SessionFinished {}
 
 /// Event sink
 
-typedef i64 SinkEventID
-
 struct SinkEvent {
-    1: required SinkEventID id
-    2: required base.Timestamp created_at
-    3: required fistful.WithdrawalID source
-    4: required Event payload
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp       created_at
+    3: required ID                   source
+    4: required Event                payload
 }
-
-struct SinkEventRange {
-    1: optional SinkEventID after
-    2: required i32 limit
-}
-
-exception NoLastEvent {}
 
 service EventSink {
 
-    list<SinkEvent> GetEvents (1: SinkEventRange range)
+    list<SinkEvent> GetEvents (1: eventsink.EventRange range)
         throws ()
 
-    SinkEventID GetLastEventID ()
-        throws (1: NoLastEvent ex1)
+    eventsink.EventID GetLastEventID ()
+        throws (1: eventsink.NoLastEvent ex1)
 
 }
