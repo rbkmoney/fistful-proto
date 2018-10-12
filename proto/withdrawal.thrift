@@ -10,7 +10,7 @@ include "fistful.thrift"
 include "cashflow.thrift"
 include "eventsink.thrift"
 
-typedef fistful.WithdrawalID  ID
+typedef fistful.WithdrawalID  WithdrawalID
 
 typedef base.ID               SessionID
 typedef fistful.WalletID      WalletID
@@ -95,7 +95,7 @@ struct SessionFinished {}
 struct SinkEvent {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp       created_at
-    3: required ID                   source
+    3: required WithdrawalID         source
     4: required Event                payload
 }
 

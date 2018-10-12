@@ -11,7 +11,7 @@ include "eventsink.thrift"
 
 /// Domain
 
-typedef base.ID ID
+typedef base.ID IdentityID
 typedef base.ID ChallengeID
 
 typedef base.ID PartyID
@@ -91,7 +91,7 @@ union ChallengeChangePayload {
 struct SinkEvent {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp       created_at
-    3: required ID                   source
+    3: required IdentityID           source
     4: required Event                payload
 }
 

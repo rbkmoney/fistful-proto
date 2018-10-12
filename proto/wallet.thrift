@@ -12,14 +12,14 @@ include "eventsink.thrift"
 
 /// Domain
 
-typedef fistful.WalletID ID
+typedef fistful.WalletID WalletID
 
 struct Wallet {
     1: optional string name
 }
 
 struct Account {
-    1: required identity.ID      identity
+    1: required identity.IdentityID identity
     2: required base.CurrencyRef currency
 }
 
@@ -45,7 +45,7 @@ union AccountChange {
 struct SinkEvent {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp       created_at
-    3: required ID                   source
+    3: required WalletID             source
     4: required Event                payload
 }
 
