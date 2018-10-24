@@ -24,27 +24,23 @@ struct WebhookParams {
     3: required Url url
 }
 
-union EventFilter {
-    1: WalletEventFilter wallet
+struct EventFilter {
+    1: required set<EventType> types
 }
 
-struct WalletEventFilter {
-    1: required set<WalletEventType> types
+union EventType {
+    1: WithdrawalEventType withdrawal
 }
 
-union WalletEventType {
-    1: WalletWithdrawalEventType withdrawal
+union WithdrawalEventType {
+    1: WithdrawalStarted started
+    2: WithdrawalSucceeded succeeded
+    3: WithdrawalFailed failed
 }
 
-union WalletWithdrawalEventType {
-    1: WalletWithdrawalStarted started
-    2: WalletWithdrawalSucceeded succeeded
-    3: WalletWithdrawalFailed failed
-}
-
-struct WalletWithdrawalStarted {}
-struct WalletWithdrawalSucceeded {}
-struct WalletWithdrawalFailed {}
+struct WithdrawalStarted {}
+struct WithdrawalSucceeded {}
+struct WithdrawalFailed {}
 
 service WebhookManager {
     list<Webhook> GetList(1: PartyID party_id)
