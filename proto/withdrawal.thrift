@@ -13,6 +13,7 @@ include "eventsink.thrift"
 typedef fistful.WithdrawalID  WithdrawalID
 
 typedef base.ID               SessionID
+typedef base.ID               ProviderID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
 typedef fistful.AccountID     AccountID
@@ -70,6 +71,7 @@ union Change {
     2: WithdrawalStatus status_changed
     3: TransferChange   transfer
     4: SessionChange    session
+    5: RouteChange      route
 }
 
 union TransferChange {
@@ -89,6 +91,10 @@ union SessionChangePayload {
 
 struct SessionStarted {}
 struct SessionFinished {}
+
+struct RouteChange {
+    1: required ProviderID id
+}
 
 /// Event sink
 
