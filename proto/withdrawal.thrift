@@ -21,8 +21,8 @@ typedef fistful.AccountID     AccountID
 /// Domain
 
 struct Withdrawal {
-    1: optional WalletID       source
-    2: optional DestinationID  destination
+    1: required WalletID       source
+    2: required DestinationID  destination
     3: required base.Cash      body
 }
 
@@ -35,7 +35,7 @@ union WithdrawalStatus {
 struct WithdrawalPending {}
 struct WithdrawalSucceeded {}
 struct WithdrawalFailed {
-    1: optional Failure failure
+    1: required Failure failure
 }
 
 struct Transfer {
