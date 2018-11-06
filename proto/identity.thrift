@@ -64,7 +64,7 @@ struct ChallengeProof {
 /// Wallet events
 
 struct Event {
-    1: required base.EventID id
+    1: required eventsink.SequenceID sequence
     2: required base.Timestamp occured_at
     3: required list<Change> changes
 }
@@ -89,7 +89,7 @@ union ChallengeChangePayload {
 /// Event sink
 
 struct SinkEvent {
-    1: required eventsink.SequenceID sequence
+    1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required IdentityID           source
     4: required Event                payload
