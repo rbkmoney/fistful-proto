@@ -20,12 +20,3 @@ struct Account {
     2: required base.CurrencyRef currency
     4: required AccounterAccountID accounter_account_id
 }
-
-/// Wallet events
-
-struct Event {
-    1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
-}
-
