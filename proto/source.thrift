@@ -1,9 +1,9 @@
 /**
- * Кошельки
+ * Место ввода денег в систему
  */
 
-namespace java   com.rbkmoney.fistful.wallet
-namespace erlang wlt
+namespace java   com.rbkmoney.fistful.source
+namespace erlang src
 
 include "base.thrift"
 include "fistful.thrift"
@@ -13,14 +13,31 @@ include "eventsink.thrift"
 
 /// Domain
 
-typedef fistful.WalletID WalletID
+typedef fistful.SourceID SourceID
 typedef account.Account Account
 
-struct Wallet {
-    1: optional string name
+struct Source {
+    1: required string   name
+    2: required Resource resource
 }
 
-/// Wallet events
+union Resource {
+    1: Internal         internal
+}
+
+struct Internal {
+    1: optional string  details
+}
+
+union Status {
+    1: Authorized       authorized
+    2: Unauthorized     unauthorized
+}
+
+struct Authorized {}
+struct Unauthorized {}
+
+/// Source events
 
 struct Event {
     1: required eventsink.SequenceID sequence
@@ -29,12 +46,17 @@ struct Event {
 }
 
 union Change {
-    1: Wallet           created
+    1: Source           created
     2: AccountChange    account
+    2: StatusChange     status
 }
 
 union AccountChange {
     1: Account          created
+}
+
+union StatusChange {
+    1: Status          changed
 }
 
 /// Event sink
@@ -42,7 +64,7 @@ union AccountChange {
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
-    3: required WalletID             source
+    3: required SourceID             source
     4: required Event                payload
 }
 

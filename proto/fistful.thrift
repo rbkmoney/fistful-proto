@@ -16,6 +16,8 @@ typedef ID DepositID
 typedef ID WithdrawalID
 typedef ID IdentityID
 typedef ID WalletID
+typedef ID SourceID
+typedef ID DestinationID
 typedef i64 Amount
 typedef string SourceName
 

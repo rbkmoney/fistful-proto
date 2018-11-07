@@ -37,3 +37,45 @@ struct Cash {
     1: required Amount amount
     2: required CurrencyRef currency
 }
+
+typedef string Token
+
+/**
+ * Банковская карта
+ *
+ * Сделано по мотивам https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1323
+ * От оргигинала отличается меньшим количеством полей и меньшими ограничениями на имеющиеся поля
+ */
+struct BankCard {
+    1: required Token token
+    2: optional BankCardPaymentSystem payment_system
+    3: optional string bin
+    4: optional string masked_pan
+    /*
+    Поля 5-8 зарезервированы для совместимости с BankCard из damsel
+    5: optional BankCardTokenProvider token_provider
+    6: optional Residence issuer_country
+    7: optional string bank_name
+    8: optional map<string, msgpack.Value> metadata
+    */
+}
+
+/**
+ * Платежные системы
+ *
+ * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1282
+ */
+enum BankCardPaymentSystem {
+    visa
+    mastercard
+    visaelectron
+    maestro
+    forbrugsforeningen
+    dankort
+    amex
+    dinersclub
+    discover
+    unionpay
+    jcb
+    nspkmir
+}
