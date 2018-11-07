@@ -14,6 +14,7 @@ typedef fistful.WithdrawalID  WithdrawalID
 
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
+typedef fistful.DepositID     DepositID
 typedef fistful.WalletID      WalletID
 typedef fistful.SourceID      SourceID
 typedef fistful.AccountID     AccountID

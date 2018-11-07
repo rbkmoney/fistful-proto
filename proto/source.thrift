@@ -48,7 +48,7 @@ struct Event {
 union Change {
     1: Source           created
     2: AccountChange    account
-    2: StatusChange     status
+    3: StatusChange     status
 }
 
 union AccountChange {
