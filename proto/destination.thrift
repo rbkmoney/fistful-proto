@@ -42,7 +42,7 @@ struct Event {
 }
 
 union Change {
-    1: Destination      destination
+    1: Destination      created
     2: AccountChange    account
     3: StatusChange     status
 }
