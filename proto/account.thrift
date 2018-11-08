@@ -12,7 +12,7 @@ include "identity.thrift"
 /// Domain
 
 typedef fistful.AccountID AccountID
-typedef base.ID AccounterAccountID
+typedef i64 AccounterAccountID
 
 struct Account {
     3: required AccountID id
