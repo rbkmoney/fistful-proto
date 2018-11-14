@@ -15,7 +15,6 @@ include "msgpack.thrift"
 typedef fistful.WithdrawalID  WithdrawalID
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
-typedef base.ID               TransactionID
 typedef msgpack.Value         AdapterState
 /// Domain
 
@@ -24,7 +23,6 @@ struct Session {
     2: required SessionStatus  status
     3: required Withdrawal     withdrawal
     4: required ProviderID     provider
-    //5: optional WoodyClientWithOpts adapter // not need here?
 }
 
 union SessionStatus {
@@ -73,13 +71,7 @@ union SessionResult {
 }
 
 struct SessionResultSuccess {
-    1: required TransactionInfo trx_info
-}
-
-struct TransactionInfo {
-    1: required TransactionID  id
-    2: optional base.Timestamp timestamp
-    3: required base.StringMap extra
+    1: required base.TransactionInfo trx_info
 }
 
 struct SessionResultFailed {

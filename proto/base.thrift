@@ -103,3 +103,15 @@ struct SubFailure {
     1: required FailureCode  code;
     2: optional SubFailure   sub;
 }
+
+/**
+ * Данные транзакции
+ *
+ * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L77
+ */
+
+struct TransactionInfo {
+    1: required ID  id
+    2: optional Timestamp timestamp
+    3: required StringMap extra
+}
