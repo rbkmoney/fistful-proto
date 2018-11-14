@@ -10,12 +10,13 @@ include "fistful.thrift"
 include "eventsink.thrift"
 include "destination.thrift"
 include "identity.thrift"
+include "msgpack.thrift"
 
 typedef fistful.WithdrawalID  WithdrawalID
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
 typedef base.ID               TransactionID
-
+typedef msgpack.Value         AdapterState
 /// Domain
 
 struct Session {
@@ -66,8 +67,6 @@ union Change {
     3: SessionResult finished
 }
 
-typedef msgpack.Value AdapterState
-
 union SessionResult {
     1: SessionResultSuccess  success
     2: SessionResultFailed   failed
@@ -92,7 +91,7 @@ struct SessionResultFailed {
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
-    3: required WithdrawalID         source
+    3: required SessionID            source
     4: required Event                payload
 }
 
