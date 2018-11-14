@@ -40,6 +40,9 @@ struct Cash {
 
 typedef string Token
 
+/** Отображение из строки в строку */
+typedef map<string, string> StringMap
+
 /**
  * Банковская карта
  *
@@ -78,4 +81,25 @@ enum BankCardPaymentSystem {
     unionpay
     jcb
     nspkmir
+}
+
+/**
+ * Ошибки
+ *
+ * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L31
+ */
+struct Failure {
+    1: required FailureCode     code;
+
+    2: optional FailureReason   reason;
+    3: optional SubFailure      sub;
+}
+
+typedef string FailureCode;
+typedef string FailureReason; // причина возникшей ошибки и пояснение откуда она взялась
+
+// возможность делать коды ошибок иерархическими
+struct SubFailure {
+    1: required FailureCode  code;
+    2: optional SubFailure   sub;
 }
