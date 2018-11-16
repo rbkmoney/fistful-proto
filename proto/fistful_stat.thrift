@@ -21,8 +21,7 @@ struct StatWallet {
     1 : required WalletID             id
     2 : required IdentityID           identity_id
     3 : optional string               name
-    4 : optional base.Amount          balance
-    5 : optional CurrencySymbolicCode currency_symbolic_code
+    4 : optional CurrencySymbolicCode currency_symbolic_code
 }
 
 /**
