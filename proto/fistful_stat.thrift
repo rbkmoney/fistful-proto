@@ -5,7 +5,7 @@
 include "base.thrift"
 include "fistful.thrift"
 
-namespace java com.rbkmoney.damsel.fistful_stat
+namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
 
 typedef fistful.WalletID WalletID
