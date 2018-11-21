@@ -33,20 +33,10 @@ struct StatWithdrawal {
     3:  required IdentityID           identity_id
     4:  required WalletID             source_id
     5:  required DestinationID        destination_id
-    6:  required Destination          destination_resource
     7:  required base.Amount          amount
     8:  required base.Amount          fee
     9:  required CurrencySymbolicCode currency_symbolic_code
     10: required WithdrawalStatus     status
-}
-
-struct Destination {
-    1: required string   name
-    2: required Resource resource
-}
-
-union Resource {
-    1: base.BankCard    bank_card
 }
 
 union WithdrawalStatus {
