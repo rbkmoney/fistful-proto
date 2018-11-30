@@ -20,6 +20,7 @@ typedef base.CurrencySymbolicCode CurrencySymbolicCode
 struct StatWallet {
     1 : required WalletID             id
     2 : required IdentityID           identity_id
+    5:  optional base.Timestamp       created_at
     3 : optional string               name
     4 : optional CurrencySymbolicCode currency_symbolic_code
 }
