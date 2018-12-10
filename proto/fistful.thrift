@@ -13,7 +13,6 @@ typedef ID AccountID
 typedef ID SourceID
 typedef ID DestinationID
 typedef ID DepositID
-typedef ID ExternalID
 typedef ID WithdrawalID
 typedef ID IdentityID
 typedef ID WalletID
@@ -45,6 +44,7 @@ struct SourceParams {
     2: required IdentityID       identity_id
     3: required CurrencyRef      currency
     4: required SourceResource   resource
+    5: required SourceID         id
 
     99: optional context.ContextSet    context
 }
@@ -64,7 +64,7 @@ struct DepositParams {
     1: required SourceID         source
     2: required WalletID         destination
     3: required DepositBody      body
-    4: required ExternalID       external_id
+    4: required DepositID        id
 
     99: optional context.ContextSet    context
 }
