@@ -15,6 +15,7 @@ include "eventsink.thrift"
 
 typedef fistful.WalletID WalletID
 typedef account.Account Account
+typedef base.ID ExternalID
 
 struct Wallet {
     1: optional string name
@@ -31,6 +32,7 @@ struct Event {
 union Change {
     1: Wallet           created
     2: AccountChange    account
+    3: ExternalID       external_changed
 }
 
 union AccountChange {

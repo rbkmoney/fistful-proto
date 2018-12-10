@@ -16,6 +16,7 @@ typedef base.ID               SessionID
 typedef base.ID               ProviderID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
+typedef base.ID               ExternalID
 typedef fistful.AccountID     AccountID
 
 /// Domain
@@ -72,6 +73,7 @@ union Change {
     3: TransferChange   transfer
     4: SessionChange    session
     5: RouteChange      route
+    6: ExternalID       external_changed
 }
 
 union TransferChange {

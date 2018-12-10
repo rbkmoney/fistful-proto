@@ -19,6 +19,7 @@ typedef base.ID ContractID
 typedef base.ID ProviderID
 typedef base.ID ClassID
 typedef base.ID LevelID
+typedef base.ID ExternalID
 typedef base.ID ChallengeClassID
 
 struct Identity {
@@ -74,6 +75,7 @@ union Change {
     2: LevelID         level_changed
     3: ChallengeChange identity_challenge
     4: ChallengeID     effective_challenge_changed
+    5: ExternalID      external_changed
 }
 
 struct ChallengeChange {

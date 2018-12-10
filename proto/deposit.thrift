@@ -18,6 +18,7 @@ typedef fistful.DepositID     DepositID
 typedef fistful.WalletID      WalletID
 typedef fistful.SourceID      SourceID
 typedef fistful.AccountID     AccountID
+typedef base.ID               ExternalID
 
 /// Domain
 
@@ -71,6 +72,7 @@ union Change {
     1: Deposit          created
     2: DepositStatus    status_changed
     3: TransferChange   transfer
+    4: ExternalID       external_changed
 }
 
 union TransferChange {

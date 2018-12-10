@@ -15,6 +15,7 @@ include "eventsink.thrift"
 
 typedef fistful.DestinationID DestinationID
 typedef account.Account Account
+typedef base.ID ExternalID
 
 struct Destination {
     1: required string   name
@@ -45,6 +46,7 @@ union Change {
     1: Destination      created
     2: AccountChange    account
     3: StatusChange     status
+    4: ExternalID       external_changed
 }
 
 union AccountChange {
