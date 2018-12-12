@@ -15,7 +15,7 @@ include "eventsink.thrift"
 
 typedef fistful.DestinationID DestinationID
 typedef account.Account Account
-typedef base.ID ExternalID
+typedef base.ExternalID ExternalID
 
 struct Destination {
     1: required string   name

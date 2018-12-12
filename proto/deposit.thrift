@@ -18,7 +18,7 @@ typedef fistful.DepositID     DepositID
 typedef fistful.WalletID      WalletID
 typedef fistful.SourceID      SourceID
 typedef fistful.AccountID     AccountID
-typedef base.ID               ExternalID
+typedef base.ExternalID       ExternalID
 
 /// Domain
 

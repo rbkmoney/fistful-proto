@@ -20,7 +20,7 @@ typedef base.ID ProviderID
 typedef base.ID ClassID
 typedef base.ID LevelID
 typedef base.ID ChallengeClassID
-typedef base.ID ExternalID
+typedef base.ExternalID ExternalID
 
 struct Identity {
     1: required PartyID         party
