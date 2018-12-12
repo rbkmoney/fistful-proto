@@ -40,11 +40,11 @@ struct DepositStatusSucceeded    {}
 struct DepositStatusFailed       { 1: optional string details }
 
 struct SourceParams {
-    1: required SourceID         id
-    2: required SourceName       name
-    3: required IdentityID       identity_id
-    4: required CurrencyRef      currency
-    5: required SourceResource   resource
+    5: required SourceID         id
+    1: required SourceName       name
+    2: required IdentityID       identity_id
+    3: required CurrencyRef      currency
+    4: required SourceResource   resource
 
     99: optional context.ContextSet    context
 }
@@ -61,10 +61,10 @@ struct Source {
 }
 
 struct DepositParams {
-    1: required DepositID        id
-    2: required SourceID         source
-    3: required WalletID         destination
-    4: required DepositBody      body
+    4: required DepositID        id
+    1: required SourceID         source
+    2: required WalletID         destination
+    3: required DepositBody      body
 
     99: optional context.ContextSet    context
 }
