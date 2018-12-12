@@ -16,8 +16,8 @@ typedef base.ID               SessionID
 typedef base.ID               ProviderID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
-typedef base.ID               ExternalID
 typedef fistful.AccountID     AccountID
+typedef base.ID               ExternalID
 
 /// Domain
 
@@ -25,6 +25,7 @@ struct Withdrawal {
     1: required WalletID       source
     2: required DestinationID  destination
     3: required base.Cash      body
+    4: optional ExternalID     external_id
 }
 
 union WithdrawalStatus {
@@ -73,7 +74,6 @@ union Change {
     3: TransferChange   transfer
     4: SessionChange    session
     5: RouteChange      route
-    6: ExternalID       external_changed
 }
 
 union TransferChange {

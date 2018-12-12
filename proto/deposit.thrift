@@ -26,6 +26,7 @@ struct Deposit {
     1: required WalletID       wallet
     2: required SourceID       source
     3: required base.Cash      body
+    4: optional ExternalID     external_id
 }
 
 union DepositStatus {
@@ -72,7 +73,6 @@ union Change {
     1: Deposit          created
     2: DepositStatus    status_changed
     3: TransferChange   transfer
-    4: ExternalID       external_changed
 }
 
 union TransferChange {

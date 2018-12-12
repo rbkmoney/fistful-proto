@@ -20,6 +20,7 @@ typedef base.ID ExternalID
 struct Source {
     1: required string   name
     2: required Resource resource
+    3: optional ExternalID external_id
 }
 
 union Resource {
@@ -50,7 +51,6 @@ union Change {
     1: Source           created
     2: AccountChange    account
     3: StatusChange     status
-    4: ExternalID       external_changed
 }
 
 union AccountChange {
