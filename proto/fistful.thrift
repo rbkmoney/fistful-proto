@@ -83,6 +83,8 @@ exception SourceNotFound         {}
 exception DestinationNotFound    {}
 exception DepositNotFound        {}
 exception SourceUnauthorized     {}
+exception DepositCurrencyInvalid {}
+exception DepositAmountInvalid   {}
 
 service FistfulAdmin {
 
@@ -97,9 +99,11 @@ service FistfulAdmin {
 
     Deposit CreateDeposit (1: DepositParams params)
         throws (
-            1: SourceNotFound       ex1
-            2: DestinationNotFound  ex2
-            3: SourceUnauthorized   ex3
+            1: SourceNotFound         ex1
+            2: DestinationNotFound    ex2
+            3: SourceUnauthorized     ex3
+            4: DepositCurrencyInvalid ex4
+            5: DepositAmountInvalid   ex5
         )
 
     Deposit GetDeposit (1: DepositID id)
