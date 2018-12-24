@@ -10,12 +10,41 @@ include "fistful.thrift"
 include "account.thrift"
 include "identity.thrift"
 include "eventsink.thrift"
+include "context.thrift"
 
 /// Domain
 
 typedef fistful.WalletID WalletID
 typedef account.Account Account
 typedef base.ExternalID ExternalID
+typedef base.ID ContractID
+typedef base.CurrencySymbolicCode CurrencySymbolicCode
+typedef account.AccountParams AccountParams
+
+/// Wallet status
+enum Blocking {
+    unblocked
+    blocked
+}
+
+struct WalletParams {
+    1: required WalletID       id
+    2: required string         name
+    3: required AccountParams  account_params
+
+    98: optional ExternalID          external_id
+    99: optional context.ContextSet  context
+}
+
+struct WalletState {
+    1: required WalletID    id
+    2: required string      name
+    3: required Blocking    blocking
+    4: required Account     account
+
+    98: optional ExternalID         external_id
+    99: optional context.ContextSet context
+}
 
 struct Wallet {
     1: optional string name
@@ -37,6 +66,21 @@ union Change {
 
 union AccountChange {
     1: Account          created
+}
+
+///
+
+
+service Management {
+    WalletState Create (1: WalletParams params)
+        throws (
+            1: fistful.IdentityNotFound     ex1
+            2: fistful.CurrencyNotFound     ex2
+            3: fistful.PartyInaccessible    ex3
+        )
+
+    WalletState Get (1: WalletID id)
+        throws (1: fistful.WalletNotFound ex1)
 }
 
 /// Event sink

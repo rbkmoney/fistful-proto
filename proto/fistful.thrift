@@ -87,6 +87,8 @@ exception DepositNotFound        {}
 exception SourceUnauthorized     {}
 exception DepositCurrencyInvalid {}
 exception DepositAmountInvalid   {}
+exception PartyInaccessible      {}
+exception WalletNotFound         {}
 
 service FistfulAdmin {
 
