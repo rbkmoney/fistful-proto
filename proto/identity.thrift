@@ -14,7 +14,7 @@ include "eventsink.thrift"
 
 typedef base.ID IdentityID
 typedef base.ID ChallengeID
-
+typedef base.ID IdentityToken
 typedef base.ID PartyID
 typedef base.ID ContractID
 typedef base.ID ProviderID
@@ -23,27 +23,71 @@ typedef base.ID LevelID
 typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
+typedef eventsink.EventRange EventRange
 
 struct IdentityParams {
-    1: IdentityID          id
-    2: ProviderID          provider_id
-    3: ClassID             class_id
+    1: required IdentityID  id
+    2: required PartyID     party_id
+    3: required ProviderID  provider_id
+    4: required ClassID     class_id
 
-    4: optional ExternalID external_id
-    5: optional ContextSet context
+    5: optional ExternalID external_id
+    6: optional ContextSet context
+}
+
+struct IdentityState {
+    1: required IdentityID  id
+    2: required PartyID     party_id
+    3: required ProviderID  provider_id
+    4: required ClassID     class_id
+    5: required ContractID  contract_id
+
+    6: optional map<ChallengeID, ChallengeState> challenges
+    7: optional LevelID         level
+    8: optional ExternalID      external_id
+    9: optional ContextSet      context
 }
 
 struct Identity {
     1: required PartyID         party
     2: required ProviderID      provider
     3: required ClassID         cls
+
     4: optional ContractID      contract
     5: optional ExternalID      external_id
+}
+
+struct IdentityEvent {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp occured_at
+    3: required Change change
+}
+
+struct IdentityEventParams {
+    1: required IdentityID identity_id
+    2: required EventRange range
 }
 
 struct Challenge {
     1: required ChallengeClassID     cls
     2: optional list<ChallengeProof> proofs
+}
+
+struct ChallengeParams {
+    1: required IdentityID           id
+    2: required ChallengeID          challenge_id
+    3: required ChallengeClassID     cls
+    4: required list<ChallengeProof> proofs
+
+    5: optional ExternalID external_id
+    6: optional ContextSet context
+}
+
+struct ChallengeState {
+    1: required ChallengeID           id
+    2: required list<ChallengeProof>  proofs
+
+    3: optional ChallengeStatus       status
 }
 
 union ChallengeStatus {
@@ -70,22 +114,38 @@ enum ChallengeResolution {
     denied
 }
 
+enum ProofType {
+    rus_domestic_passport
+    rus_retiree_insurance_cert
+}
+
 struct ChallengeProof {
-    // TODO
+    1: ProofType     type
+    2: IdentityToken token
 }
 
 
 service Management {
-    Identity Create(1: IdentityParams params)
-    throws(
-        1: fistful.ProviderNotFound      ex1
-        2: fistful.IdentityClassNotFound ex2
-    )
 
-    Identity Get(1: IdentityID id)
-    throws(
-        1: fistful.IdentityNotFound ex1
-    )
+    IdentityState Create (1: IdentityParams params)
+        throws (
+            1: fistful.ProviderNotFound      ex1
+            2: fistful.IdentityClassNotFound ex2
+            3: fistful.PartyInaccessible     ex3
+        )
+
+    IdentityState Get (1: IdentityID id)
+        throws (
+            1: fistful.IdentityNotFound ex1
+        )
+
+    IdentityState StartChallenges (1: ChallengeParams params)
+        throws (
+            1: fistful.ChallengeError ex1
+        )
+
+    list<IdentityEvent> GetEvents (1: required IdentityEventParams params)
+        throws ()
 }
 
 /// Wallet events
