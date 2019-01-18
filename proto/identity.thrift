@@ -77,10 +77,15 @@ struct ChallengeProof {
 
 service Management {
     Identity Create(1: IdentityParams params)
-    throws()
+    throws(
+        1: fistful.ProviderNotFound      ex1
+        2: fistful.IdentityClassNotFound ex2
+    )
 
     Identity Get(1: IdentityID id)
-    throws()
+    throws(
+        1: fistful.IdentityNotFound ex1
+    )
 }
 
 /// Wallet events
