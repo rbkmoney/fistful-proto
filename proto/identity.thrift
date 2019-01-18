@@ -6,6 +6,7 @@ namespace java   com.rbkmoney.fistful.identity
 namespace erlang idnt
 
 include "base.thrift"
+include "context.thrift"
 include "fistful.thrift"
 include "eventsink.thrift"
 
@@ -21,6 +22,16 @@ typedef base.ID ClassID
 typedef base.ID LevelID
 typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
+typedef context.ContextSet ContextSet
+
+struct IdentityParams {
+    1: IdentityID          id
+    2: ProviderID          provider_id
+    3: ClassID             class_id
+
+    4: optional ExternalID external_id
+    5: optional ContextSet context
+}
 
 struct Identity {
     1: required PartyID         party
@@ -63,6 +74,15 @@ struct ChallengeProof {
     // TODO
 }
 
+
+service Management {
+    Identity Create(1: IdentityParams params)
+    throws()
+
+    Identity Get(1: IdentityID id)
+    throws()
+}
+
 /// Wallet events
 
 struct Event {
@@ -87,6 +107,7 @@ union ChallengeChangePayload {
     1: Challenge       created
     2: ChallengeStatus status_changed
 }
+
 
 /// Event sink
 
