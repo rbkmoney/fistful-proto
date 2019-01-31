@@ -31,10 +31,11 @@ struct DestinationState {
 }
 
 struct DestinationParams {
-    1: required IdentityID            identity_id
-    2: required string                name
-    3: required CurrencySymbolicCode  currency
-    4: required DestinationResource   resource
+    1: required DestinationID         id
+    2: required IdentityID            identity_id
+    3: required string                name
+    4: required CurrencySymbolicCode  currency
+    5: required DestinationResource   resource
 
     98: optional ExternalID           external_id
     99: optional context.ContextSet   context
