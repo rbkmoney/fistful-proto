@@ -10,17 +10,39 @@ include "fistful.thrift"
 include "account.thrift"
 include "identity.thrift"
 include "eventsink.thrift"
+include "context.thrift"
 
 /// Domain
 
-typedef fistful.DestinationID DestinationID
-typedef account.Account Account
-typedef base.ExternalID ExternalID
+typedef fistful.DestinationID     DestinationID
+typedef account.Account           Account
+typedef identity.IdentityID       IdentityID
+typedef base.ExternalID           ExternalID
+typedef base.CurrencySymbolicCode CurrencySymbolicCode
 
 struct Destination {
-    1: required string   name
-    2: required Resource resource
+    1: required string     name
+    2: required Resource   resource
     3: optional ExternalID external_id
+}
+
+struct DestinationState {
+
+}
+
+struct DestinationParams {
+    1: required IdentityID            identity_id
+    2: required string                name
+    3: required CurrencySymbolicCode  currency
+    4: required DestinationResource   resource
+
+    98: optional ExternalID           external_id
+    99: optional context.ContextSet   context
+}
+
+struct DestinationResource {
+    1: required string type
+    2: required string token
 }
 
 union Resource {
@@ -34,6 +56,12 @@ union Status {
 
 struct Authorized {}
 struct Unauthorized {}
+
+
+service Management {
+    DestinationState Create( 1: DestinationParams params)
+        throws()
+}
 
 /// Source events
 
