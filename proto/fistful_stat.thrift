@@ -10,7 +10,9 @@ namespace erlang fistfulstat
 
 typedef fistful.WalletID WalletID
 typedef fistful.WithdrawalID WithdrawalID
+typedef fistful.DepositID DepositID
 typedef fistful.DestinationID DestinationID
+typedef fistful.SourceID SourceID
 typedef fistful.IdentityID IdentityID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 
@@ -81,10 +83,6 @@ struct DepositPending {}
 struct DepositSucceeded {}
 struct DepositFailed {
     1: required Failure failure
-}
-
-struct Failure {
-    // TODO
 }
 
 /**
