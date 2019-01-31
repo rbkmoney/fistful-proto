@@ -35,15 +35,10 @@ struct DestinationParams {
     2: required IdentityID            identity_id
     3: required string                name
     4: required CurrencySymbolicCode  currency
-    5: required DestinationResource   resource
+    5: required Resource              resource
 
     98: optional ExternalID           external_id
     99: optional context.ContextSet   context
-}
-
-struct DestinationResource {
-    1: required string type
-    2: required string token
 }
 
 union Resource {
