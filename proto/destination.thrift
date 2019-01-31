@@ -43,8 +43,7 @@ struct DestinationParams {
     2: required IdentityID            identity_id
     3: required string                name
     4: required CurrencySymbolicCode  currency
-    5: required Status                status
-    6: required Resource              resource
+    5: required Resource              resource
 
 
     98: optional ExternalID           external_id
