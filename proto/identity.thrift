@@ -35,14 +35,15 @@ struct IdentityParams {
 }
 
 struct Identity {
-    1: required PartyID         party
-    2: required ProviderID      provider
-    3: required ClassID         cls
-    4: optional IdentityID      id
-    7: optional LevelID         level
+    1: required PartyID     party
+    2: required ProviderID  provider
+    3: required ClassID     cls
+    4: optional ContractID  contract
+    5: optional ExternalID  external_id
+    6: optional IdentityID  id
+    7: optional LevelID     level
 
-    5:  optional ExternalID     external_id
-    99: optional ContextSet     context
+    99: optional ContextSet context
 }
 
 struct IdentityEvent {

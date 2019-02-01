@@ -79,17 +79,6 @@ struct Deposit {
     99: optional context.ContextSet    context
 }
 
-enum ChallengeErrorType {
-    identity_notfound
-    identity_unauthorized
-    challenge_pending
-    challenge_class_notfound
-    challenge_proof_notfound
-    challenge_proof_insufficient
-    challenge_level_incorrect
-    challenge_conflict
-}
-
 exception IdentityNotFound        {}
 exception CurrencyNotFound        {}
 exception SourceNotFound          {}
@@ -107,11 +96,7 @@ exception ChallengeLevelIncorrect {}
 exception ChallengeConflict       {}
 exception ProofNotFound           {}
 exception ProofInsufficient       {}
-
-exception ChallengeError         {
-    1: ChallengeErrorType error_type
-}
-exception WalletNotFound         {}
+exception WalletNotFound          {}
 
 service FistfulAdmin {
 
