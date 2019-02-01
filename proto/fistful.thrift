@@ -90,17 +90,24 @@ enum ChallengeErrorType {
     challenge_conflict
 }
 
-exception IdentityNotFound       {}
-exception CurrencyNotFound       {}
-exception SourceNotFound         {}
-exception DestinationNotFound    {}
-exception DepositNotFound        {}
-exception SourceUnauthorized     {}
-exception DepositCurrencyInvalid {}
-exception DepositAmountInvalid   {}
-exception PartyInaccessible      {}
-exception ProviderNotFound       {}
-exception IdentityClassNotFound  {}
+exception IdentityNotFound        {}
+exception CurrencyNotFound        {}
+exception SourceNotFound          {}
+exception DestinationNotFound     {}
+exception DepositNotFound         {}
+exception SourceUnauthorized      {}
+exception DepositCurrencyInvalid  {}
+exception DepositAmountInvalid    {}
+exception PartyInaccessible       {}
+exception ProviderNotFound        {}
+exception IdentityClassNotFound   {}
+exception ChallengePending        {}
+exception ChallengeClassNotFound  {}
+exception ChallengeLevelIncorrect {}
+exception ChallengeConflict       {}
+exception ProofNotFound           {}
+exception ProofInsufficient       {}
+
 exception ChallengeError         {
     1: ChallengeErrorType error_type
 }

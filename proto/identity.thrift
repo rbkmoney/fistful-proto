@@ -26,35 +26,23 @@ typedef context.ContextSet ContextSet
 typedef eventsink.EventRange EventRange
 
 struct IdentityParams {
-    1: required IdentityID  id
-    2: required PartyID     party_id
-    3: required ProviderID  provider_id
-    4: required ClassID     class_id
+    1: required PartyID     party_id
+    2: required ProviderID  provider_id
+    3: required ClassID     class_id
 
-    5: optional ExternalID external_id
-    6: optional ContextSet context
-}
-
-struct IdentityState {
-    1: required IdentityID  id
-    2: required PartyID     party_id
-    3: required ProviderID  provider_id
-    4: required ClassID     class_id
-    5: required ContractID  contract_id
-
-    6: optional map<ChallengeID, ChallengeState> challenges
-    7: optional LevelID         level
-    8: optional ExternalID      external_id
-    9: optional ContextSet      context
+    98: optional ExternalID external_id
+    99: optional ContextSet context
 }
 
 struct Identity {
     1: required PartyID         party
     2: required ProviderID      provider
     3: required ClassID         cls
+    4: optional IdentityID      id
+    7: optional LevelID         level
 
-    4: optional ContractID      contract
-    5: optional ExternalID      external_id
+    5:  optional ExternalID     external_id
+    99: optional ContextSet     context
 }
 
 struct IdentityEvent {
@@ -75,19 +63,11 @@ struct Challenge {
 
 struct ChallengeParams {
     1: required IdentityID           id
-    2: required ChallengeID          challenge_id
-    3: required ChallengeClassID     cls
-    4: required list<ChallengeProof> proofs
+    2: required ChallengeClassID     cls
+    3: required list<ChallengeProof> proofs
 
-    5: optional ExternalID external_id
-    6: optional ContextSet context
-}
-
-struct ChallengeState {
-    1: required ChallengeID           id
-    2: required list<ChallengeProof>  proofs
-
-    3: optional ChallengeStatus       status
+    98: optional ExternalID external_id
+    99: optional ContextSet context
 }
 
 union ChallengeStatus {
@@ -127,25 +107,34 @@ struct ChallengeProof {
 
 service Management {
 
-    IdentityState Create (1: IdentityParams params)
+    Identity Create (1: IdentityParams params)
         throws (
             1: fistful.ProviderNotFound      ex1
             2: fistful.IdentityClassNotFound ex2
             3: fistful.PartyInaccessible     ex3
         )
 
-    IdentityState Get (1: IdentityID id)
+    Identity Get (1: IdentityID id)
         throws (
             1: fistful.IdentityNotFound ex1
         )
 
-    IdentityState StartChallenges (1: ChallengeParams params)
+    ChallengeID StartChallenge (1: ChallengeParams params)
         throws (
-            1: fistful.ChallengeError ex1
+            1: fistful.IdentityNotFound        ex1
+            2: fistful.ChallengePending        ex2
+            3: fistful.ChallengeClassNotFound  ex3
+            4: fistful.ChallengeLevelIncorrect ex4
+            5: fistful.ChallengeConflict       ex5
+            6: fistful.ProofNotFound           ex6
+            7: fistful.ProofInsufficient       ex7
+            8: fistful.PartyInaccessible       ex8
         )
 
     list<IdentityEvent> GetEvents (1: required IdentityEventParams params)
-        throws ()
+        throws (
+            1: fistful.IdentityNotFound ex1
+        )
 }
 
 /// Wallet events
