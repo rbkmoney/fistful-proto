@@ -62,16 +62,12 @@ struct IdentityEventParams {
 struct Challenge {
     1: required ChallengeClassID     cls
     2: optional list<ChallengeProof> proofs
-
-    99: optional ContextSet          context
 }
 
 struct ChallengeParams {
     1: required IdentityID           id
     2: required ChallengeClassID     cls
     3: required list<ChallengeProof> proofs
-
-    99: optional ContextSet context
 }
 
 union ChallengeStatus {
