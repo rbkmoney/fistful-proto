@@ -30,6 +30,7 @@ struct IdentityParams {
     2: required ProviderID  provider_id
     3: required ClassID     class_id
     4: optional ExternalID  external_id
+    5: optional string      name
 
     99: optional ContextSet context
 }
@@ -42,6 +43,7 @@ struct Identity {
     5: optional ExternalID  external_id
     6: optional IdentityID  id
     7: optional LevelID     level
+    8: optional string      name
 
     99: optional ContextSet context
 }
