@@ -90,6 +90,7 @@ exception DepositAmountInvalid    {}
 exception PartyInaccessible       {}
 exception ProviderNotFound        {}
 exception IdentityClassNotFound   {}
+exception ChallengeNotFound       {}
 exception ChallengePending        {}
 exception ChallengeClassNotFound  {}
 exception ChallengeLevelIncorrect {}

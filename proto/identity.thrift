@@ -26,37 +26,45 @@ typedef context.ContextSet ContextSet
 typedef eventsink.EventRange EventRange
 
 struct IdentityParams {
-    1: required PartyID     party_id
-    2: required ProviderID  provider_id
-    3: required ClassID     class_id
+    1: required PartyID     party
+    2: required ProviderID  provider
+    3: required ClassID     cls
     4: optional ExternalID  external_id
-    5: optional string      name
+
+    99: optional ContextSet context
+}
+
+struct IdentityState {
+    1: IdentityID id
+    2: PartyID    party
+    3: ClassID    cls
+    4: ProviderID provider
+    5: ExternalID external_id
+    6: LevelID    level
+    7: ContractID contract
 
     99: optional ContextSet context
 }
 
 struct Identity {
-    1: required PartyID     party
-    2: required ProviderID  provider
-    3: required ClassID     cls
-    4: optional ContractID  contract
-    5: optional ExternalID  external_id
-    6: optional IdentityID  id
-    7: optional LevelID     level
-    8: optional string      name
-
-    99: optional ContextSet context
+    1: required PartyID    party
+    2: required ProviderID provider
+    3: required ClassID    cls
+    4: optional ContractID contract
+    5: optional ExternalID external_id
 }
 
 struct IdentityEvent {
     1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required Change change
+    2: required base.Timestamp       occured_at
+    3: required Change               change
 }
 
-struct IdentityEventParams {
-    1: required IdentityID identity_id
-    2: required EventRange range
+struct ChallengeState {
+    1: required ChallengeID          id
+    2: required list<ChallengeProof> proofs
+    3: required ChallengeClassID     cls
+    4: required ChallengeStatus      status
 }
 
 struct Challenge {
@@ -77,7 +85,7 @@ union ChallengeStatus {
     4: ChallengeFailed    failed
 }
 
-struct ChallengePending {}
+struct ChallengePending   {}
 struct ChallengeCancelled {}
 
 struct ChallengeCompleted {
@@ -107,19 +115,23 @@ struct ChallengeProof {
 
 service Management {
 
-    Identity Create (1: IdentityParams params)
+    IdentityState Create (
+        1: required IdentityID     id
+        2: required IdentityParams params)
         throws (
             1: fistful.ProviderNotFound      ex1
             2: fistful.IdentityClassNotFound ex2
             3: fistful.PartyInaccessible     ex3
         )
 
-    Identity Get (1: IdentityID id)
+    IdentityState Get (1: required IdentityID id)
         throws (
             1: fistful.IdentityNotFound ex1
         )
 
-    ChallengeID StartChallenge (1: ChallengeParams params)
+    ChallengeID StartChallenge (
+        1: required IdentityID      id
+        2: required ChallengeParams params)
         throws (
             1: fistful.IdentityNotFound        ex1
             2: fistful.ChallengePending        ex2
@@ -131,7 +143,17 @@ service Management {
             8: fistful.PartyInaccessible       ex8
         )
 
-    list<IdentityEvent> GetEvents (1: required IdentityEventParams params)
+    ChallengeState GetChallenge(
+        1: required IdentityID  id
+        2: required ChallengeID challenge_id
+    ) throws (
+        1: fistful.IdentityNotFound  ex1
+        2: fistful.ChallengeNotFound ex2
+    )
+
+    list<IdentityEvent> GetEvents (
+        1: required IdentityID identity_id
+        2: required EventRange range)
         throws (
             1: fistful.IdentityNotFound ex1
         )
