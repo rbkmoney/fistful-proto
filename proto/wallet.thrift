@@ -117,7 +117,7 @@ struct AddEventsRepair {
 service Repairer {
     void Repair(1: WalletID id, 2: RepairScenario scenario)
         throws (
-            1: fistful.WithdrawalNotFound ex1
+            1: fistful.WalletNotFound ex1
             2: fistful.MachineAlreadyWorking ex2
         )
 }
