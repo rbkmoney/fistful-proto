@@ -8,6 +8,7 @@ namespace erlang idnt
 include "base.thrift"
 include "fistful.thrift"
 include "eventsink.thrift"
+include "repairer.thrift"
 
 /// Domain
 
@@ -107,3 +108,21 @@ service EventSink {
 
 }
 
+/// Repair
+
+union RepairScenario {
+    1: AddEventsRepair add_events
+}
+
+struct AddEventsRepair {
+    1: required list<Event>             events
+    2: optional repairer.ComplexAction  action
+}
+
+service Repairer {
+    void Repair(1: IdentityID id, 2: RepairScenario scenario)
+        throws (
+            1: fistful.IdentityNotFound ex1
+            2: fistful.MachineAlreadyWorking ex2
+        )
+}

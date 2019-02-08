@@ -79,16 +79,19 @@ struct Deposit {
     99: optional context.ContextSet    context
 }
 
-exception IdentityNotFound       {}
-exception CurrencyNotFound       {}
-exception SourceNotFound         {}
-exception DestinationNotFound    {}
-exception DepositNotFound        {}
-exception SourceUnauthorized     {}
-exception DepositCurrencyInvalid {}
-exception DepositAmountInvalid   {}
-exception PartyInaccessible      {}
-exception WalletNotFound         {}
+exception IdentityNotFound          {}
+exception CurrencyNotFound          {}
+exception SourceNotFound            {}
+exception DestinationNotFound       {}
+exception DepositNotFound           {}
+exception WithdrawalNotFound        {}
+exception WithdrawalSessionNotFound {}
+exception SourceUnauthorized        {}
+exception DepositCurrencyInvalid    {}
+exception DepositAmountInvalid      {}
+exception PartyInaccessible         {}
+exception WalletNotFound            {}
+exception MachineAlreadyWorking     {}
 
 service FistfulAdmin {
 
