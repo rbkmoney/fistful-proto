@@ -143,12 +143,10 @@ service Management {
             8: fistful.PartyInaccessible       ex8
         )
 
-    ChallengeState GetChallenge(
+    list<ChallengeState> GetChallenges(
         1: required IdentityID  id
-        2: required ChallengeID challenge_id
     ) throws (
         1: fistful.IdentityNotFound  ex1
-        2: fistful.ChallengeNotFound ex2
     )
 
     list<IdentityEvent> GetEvents (
