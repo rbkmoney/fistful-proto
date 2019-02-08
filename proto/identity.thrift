@@ -73,7 +73,7 @@ struct Challenge {
 }
 
 struct ChallengeParams {
-    1: required IdentityID           id
+    1: required ChallengeID          id
     2: required ChallengeClassID     cls
     3: required list<ChallengeProof> proofs
 }
