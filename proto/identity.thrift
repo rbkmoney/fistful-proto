@@ -44,10 +44,11 @@ struct Identity {
     5:  optional ExternalID  external_id
     6:  optional IdentityID  id
     7:  optional ChallengeID effective_challenge
-    8:  optional bool        is_block
+    8:  optional bool        blocked
     9:  optional LevelID     level
     10: optional string      name
-    11: optional ContextSet  context
+
+    99: optional ContextSet  context
 }
 
 struct IdentityEvent {
@@ -170,7 +171,6 @@ union ChallengeChangePayload {
     1: Challenge       created
     2: ChallengeStatus status_changed
 }
-
 
 /// Event sink
 
