@@ -8,6 +8,7 @@ namespace erlang wthd_session
 include "base.thrift"
 include "fistful.thrift"
 include "eventsink.thrift"
+include "repairer.thrift"
 include "destination.thrift"
 include "identity.thrift"
 include "msgpack.thrift"
@@ -95,4 +96,28 @@ service EventSink {
     eventsink.EventID GetLastEventID ()
         throws (1: eventsink.NoLastEvent ex1)
 
+}
+
+/// Repair
+
+union RepairScenario {
+    1: AddEventsRepair add_events
+    2: SetResultRepair set_session_result
+}
+
+struct AddEventsRepair {
+    1: required list<Event>             events
+    2: optional repairer.ComplexAction  action
+}
+
+struct SetResultRepair {
+    1: required SessionResult           result
+}
+
+service Repairer {
+    void Repair(1: SessionID id, 2: RepairScenario scenario)
+        throws (
+            1: fistful.WithdrawalSessionNotFound ex1
+            2: fistful.MachineAlreadyWorking ex2
+        )
 }

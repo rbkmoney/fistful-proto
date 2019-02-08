@@ -10,7 +10,9 @@ namespace erlang fistfulstat
 
 typedef fistful.WalletID WalletID
 typedef fistful.WithdrawalID WithdrawalID
+typedef fistful.DepositID DepositID
 typedef fistful.DestinationID DestinationID
+typedef fistful.SourceID SourceID
 typedef fistful.IdentityID IdentityID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 
@@ -57,6 +59,33 @@ struct Failure {
 }
 
 /**
+* Информация о пополнении
+*/
+struct StatDeposit {
+    1:  required DepositID            id
+    2:  required base.Timestamp       created_at
+    3:  required IdentityID           identity_id
+    4:  required WalletID             destination_id
+    5:  required SourceID             source_id
+    7:  required base.Amount          amount
+    8:  required base.Amount          fee
+    9:  required CurrencySymbolicCode currency_symbolic_code
+    10: required DepositStatus        status
+}
+
+union DepositStatus {
+    1: DepositPending pending
+    2: DepositSucceeded succeeded
+    3: DepositFailed failed
+}
+
+struct DepositPending {}
+struct DepositSucceeded {}
+struct DepositFailed {
+    1: required Failure failure
+}
+
+/**
 * Данные запроса к сервису. Формат и функциональность запроса зависят от DSL.
  * DSL содержит условия выборки, а также id мерчанта, по которому производится выборка.
  * continuation_token - токен, который передается в случае обращения за следующим блоком данных, соответствующих dsl
@@ -85,6 +114,7 @@ struct StatResponse {
 union StatResponseData {
     1: list<StatWallet> wallets
     2: list<StatWithdrawal> withdrawals
+    3: list<StatDeposit> deposits
 }
 
 /**
@@ -113,6 +143,11 @@ service FistfulStatistics {
      * Возвращает набор данных о выводах
      */
     StatResponse GetWithdrawals(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о пополнениях
+     */
+    StatResponse GetDeposits(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
 
 }
 
