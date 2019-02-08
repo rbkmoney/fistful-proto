@@ -35,15 +35,17 @@ struct IdentityParams {
 }
 
 struct Identity {
-    1: required PartyID     party
-    2: required ProviderID  provider
-    3: required ClassID     cls
-    4: optional ContractID  contract
-    5: optional ExternalID  external_id
-    6: optional IdentityID  id
-    7: optional ChallengeID effective_challenge
-    8: optional LevelID     level
-    9: optional ContextSet  context
+    1:  required PartyID     party
+    2:  required ProviderID  provider
+    3:  required ClassID     cls
+    4:  optional ContractID  contract
+    5:  optional ExternalID  external_id
+    6:  optional IdentityID  id
+    7:  optional ChallengeID effective_challenge
+    8:  optional bool        is_block
+    9:  optional LevelID     level
+    10: optional string      name
+    11: optional ContextSet  context
 }
 
 struct IdentityEvent {
