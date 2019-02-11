@@ -46,7 +46,6 @@ struct Identity {
     7:  optional ChallengeID effective_challenge
     8:  optional bool        blocked
     9:  optional LevelID     level
-    10: optional string      name
 
     99: optional ContextSet  context
 }
