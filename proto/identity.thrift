@@ -99,8 +99,8 @@ enum ProofType {
 }
 
 struct ChallengeProof {
-    1: ProofType     type
-    2: IdentityToken token
+    1: optional ProofType     type
+    2: optional IdentityToken token
 }
 
 service Management {
