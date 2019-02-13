@@ -19,34 +19,31 @@ typedef account.Account           Account
 typedef identity.IdentityID       IdentityID
 typedef base.ExternalID           ExternalID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
+typedef base.Timestamp            Timestamp
 
 struct Destination {
     1: required string     name
     2: required Resource   resource
     3: optional ExternalID external_id
-}
 
-struct DestinationState {
-    1: required DestinationID        id
-    2: required string               name
-    3: required IdentityID           identity
-    4: required CurrencySymbolicCode currency
-    5: required Status               status
-    6: required Resource             resource
+    4: optional DestinationID        id
+    5: optional IdentityID           identity
+    6: optional CurrencySymbolicCode currency
+    7: optional Status               status
+    8: optional Timestamp            created_at
+    9: optional bool                 blocked
 
-    98: optional ExternalID           external_id
-    99: optional context.ContextSet   context
+    99: optional context.ContextSet  context
 }
 
 struct DestinationParams {
     1: required DestinationID         id
-    2: required IdentityID            identity_id
+    2: required IdentityID            identity
     3: required string                name
     4: required CurrencySymbolicCode  currency
     5: required Resource              resource
+    6: optional ExternalID            external_id
 
-
-    98: optional ExternalID           external_id
     99: optional context.ContextSet   context
 }
 
@@ -64,7 +61,7 @@ struct Unauthorized {}
 
 
 service Management {
-    DestinationState Create( 1: DestinationParams params)
+    Destination Create( 1: DestinationParams params)
         throws()
 }
 
