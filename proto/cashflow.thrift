@@ -46,6 +46,7 @@ enum ProviderCashFlowAccount {
 
 enum SystemCashFlowAccount {
     settlement
+    subagent
 }
 
 enum ExternalCashFlowAccount {
