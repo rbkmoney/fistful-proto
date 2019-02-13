@@ -61,7 +61,11 @@ struct Unauthorized {}
 
 
 service Management {
+
     Destination Create( 1: DestinationParams params)
+        throws()
+
+    Destination Get(1: DestinationID id)
         throws()
 }
 
