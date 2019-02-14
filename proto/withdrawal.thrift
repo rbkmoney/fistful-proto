@@ -30,8 +30,6 @@ struct WithdrawalParams {
     4: required base.Cash     body
     5: required ExternalID    external_id
     6: optional base.Cash     fee
-    7: optional Token         wallet_grant
-    8: optional Token         destination_grant
 
     99: optional context.ContextSet   context
 }
