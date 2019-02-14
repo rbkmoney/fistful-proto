@@ -10,6 +10,7 @@ include "fistful.thrift"
 include "cashflow.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
+include "context.thrift"
 
 typedef fistful.WithdrawalID  WithdrawalID
 
@@ -19,8 +20,21 @@ typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
 typedef fistful.AccountID     AccountID
 typedef base.ExternalID       ExternalID
-
+typedef base.Token            Token
 /// Domain
+
+struct WithdrawalParams {
+    1: required WithdrawalID  id
+    2: required WalletID      wallet
+    3: required DestinationID destination
+    4: required base.Cash     body
+    5: required ExternalID    external_id
+    6: optional base.Cash     fee
+    7: optional Token         wallet_grant
+    8: optional Token         destination_grant
+
+    99: optional context.ContextSet   context
+}
 
 struct Withdrawal {
     1: required WalletID       source
@@ -98,6 +112,13 @@ struct SessionFinished {}
 struct RouteChange {
     1: required ProviderID id
 }
+
+service Management {
+
+    Withdrawal Create(1: WithdrawalParams params)
+        throws ()
+}
+
 
 /// Event sink
 
