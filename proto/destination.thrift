@@ -64,10 +64,17 @@ struct Unauthorized {}
 service Management {
 
     Destination Create( 1: DestinationParams params)
-        throws()
+        throws(
+            1: fistful.IdentityNotFound      ex1
+            2: fistful.CurrencyNotFound      ex2
+            3: fistful.MachineAlreadyWorking ex3
+            4: fistful.PartyInaccessible     ex4
+        )
 
     Destination Get(1: DestinationID id)
-        throws()
+        throws(
+            1: fistful.DestinationNotFound ex1
+        )
 }
 
 /// Source events
