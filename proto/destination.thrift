@@ -63,7 +63,7 @@ struct Unauthorized {}
 
 service Management {
 
-    Destination Create( 1: DestinationParams params)
+    Destination Create(1: DestinationParams params)
         throws(
             1: fistful.IdentityNotFound      ex1
             2: fistful.CurrencyNotFound      ex2
