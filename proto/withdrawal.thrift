@@ -29,7 +29,6 @@ struct WithdrawalParams {
     3: required DestinationID destination
     4: required base.Cash     body
     5: required ExternalID    external_id
-    6: optional base.Cash     fee
 
     99: optional context.ContextSet   context
 }
