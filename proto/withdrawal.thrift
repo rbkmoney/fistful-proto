@@ -38,17 +38,16 @@ struct Withdrawal {
     2: required DestinationID  destination
     3: required base.Cash      body
     4: optional ExternalID     external_id
-
     5: optional WithdrawalID        id
-    6: optional base.Cash           fee
-    7: optional WithdrawalStatus    status
+    6: optional WithdrawalStatus    status
+
     99: optional context.ContextSet context
 }
 
 union WithdrawalStatus {
-    1: WithdrawalPending pending
+    1: WithdrawalPending   pending
     2: WithdrawalSucceeded succeeded
-    3: WithdrawalFailed failed
+    3: WithdrawalFailed    failed
 }
 
 struct WithdrawalPending {}
