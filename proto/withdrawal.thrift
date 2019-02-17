@@ -72,8 +72,8 @@ struct TransferPrepared {}
 struct TransferCommitted {}
 struct TransferCancelled {}
 
+// TODO
 struct Failure {
-    // TODO
 }
 
 /// Withdrawal events
@@ -117,6 +117,9 @@ struct RouteChange {
 service Management {
 
     Withdrawal Create(1: WithdrawalParams params)
+        throws ()
+
+    Withdrawal Get(1: WithdrawalID id)
         throws ()
 }
 
