@@ -74,6 +74,7 @@ struct TransferCancelled {}
 
 // TODO
 struct Failure {
+    1: optional string reason
 }
 
 /// Withdrawal events
@@ -120,7 +121,7 @@ service Management {
         throws ()
 
     Withdrawal Get(1: WithdrawalID id)
-        throws ()
+        throws ( 1: fistful.WithdrawalNotFound ex1)
 }
 
 
