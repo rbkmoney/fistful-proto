@@ -101,6 +101,10 @@ exception WalletNotFound            {}
 exception WithdrawalNotFound        {}
 exception WithdrawalSessionNotFound {}
 exception MachineAlreadyWorking     {}
+exception IDExists                  {}
+exception DestinationUnauthorized   {}
+exception CurrencyInvalid           {}
+exception CashRangeError            {}
 
 service FistfulAdmin {
 

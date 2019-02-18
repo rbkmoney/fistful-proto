@@ -72,9 +72,9 @@ struct TransferPrepared {}
 struct TransferCommitted {}
 struct TransferCancelled {}
 
-// TODO
+
 struct Failure {
-    1: optional string reason
+    // TODO
 }
 
 /// Withdrawal events
@@ -118,7 +118,16 @@ struct RouteChange {
 service Management {
 
     Withdrawal Create(1: WithdrawalParams params)
-        throws ()
+        throws (
+            1: fistful.SourceNotFound          ex1
+            2: fistful.DestinationNotFound     ex2
+            3: fistful.DestinationUnauthorized ex3
+            4: fistful.ProviderNotFound        ex4
+            5: fistful.CurrencyInvalid         ex5
+            6: fistful.CashRangeError          ex6
+            7: fistful.IDExists                ex7
+            8: fistful.WalletNotFound          ex8
+        )
 
     Withdrawal Get(1: WithdrawalID id)
         throws ( 1: fistful.WithdrawalNotFound ex1)
