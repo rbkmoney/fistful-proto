@@ -60,7 +60,6 @@ union Status {
 struct Authorized {}
 struct Unauthorized {}
 
-
 service Management {
 
     Destination Create(1: DestinationParams params)
