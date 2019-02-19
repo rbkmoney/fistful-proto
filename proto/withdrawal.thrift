@@ -146,7 +146,6 @@ service Management {
         )
 }
 
-
 /// Event sink
 
 struct SinkEvent {
