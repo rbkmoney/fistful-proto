@@ -32,7 +32,6 @@ struct Destination {
     6: optional CurrencySymbolicCode currency
     7: optional Status               status
     8: optional Timestamp            created_at
-    9: optional bool                 blocked
 
     99: optional context.ContextSet  context
 }

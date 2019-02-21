@@ -16,6 +16,7 @@ typedef fistful.WithdrawalID  WithdrawalID
 
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
+typedef base.ID               EventID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
 typedef fistful.AccountID     AccountID
@@ -57,7 +58,7 @@ struct WithdrawalFailed {
 }
 
 struct WithdrawalEvent {
-    1: required eventsink.SequenceID sequence
+    1: required EventID              id
     2: required base.Timestamp       occured_at
     3: required Change               change
 }
