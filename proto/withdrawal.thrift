@@ -125,14 +125,12 @@ service Management {
 
     Withdrawal Create(1: WithdrawalParams params)
         throws (
-            1: fistful.SourceNotFound          ex1
-            2: fistful.DestinationNotFound     ex2
-            3: fistful.DestinationUnauthorized ex3
-            4: fistful.ProviderNotFound        ex4
-            5: fistful.CurrencyInvalid         ex5
-            6: fistful.CashRangeError          ex6
-            7: fistful.IDExists                ex7
-            8: fistful.WalletNotFound          ex8
+            1: fistful.IDExists                    ex1
+            2: fistful.WalletNotFound              ex2
+            3: fistful.DestinationNotFound         ex3
+            4: fistful.DestinationUnauthorized     ex4
+            5: fistful.WithdrawalCurrencyInvalid   ex5
+            6: fistful.WithdrawalCashAmountInvalid ex6
         )
 
     Withdrawal Get(1: WithdrawalID id)

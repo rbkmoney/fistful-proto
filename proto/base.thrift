@@ -42,6 +42,16 @@ struct Cash {
     2: required CurrencyRef currency
 }
 
+struct CashRange {
+    1: required CashBound upper
+    2: required CashBound lower
+}
+
+union CashBound {
+    1: Cash inclusive
+    2: Cash exclusive
+}
+
 typedef string Token
 
 /** Отображение из строки в строку */
