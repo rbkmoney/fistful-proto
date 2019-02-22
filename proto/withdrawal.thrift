@@ -86,11 +86,6 @@ struct Failure {
 
 /// Withdrawal events
 
-struct EventSinkPayload {
-    1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
-}
 
 union Change {
     1: Withdrawal       created
@@ -137,7 +132,7 @@ service Management {
     Withdrawal Get(1: WithdrawalID id)
         throws ( 1: fistful.WithdrawalNotFound ex1)
 
-    list<WithdrawalEvent> GetEvents(
+    list<Event> GetEvents(
         1: WithdrawalID id
         2: eventsink.EventRange range)
         throws (
@@ -147,6 +142,11 @@ service Management {
 
 /// Event sink
 
+struct EventSinkPayload {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp       occured_at
+    3: required list<Change>         changes
+}
 
 struct SinkEvent {
     1: required eventsink.EventID    id
