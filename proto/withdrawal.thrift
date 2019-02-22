@@ -16,7 +16,7 @@ typedef fistful.WithdrawalID  WithdrawalID
 
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
-typedef base.ID               EventID
+typedef base.EventID          EventID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
 typedef fistful.AccountID     AccountID
@@ -57,8 +57,8 @@ struct WithdrawalFailed {
     1: required Failure failure
 }
 
-struct WithdrawalEvent {
-    1: required EventID              id
+struct Event {
+    1: required EventID              event
     2: required base.Timestamp       occured_at
     3: required Change               change
 }
@@ -86,7 +86,7 @@ struct Failure {
 
 /// Withdrawal events
 
-struct Event {
+struct EventSinkPayload {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp occured_at
     3: required list<Change> changes
@@ -147,11 +147,12 @@ service Management {
 
 /// Event sink
 
+
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required WithdrawalID         source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {
