@@ -21,7 +21,7 @@ typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
 typedef fistful.AccountID     AccountID
 typedef base.ExternalID       ExternalID
-
+typedef base.EventRange       EventRange
 /// Domain
 
 struct WithdrawalParams {
@@ -74,8 +74,8 @@ union TransferStatus {
     4: TransferCancelled cancelled
 }
 
-struct TransferCreated {}
-struct TransferPrepared {}
+struct TransferCreated   {}
+struct TransferPrepared  {}
 struct TransferCommitted {}
 struct TransferCancelled {}
 
@@ -134,7 +134,7 @@ service Management {
 
     list<Event> GetEvents(
         1: WithdrawalID id
-        2: eventsink.EventRange range)
+        2: EventRange range)
         throws (
             1: fistful.WithdrawalNotFound ex1
         )

@@ -63,9 +63,9 @@ service Management {
 
     Destination Create(1: DestinationParams params)
         throws(
-            1: fistful.IdentityNotFound      ex1
-            2: fistful.CurrencyNotFound      ex2
-            3: fistful.MachineAlreadyWorking ex3
+            1: fistful.IDExists              ex1
+            2: fistful.IdentityNotFound      ex2
+            3: fistful.CurrencyNotFound      ex3
             4: fistful.PartyInaccessible     ex4
         )
 
