@@ -136,4 +136,6 @@ service FistfulAdmin {
     Deposit GetDeposit (1: DepositID id)
         throws (1: DepositNotFound ex1)
 
+    DepositID RevertDeposit (1: DepositID id)
+        throws (1: DepositNotFound ex1)
 }
