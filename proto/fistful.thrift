@@ -13,6 +13,7 @@ typedef ID AccountID
 typedef ID SourceID
 typedef ID DestinationID
 typedef ID DepositID
+typedef ID RepositID
 typedef ID WithdrawalID
 typedef ID IdentityID
 typedef ID WalletID
@@ -34,11 +35,23 @@ union DepositStatus {
     1: DepositStatusPending      pending
     2: DepositStatusSucceeded    succeeded
     3: DepositStatusFailed       failed
+    4: DepositStatusReverted     reverted
 }
 
 struct DepositStatusPending      {}
 struct DepositStatusSucceeded    {}
 struct DepositStatusFailed       { 1: optional string details }
+struct DepositStatusReverted     { 1: optional string details }
+
+union RepositStatus {
+    1: RepositStatusPending      pending
+    2: RepositStatusSucceeded    succeeded
+    3: RepositStatusFailed       failed
+}
+
+struct RepositStatusPending      {}
+struct RepositStatusSucceeded    {}
+struct RepositStatusFailed       { 1: optional string details }
 
 struct SourceParams {
     5: required SourceID         id
@@ -78,6 +91,20 @@ struct Deposit {
     5: required DepositStatus    status
 
     99: optional context.ContextSet    context
+}
+
+struct Reposit {
+    1: required RepositID           id
+    2: required DepositID           deposit_id
+    3: required SourceID            destination
+    4: required WalletID            source
+    5: required base.Cash           body
+    6: required RepositStatus       status
+    7: required base.Timestamp      created_at
+    8: optional base.DataRevision   domain_revision
+    9: optional base.PartyRevision  party_revision
+
+    10: optional string             reason
 }
 
 exception IdentityNotFound          {}
@@ -136,6 +163,6 @@ service FistfulAdmin {
     Deposit GetDeposit (1: DepositID id)
         throws (1: DepositNotFound ex1)
 
-    DepositID RevertDeposit (1: DepositID id)
+    Reposit RevertDeposit (1: DepositID id)
         throws (1: DepositNotFound ex1)
 }

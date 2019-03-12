@@ -23,6 +23,27 @@ typedef base.ExternalID       ExternalID
 
 /// Domain
 
+struct Reposit {
+    1: required WalletID            source
+    2: required SourceID            destination
+    3: required base.Cash           body
+    4: required base.Timestamp      created_at
+    5: optional base.DataRevision   domain_revision
+    6: optional base.PartyRevision  party_revision
+}
+
+union RepositStatus {
+    1: RepositPending pending
+    2: RepositSucceeded succeeded
+    3: RepositFailed failed
+}
+
+struct RepositPending {}
+struct RepositSucceeded {}
+struct RepositFailed {
+    1: required Failure failure
+}
+
 struct Deposit {
     1: required WalletID       wallet
     2: required SourceID       source
@@ -34,12 +55,16 @@ union DepositStatus {
     1: DepositPending pending
     2: DepositSucceeded succeeded
     3: DepositFailed failed
+    4: DepositStatusReverted reverted
 }
 
 struct DepositPending {}
 struct DepositSucceeded {}
 struct DepositFailed {
     1: required Failure failure
+}
+struct DepositStatusReverted {
+    1: optional string details
 }
 
 struct Transfer {
@@ -74,11 +99,17 @@ union Change {
     1: Deposit          created
     2: DepositStatus    status_changed
     3: TransferChange   transfer
+    4: RepositChange    reposit
 }
 
 union TransferChange {
     1: Transfer         created
     2: TransferStatus   status_changed
+}
+
+union RepositChange {
+    1: Reposit          created
+    2: RepositStatus    status_changed
 }
 
 /// Event sink
