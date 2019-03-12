@@ -27,11 +27,10 @@ typedef context.ContextSet ContextSet
 typedef base.EventRange EventRange
 
 struct IdentityParams {
-    1: required string      name
-    2: required PartyID     party
-    3: required ProviderID  provider
-    4: required ClassID     cls
-    5: optional ExternalID  external_id
+    1: required PartyID     party
+    2: required ProviderID  provider
+    3: required ClassID     cls
+    4: optional ExternalID  external_id
 
     99: optional ContextSet context
 }
