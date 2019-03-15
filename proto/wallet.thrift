@@ -19,6 +19,7 @@ typedef fistful.WalletID WalletID
 typedef account.Account Account
 typedef base.ExternalID ExternalID
 typedef base.ID ContractID
+typedef base.Timestamp Timestamp
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef account.AccountParams AccountParams
 
@@ -37,19 +38,15 @@ struct WalletParams {
     99: optional context.ContextSet  context
 }
 
-struct WalletState {
-    1: required WalletID    id
-    2: required string      name
-    3: required Blocking    blocking
-    4: required Account     account
-
-    98: optional ExternalID         external_id
-    99: optional context.ContextSet context
-}
-
 struct Wallet {
-    1: optional string name
+    1: optional string     name
     2: optional ExternalID external_id
+    3: optional WalletID   id
+    4: optional Blocking   blocked
+    5: optional Account    account
+    6: optional Timestamp  created
+
+    99: optional context.ContextSet context
 }
 
 /// Wallet events
@@ -71,16 +68,16 @@ union AccountChange {
 
 ///
 
-
 service Management {
-    WalletState Create (1: WalletParams params)
+    Wallet Create (1: WalletParams params)
         throws (
             1: fistful.IdentityNotFound     ex1
             2: fistful.CurrencyNotFound     ex2
             3: fistful.PartyInaccessible    ex3
+            4: fistful.IDExists             ex4
         )
 
-    WalletState Get (1: WalletID id)
+    Wallet Get (1: WalletID id)
         throws (1: fistful.WalletNotFound ex1)
 }
 
