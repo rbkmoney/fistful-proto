@@ -24,12 +24,13 @@ typedef base.ExternalID       ExternalID
 /// Domain
 
 struct Reposit {
-    1: required WalletID            source
-    2: required SourceID            destination
-    3: required base.Cash           body
-    4: required base.Timestamp      created_at
-    5: optional base.DataRevision   domain_revision
-    6: optional base.PartyRevision  party_revision
+    1: required DepositID           deposit
+    2: required WalletID            source
+    3: required SourceID            destination
+    4: required base.Cash           body
+    5: required base.Timestamp      created_at
+    6: optional base.DataRevision   domain_revision
+    7: optional base.PartyRevision  party_revision
 }
 
 union RepositStatus {

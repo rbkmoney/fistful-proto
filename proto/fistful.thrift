@@ -93,11 +93,17 @@ struct Deposit {
     99: optional context.ContextSet    context
 }
 
+struct RevertDepositParams {
+    1: required DepositID        id
+    2: required DepositBody      body
+    3: optional string           reason
+}
+
 struct Reposit {
     1: required RepositID           id
-    2: required DepositID           deposit_id
-    3: required SourceID            destination
-    4: required WalletID            source
+    2: required DepositID           deposit
+    3: required WalletID            source
+    4: required SourceID            destination
     5: required base.Cash           body
     6: required RepositStatus       status
     7: required base.Timestamp      created_at
@@ -112,6 +118,7 @@ exception CurrencyNotFound          {}
 exception SourceNotFound            {}
 exception DestinationNotFound       {}
 exception DepositNotFound           {}
+exception RepositNotFound           {}
 exception SourceUnauthorized        {}
 exception DepositCurrencyInvalid    {}
 exception DepositAmountInvalid      {}
@@ -163,6 +170,13 @@ service FistfulAdmin {
     Deposit GetDeposit (1: DepositID id)
         throws (1: DepositNotFound ex1)
 
-    Reposit RevertDeposit (1: DepositID id)
-        throws (1: DepositNotFound ex1)
+    Reposit RevertDeposit (1: RevertDepositParams params)
+        throws (
+            1: DepositNotFound        ex1
+            2: DepositCurrencyInvalid ex2
+            3: DepositAmountInvalid   ex3
+        )
+
+    Reposit GetReposit (1: DepositID id)
+        throws (1: RepositNotFound ex1)
 }
