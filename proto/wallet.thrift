@@ -42,9 +42,9 @@ struct Wallet {
     1: optional string     name
     2: optional ExternalID external_id
     3: optional WalletID   id
-    4: optional Blocking   blocked
+    4: optional Blocking   blocking
     5: optional Account    account
-    6: optional Timestamp  created
+    6: optional Timestamp  created_at
 
     99: optional context.ContextSet context
 }
