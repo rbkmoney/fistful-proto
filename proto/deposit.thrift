@@ -56,7 +56,7 @@ union DepositStatus {
     1: DepositPending pending
     2: DepositSucceeded succeeded
     3: DepositFailed failed
-    4: DepositStatusReverted reverted
+    4: DepositReverted reverted
 }
 
 struct DepositPending {}
@@ -64,7 +64,7 @@ struct DepositSucceeded {}
 struct DepositFailed {
     1: required Failure failure
 }
-struct DepositStatusReverted {
+struct DepositReverted {
     1: optional string details
 }
 

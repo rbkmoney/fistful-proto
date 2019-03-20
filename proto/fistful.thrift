@@ -179,6 +179,9 @@ service FistfulAdmin {
             3: RepositAmountInvalid   ex3
         )
 
-    Reposit GetReposit (1: DepositID id)
-        throws (1: RepositNotFound ex1)
+    Reposit GetReposit (1: DepositID deposit_id, 2: RepositID reposit_id)
+        throws (
+            1: DepositNotFound ex1
+            2: RepositNotFound ex2
+        )
 }
