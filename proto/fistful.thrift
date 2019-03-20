@@ -89,6 +89,7 @@ struct Deposit {
     3: required WalletID         destination
     4: required DepositBody      body
     5: required DepositStatus    status
+    6: optional list<Reposit>    reposits
 
     99: optional context.ContextSet    context
 }
