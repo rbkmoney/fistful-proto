@@ -26,12 +26,11 @@ struct Destination {
     1: required string     name
     2: required Resource   resource
     3: optional ExternalID external_id
+    4: optional Account    account
+    5: optional Status     status
 
-    4: optional DestinationID        id
-    5: optional IdentityID           identity
-    6: optional CurrencySymbolicCode currency
-    7: optional Status               status
-    8: optional Timestamp            created_at
+    6: optional DestinationID        id
+    7: optional Timestamp            created_at
 
     99: optional context.ContextSet  context
 }
