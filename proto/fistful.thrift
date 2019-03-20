@@ -119,6 +119,8 @@ exception SourceNotFound            {}
 exception DestinationNotFound       {}
 exception DepositNotFound           {}
 exception RepositNotFound           {}
+exception RepositCurrencyInvalid    {}
+exception RepositAmountInvalid      {}
 exception SourceUnauthorized        {}
 exception DepositCurrencyInvalid    {}
 exception DepositAmountInvalid      {}
@@ -173,8 +175,8 @@ service FistfulAdmin {
     Reposit RevertDeposit (1: RevertDepositParams params)
         throws (
             1: DepositNotFound        ex1
-            2: DepositCurrencyInvalid ex2
-            3: DepositAmountInvalid   ex3
+            2: RepositCurrencyInvalid ex2
+            3: RepositAmountInvalid   ex3
         )
 
     Reposit GetReposit (1: DepositID id)
