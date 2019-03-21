@@ -41,7 +41,10 @@ union DepositStatus {
 struct DepositStatusPending      {}
 struct DepositStatusSucceeded    {}
 struct DepositStatusFailed       { 1: optional string details }
-struct DepositStatusReverted     { 1: optional string details }
+struct DepositStatusReverted     {
+    1: required RepositID reposit_id,
+    2: optional string details
+}
 
 union RepositStatus {
     1: RepositStatusPending      pending
@@ -149,6 +152,7 @@ exception WithdrawalCashAmountInvalid {
     1: required base.Cash      cash
     2: required base.CashRange range
 }
+exception OperationNotPermitted { 1: optional string details }
 
 service FistfulAdmin {
 
@@ -178,6 +182,7 @@ service FistfulAdmin {
             1: DepositNotFound        ex1
             2: RepositCurrencyInvalid ex2
             3: RepositAmountInvalid   ex3
+            4: OperationNotPermitted  ex4
         )
 
     Reposit GetReposit (1: DepositID deposit_id, 2: RepositID reposit_id)
