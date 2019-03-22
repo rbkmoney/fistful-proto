@@ -67,8 +67,7 @@ struct DepositFailed {
     1: required Failure failure
 }
 struct DepositReverted {
-    1: required RepositID reposit_id,
-    2: optional string details
+    1: optional string details
 }
 
 struct Transfer {

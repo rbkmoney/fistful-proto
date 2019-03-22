@@ -41,10 +41,7 @@ union DepositStatus {
 struct DepositStatusPending      {}
 struct DepositStatusSucceeded    {}
 struct DepositStatusFailed       { 1: optional string details }
-struct DepositStatusReverted     {
-    1: required RepositID reposit_id,
-    2: optional string details
-}
+struct DepositStatusReverted     { 1: optional string details }
 
 union RepositStatus {
     1: RepositStatusPending      pending
