@@ -165,7 +165,7 @@ struct RouteOnCreate {
 }
 
 union TransactionChange {
-    1: TransactionOnCreate      transaction_changed
+    1: TransactionOnCreate      created
     2: TransactionStatus        status_changed
     3: PostingTransferChange    posting_transfer_changed
     4: SessionChange            session_changed
