@@ -35,13 +35,27 @@ struct TransferDeposit {}
 struct TransferWithdrawal {}
 
 struct Transfer {
-    1: required i32            version
-    2: required TransferType   transfer_type
-    3: required TransferID     id
-    4: required base.Cash      body
-    5: optional ExternalID     external_id
+    1: required TransferType   transfer_type
+    2: required TransferID     id
+    3: required base.Cash      body
+    4: optional ExternalID     external_id
 
-    6: required msgpack.Value  params
+    5: required TransferParams params
+}
+
+union TransferParams {
+    1: DepositParams      deposit
+    2: WithdrawalParams   withdrawal
+}
+
+struct DepositParams {
+    1: required WalletID       wallet_id
+    2: required SourceID       source_id
+}
+
+struct WithdrawalParams {
+    1: required WalletID       wallet_id
+    2: required DestinationID  destination_id
 }
 
 union TransferStatus {
@@ -61,7 +75,6 @@ struct Failure {
 }
 
 struct Transaction {
-    1: required i32                     version
     2: required TransferID              id
     3: required base.Cash               body
     4: required SessionData             session_data
@@ -82,9 +95,8 @@ struct SessionDataWithdrawal {
 struct SessionWithdrawalData {
     1: required SessionID           id
     2: required base.Cash           cash
-    // TODO mb use only IdentityID here?
-    3: required identity.Identity   sender
-    4: required identity.Identity   receiver
+    3: required identity.IdentityID sender
+    4: required identity.IdentityID receiver
 }
 
 struct SessionWithdrawalParams {
@@ -129,27 +141,47 @@ struct Event {
 }
 
 union Change {
-    1: Transfer             created
+    1: TransferChange       transfer_changed
     2: TransferStatus       status_changed
     3: RouteChange          route_changed
-    4: TransactionChange    transaction
-    5: SignedChange         transfer
+    4: TransactionChange    transaction_changed
+    5: ChildTransferChange  child_transfer_changed
 }
 
-struct RouteChange {
-    1: required ProviderID id
+union TransferChange {
+    1: TransferOnCreate     created
+}
+
+struct TransferOnCreate {
+    1: required Transfer    transfer
+}
+
+union RouteChange {
+    1: RouteOnCreate        created
+}
+
+struct RouteOnCreate {
+    1: required ProviderID  id
 }
 
 union TransactionChange {
-    1: Transaction              created
+    1: TransactionOnCreate      transaction_changed
     2: TransactionStatus        status_changed
-    3: PostingTransferChange    posting_transfer
-    4: SessionChange            session
+    3: PostingTransferChange    posting_transfer_changed
+    4: SessionChange            session_changed
+}
+
+struct TransactionOnCreate {
+    1: required Transaction     transaction
 }
 
 union PostingTransferChange {
-    1: PostingTransfer          created
+    1: PostingTransferOnCreate  created
     2: PostingTransferStatus    status_changed
+}
+
+struct PostingTransferOnCreate {
+    1: required PostingTransfer posting_transfer
 }
 
 struct SessionChange {
@@ -165,7 +197,7 @@ union SessionChangePayload {
 struct SessionStarted {}
 struct SessionFinished {}
 
-struct SignedChange {
+struct ChildTransferChange {
     1: required TransferType   type
     2: required TransferID     id
     3: required list<Change>   changes
@@ -203,7 +235,7 @@ union RepairScenario {
 }
 
 struct AddEventsRepair {
-    1: required list<Event>             events
+    1: required list<Change>            events
     2: optional repairer.ComplexAction  action
 }
 
