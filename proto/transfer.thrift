@@ -127,10 +127,10 @@ union PostingsTransferStatus {
     4: PostingsTransferStatusCancelled cancelled
 }
 
-struct PostingsTransferCreated {}
-struct PostingsTransferPrepared {}
-struct PostingsTransferCommitted {}
-struct PostingsTransferCancelled {}
+struct PostingsTransferStatusCreated {}
+struct PostingsTransferStatusPrepared {}
+struct PostingsTransferStatusCommitted {}
+struct PostingsTransferStatusCancelled {}
 
 /// Transfer events
 
