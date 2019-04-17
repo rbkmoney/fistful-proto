@@ -96,7 +96,7 @@ struct SessionWithdrawalData {
     1: required SessionID           id
     2: required base.Cash           cash
     3: required identity.IdentityID sender_id
-    4: required identity.IdentityID receiver_Id
+    4: required identity.IdentityID receiver_id
 }
 
 struct SessionWithdrawalParams {
