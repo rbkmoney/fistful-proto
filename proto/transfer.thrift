@@ -160,7 +160,11 @@ union RouteChange {
     1: RouteOnCreate        created
 }
 
-struct RouteOnCreate {
+union RouteOnCreate {
+    1: RouteWithdrawal      withdrawal
+}
+
+struct RouteWithdrawal {
     1: required ProviderID  id
 }
 
