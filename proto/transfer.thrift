@@ -95,8 +95,8 @@ struct SessionDataWithdrawal {
 struct SessionWithdrawalData {
     1: required SessionID           id
     2: required base.Cash           cash
-    3: required identity.IdentityID sender
-    4: required identity.IdentityID receiver
+    3: required identity.IdentityID sender_id
+    4: required identity.IdentityID receiver_Id
 }
 
 struct SessionWithdrawalParams {
@@ -116,26 +116,26 @@ struct TransactionFailed {
     1: required Failure failure
 }
 
-struct PostingTransfer {
+struct PostingsTransfer {
     1: required cashflow.FinalCashFlow cashflow
 }
 
-union PostingTransferStatus {
-    1: PostingTransferCreated   created
-    2: PostingTransferPrepared  prepared
-    3: PostingTransferCommitted committed
-    4: PostingTransferCancelled cancelled
+union PostingsTransferStatus {
+    1: PostingsTransferCreated   created
+    2: PostingsTransferPrepared  prepared
+    3: PostingsTransferCommitted committed
+    4: PostingsTransferCancelled cancelled
 }
 
-struct PostingTransferCreated {}
-struct PostingTransferPrepared {}
-struct PostingTransferCommitted {}
-struct PostingTransferCancelled {}
+struct PostingsTransferCreated {}
+struct PostingsTransferPrepared {}
+struct PostingsTransferCommitted {}
+struct PostingsTransferCancelled {}
 
 /// Transfer events
 
 struct Event {
-    1: required eventsink.SequenceID sequence
+    1: required eventsink.SequenceID sequence_id
     2: required base.Timestamp occured_at
     3: required list<Change> changes
 }
@@ -171,7 +171,7 @@ struct RouteWithdrawal {
 union TransactionChange {
     1: TransactionOnCreate      created
     2: TransactionStatus        status_changed
-    3: PostingTransferChange    posting_transfer_changed
+    3: PostingsTransferChange   postings_transfer_changed
     4: SessionChange            session_changed
 }
 
@@ -179,13 +179,13 @@ struct TransactionOnCreate {
     1: required Transaction     transaction
 }
 
-union PostingTransferChange {
-    1: PostingTransferOnCreate  created
-    2: PostingTransferStatus    status_changed
+union PostingsTransferChange {
+    1: PostingsTransferOnCreate  created
+    2: PostingsTransferStatus    status_changed
 }
 
-struct PostingTransferOnCreate {
-    1: required PostingTransfer posting_transfer
+struct PostingsTransferOnCreate {
+    1: required PostingsTransfer posting_transfer
 }
 
 struct SessionChange {
@@ -218,7 +218,7 @@ struct TransferParent {
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
-    3: required TransferID           source
+    3: required TransferID           source_id
     4: required Event                payload
 }
 
