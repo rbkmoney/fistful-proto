@@ -121,10 +121,10 @@ struct PostingsTransfer {
 }
 
 union PostingsTransferStatus {
-    1: PostingsTransferCreated   created
-    2: PostingsTransferPrepared  prepared
-    3: PostingsTransferCommitted committed
-    4: PostingsTransferCancelled cancelled
+    1: PostingsTransferStatusCreated   created
+    2: PostingsTransferStatusPrepared  prepared
+    3: PostingsTransferStatusCommitted committed
+    4: PostingsTransferStatusCancelled cancelled
 }
 
 struct PostingsTransferCreated {}
@@ -141,26 +141,22 @@ struct Event {
 }
 
 union Change {
-    1: TransferChange       transfer_changed
+    1: TransferCreated      transfer_changed
     2: TransferStatus       status_changed
     3: RouteChange          route_changed
     4: TransactionChange    transaction_changed
     5: ChildTransferChange  child_transfer_changed
 }
 
-union TransferChange {
-    1: TransferOnCreate     created
-}
-
-struct TransferOnCreate {
+struct TransferCreated {
     1: required Transfer    transfer
 }
 
 union RouteChange {
-    1: RouteOnCreate        created
+    1: RouteCreated         created
 }
 
-union RouteOnCreate {
+union RouteCreated {
     1: RouteWithdrawal      withdrawal
 }
 
@@ -169,22 +165,22 @@ struct RouteWithdrawal {
 }
 
 union TransactionChange {
-    1: TransactionOnCreate      created
+    1: TransactionCreated       created
     2: TransactionStatus        status_changed
     3: PostingsTransferChange   postings_transfer_changed
     4: SessionChange            session_changed
 }
 
-struct TransactionOnCreate {
+struct TransactionCreated {
     1: required Transaction     transaction
 }
 
 union PostingsTransferChange {
-    1: PostingsTransferOnCreate  created
+    1: PostingsTransferCreated   created
     2: PostingsTransferStatus    status_changed
 }
 
-struct PostingsTransferOnCreate {
+struct PostingsTransferCreated {
     1: required PostingsTransfer posting_transfer
 }
 
