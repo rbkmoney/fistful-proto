@@ -141,7 +141,7 @@ struct Event {
 }
 
 union Change {
-    1: TransferCreated      transfer_changed
+    1: TransferCreated      created
     2: TransferStatus       status_changed
     3: RouteChange          route_changed
     4: TransactionChange    transaction_changed
