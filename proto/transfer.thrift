@@ -21,7 +21,7 @@ typedef base.ID               TransferID
 typedef fistful.WalletID      WalletID
 typedef fistful.SourceID      SourceID
 typedef fistful.DestinationID DestinationID
-typedef fistful.AccountID     AccountID
+typedef base.ID               AccountID
 typedef base.ExternalID       ExternalID
 
 /// Domain
@@ -29,10 +29,21 @@ typedef base.ExternalID       ExternalID
 union TransferType {
     1: TransferDeposit     deposit
     2: TransferWithdrawal  withdrawal
+    3: TransferRevert      revert
+    4: TransferAdjustment  adjustment
 }
 
 struct TransferDeposit {}
 struct TransferWithdrawal {}
+
+union TransferRevert {
+    1: TransferDepositRevert    deposit
+    2: TransferAdjustmentRevert adjustment
+}
+struct TransferDepositRevert {}
+struct TransferAdjustmentRevert {}
+
+struct TransferAdjustment {}
 
 struct Transfer {
     1: required TransferType   transfer_type
@@ -46,6 +57,8 @@ struct Transfer {
 union TransferParams {
     1: DepositParams      deposit
     2: WithdrawalParams   withdrawal
+    3: RevertParams       revert
+    4: AdjustmentParams   adjustment
 }
 
 struct DepositParams {
@@ -58,16 +71,33 @@ struct WithdrawalParams {
     2: required DestinationID  destination_id
 }
 
+union RevertParams {
+    1: RevertDepositParams     deposit
+}
+
+struct RevertDepositParams {
+    1: optional string         reason
+}
+
+struct AdjustmentParams {
+    1: required TransferStatus              status
+    2: optional cashflow.FinalCashFlow      cashflow
+}
+
 union TransferStatus {
     1: TransferPending      pending
     2: TransferSucceeded    succeeded
     3: TransferFailed       failed
+    4: TransferReverted     reverted
 }
 
 struct TransferPending {}
 struct TransferSucceeded {}
 struct TransferFailed {
     1: required Failure failure
+}
+struct TransferReverted {
+    1: optional string reason
 }
 
 struct Failure {
@@ -88,20 +118,16 @@ union SessionData {
 
 struct SessionDataEmpty {}
 struct SessionDataWithdrawal {
-    1: required SessionWithdrawalData     data
-    2: required SessionWithdrawalParams   params
-}
-
-struct SessionWithdrawalData {
-    1: required SessionID           id
-    2: required base.Cash           cash
-    3: required identity.IdentityID sender_id
-    4: required identity.IdentityID receiver_id
+    1: required SessionWithdrawalParams   params
 }
 
 struct SessionWithdrawalParams {
-    1: required DestinationID   destination_id
-    2: required ProviderID      provider_id
+    1: required SessionID           id
+    2: required base.Cash           cash
+    3: required identity.Identity   sender
+    4: required identity.Identity   receiver
+    5: required DestinationID       destination_id
+    6: required ProviderID          provider_id
 }
 
 union TransactionStatus {

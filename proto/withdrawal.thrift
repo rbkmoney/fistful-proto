@@ -19,7 +19,7 @@ typedef base.ID               ProviderID
 typedef base.EventID          EventID
 typedef fistful.WalletID      WalletID
 typedef fistful.DestinationID DestinationID
-typedef fistful.AccountID     AccountID
+typedef base.ID               AccountID
 typedef base.ExternalID       ExternalID
 typedef base.EventRange       EventRange
 /// Domain

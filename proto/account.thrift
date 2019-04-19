@@ -11,7 +11,7 @@ include "identity.thrift"
 
 /// Domain
 
-typedef fistful.AccountID AccountID
+typedef base.ID AccountID
 typedef i64 AccounterAccountID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 
