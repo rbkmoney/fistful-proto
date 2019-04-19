@@ -11,7 +11,6 @@ include "identity.thrift"
 include "cashflow.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
-include "msgpack.thrift"
 
 typedef fistful.WithdrawalID  WithdrawalID
 

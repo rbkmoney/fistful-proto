@@ -130,11 +130,12 @@ service Management {
         )
 
     Withdrawal Get(1: WithdrawalID id)
-        throws ( 1: fistful.WithdrawalNotFound ex1)
+        throws (1: fistful.WithdrawalNotFound ex1)
 
     list<Event> GetEvents(
         1: WithdrawalID id
-        2: EventRange range)
+        2: EventRange range
+    )
         throws (
             1: fistful.WithdrawalNotFound ex1
         )
