@@ -8,9 +8,9 @@ namespace java   com.rbkmoney.fistful.cashflow
 namespace erlang cashflow
 
 include "base.thrift"
+include "fistful.thrift"
 
-typedef base.ID AccountID
-
+typedef fistful.AccountID AccountID
 
 struct FinalCashFlow {
     1: required list<FinalCashFlowPosting> postings
