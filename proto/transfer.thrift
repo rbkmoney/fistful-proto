@@ -20,7 +20,7 @@ typedef base.ID               TransferID
 typedef fistful.WalletID      WalletID
 typedef fistful.SourceID      SourceID
 typedef fistful.DestinationID DestinationID
-typedef base.ID               AccountID
+typedef fistful.AccountID     AccountID
 typedef base.ExternalID       ExternalID
 
 /// Domain

@@ -29,7 +29,7 @@ typedef i64 Amount
 /** Внешний идентификатор (идентификатор в системе клиента) для сущностей системы. */
 typedef ID ExternalID
 
-typedef i64 DataRevision
+typedef i64 DomainRevision
 typedef i64 PartyRevision
 
 /**

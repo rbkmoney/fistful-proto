@@ -60,7 +60,7 @@ struct Revert {
     3: required transfer.TransferStatus     status
 
     4: optional base.Cash                   body
-    5: optional base.DataRevision           domain_revision
+    5: optional base.DomainRevision         domain_revision
     6: optional base.PartyRevision          party_revision
     7: optional string                      reason
 }
@@ -76,7 +76,7 @@ struct AdjustmentParams {
     2: required Target                  target
 
     3: optional transfer.TransferStatus target_status
-    4: optional base.DataRevision       domain_revision
+    4: optional base.DomainRevision     domain_revision
     5: optional cashflow.FinalCashFlow  new_cash_flow
     6: optional string                  reason
 }
@@ -89,7 +89,7 @@ struct Adjustment {
     4: optional cashflow.FinalCashFlow  new_cash_flow
     5: optional cashflow.FinalCashFlow  old_cash_flow_inverse
     6: optional transfer.TransferStatus target_status
-    7: optional base.DataRevision       domain_revision
+    7: optional base.DomainRevision     domain_revision
     8: optional base.PartyRevision      party_revision
     9: optional string                  reason
 }
