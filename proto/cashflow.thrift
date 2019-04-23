@@ -10,6 +10,8 @@ namespace erlang cashflow
 include "base.thrift"
 include "fistful.thrift"
 
+typedef fistful.AccountID AccountID
+
 struct FinalCashFlow {
     1: required list<FinalCashFlowPosting> postings
 }
@@ -23,7 +25,7 @@ struct FinalCashFlowPosting {
 
 struct FinalCashFlowAccount {
     1: required CashFlowAccount account_type
-    2: required fistful.AccountID account_id
+    2: required AccountID account_id
 }
 
 union CashFlowAccount {
