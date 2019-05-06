@@ -7,21 +7,30 @@ namespace erlang transfer
 
 include "base.thrift"
 include "fistful.thrift"
-include "identity.thrift"
 include "cashflow.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 
-typedef fistful.WithdrawalID  WithdrawalID
+include "t_withdrawal.thrift"
+include "t_deposit.thrift"
+include "transaction.thrift"
 
-typedef base.ID               SessionID
-typedef base.ID               ProviderID
-typedef base.ID               TransferID
-typedef fistful.WalletID      WalletID
-typedef fistful.SourceID      SourceID
-typedef fistful.DestinationID DestinationID
-typedef fistful.AccountID     AccountID
-typedef base.ExternalID       ExternalID
+typedef base.ExternalID                 ExternalID
+typedef base.Cash                       Cash
+typedef base.Timestamp                  Timestamp
+typedef fistful.TransferID              TransferID
+typedef fistful.MachineAlreadyWorking   MachineAlreadyWorking
+typedef cashflow.FinalCashFlow          FinalCashFlow
+typedef t_deposit.DepositParams         DepositParams
+typedef t_deposit.RevertDepositParams   RevertDepositParams
+typedef t_withdrawal.WithdrawalParams   WithdrawalParams
+typedef t_withdrawal.RouteWithdrawal    RouteWithdrawal
+typedef transaction.TransactionChange   TransactionChange
+typedef eventsink.SequenceID            SequenceID
+typedef eventsink.EventID               EventID
+typedef eventsink.EventRange            EventRange
+typedef eventsink.NoLastEvent           NoLastEvent
+typedef repairer.ComplexAction          ComplexAction
 
 /// Domain
 
@@ -47,40 +56,26 @@ struct TransferAdjustment {}
 struct Transfer {
     1: required TransferType   transfer_type
     2: required TransferID     id
-    3: required base.Cash      body
+    3: required Cash           body
     4: optional ExternalID     external_id
 
     5: required TransferParams params
 }
 
 union TransferParams {
-    1: DepositParams      deposit
-    2: WithdrawalParams   withdrawal
-    3: RevertParams       revert
-    4: AdjustmentParams   adjustment
-}
-
-struct DepositParams {
-    1: required WalletID       wallet_id
-    2: required SourceID       source_id
-}
-
-struct WithdrawalParams {
-    1: required WalletID       wallet_id
-    2: required DestinationID  destination_id
+    1: DepositParams       deposit
+    2: WithdrawalParams    withdrawal
+    3: RevertParams        revert
+    4: AdjustmentParams    adjustment
 }
 
 union RevertParams {
-    1: RevertDepositParams     deposit
-}
-
-struct RevertDepositParams {
-    1: optional string         reason
+    1: RevertDepositParams deposit
 }
 
 struct AdjustmentParams {
-    1: required TransferStatus              status
-    2: optional cashflow.FinalCashFlow      cashflow
+    1: required TransferStatus     status
+    2: optional FinalCashFlow      cashflow
 }
 
 union TransferStatus {
@@ -103,66 +98,12 @@ struct Failure {
     // TODO
 }
 
-struct Transaction {
-    2: required TransferID              id
-    3: required base.Cash               body
-    4: required SessionData             session_data
-    5: required cashflow.FinalCashFlow  final_cash_flow
-}
-
-union SessionData {
-    1: SessionDataEmpty      empty
-    2: SessionDataWithdrawal withdrawal
-}
-
-struct SessionDataEmpty {}
-struct SessionDataWithdrawal {
-    1: required SessionWithdrawalParams   params
-}
-
-struct SessionWithdrawalParams {
-    1: required SessionID           id
-    2: required base.Cash           cash
-    3: required identity.Identity   sender
-    4: required identity.Identity   receiver
-    5: required DestinationID       destination_id
-    6: required ProviderID          provider_id
-}
-
-union TransactionStatus {
-    1: TransactionPending      pending
-    2: TransactionSucceeded    succeeded
-    3: TransactionFailed       failed
-}
-
-struct TransactionPending {}
-struct TransactionSucceeded {}
-struct TransactionFailed {
-    1: required Failure failure
-}
-
-struct PostingsTransfer {
-    1: required cashflow.FinalCashFlow cashflow
-}
-
-union PostingsTransferStatus {
-    1: PostingsTransferStatusCreated   created
-    2: PostingsTransferStatusPrepared  prepared
-    3: PostingsTransferStatusCommitted committed
-    4: PostingsTransferStatusCancelled cancelled
-}
-
-struct PostingsTransferStatusCreated {}
-struct PostingsTransferStatusPrepared {}
-struct PostingsTransferStatusCommitted {}
-struct PostingsTransferStatusCancelled {}
-
 /// Transfer events
 
 struct Event {
-    1: required eventsink.SequenceID sequence_id
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
+    1: required SequenceID      sequence_id
+    2: required Timestamp       occured_at
+    3: required list<Change>    changes
 }
 
 union Change {
@@ -185,43 +126,6 @@ union RouteCreated {
     1: RouteWithdrawal      withdrawal
 }
 
-struct RouteWithdrawal {
-    1: required ProviderID  id
-}
-
-union TransactionChange {
-    1: TransactionCreated       created
-    2: TransactionStatus        status_changed
-    3: PostingsTransferChange   postings_transfer_changed
-    4: SessionChange            session_changed
-}
-
-struct TransactionCreated {
-    1: required Transaction     transaction
-}
-
-union PostingsTransferChange {
-    1: PostingsTransferCreated   created
-    2: PostingsTransferStatus    status_changed
-}
-
-struct PostingsTransferCreated {
-    1: required PostingsTransfer posting_transfer
-}
-
-struct SessionChange {
-    1: required SessionID id
-    2: required SessionChangePayload payload
-}
-
-union SessionChangePayload {
-    1: SessionStarted   started
-    2: SessionFinished  finished
-}
-
-struct SessionStarted {}
-struct SessionFinished {}
-
 struct ChildTransferChange {
     1: required TransferType   type
     2: required TransferID     id
@@ -237,19 +141,19 @@ struct TransferParent {
 /// Event sink
 
 struct SinkEvent {
-    1: required eventsink.EventID    id
-    2: required base.Timestamp       created_at
+    1: required EventID    id
+    2: required Timestamp            created_at
     3: required TransferID           source_id
     4: required Event                payload
 }
 
 service EventSink {
 
-    list<SinkEvent> GetEvents (1: eventsink.EventRange range)
+    list<SinkEvent> GetEvents (1: EventRange range)
         throws ()
 
-    eventsink.EventID GetLastEventID ()
-        throws (1: eventsink.NoLastEvent ex1)
+    EventID GetLastEventID ()
+        throws (1: NoLastEvent ex1)
 
 }
 
@@ -260,8 +164,8 @@ union RepairScenario {
 }
 
 struct AddEventsRepair {
-    1: required list<Change>            events
-    2: optional repairer.ComplexAction  action
+    1: required list<Change>   events
+    2: optional ComplexAction  action
 }
 
 exception TransferNotFound              {}
@@ -270,6 +174,6 @@ service Repairer {
     void Repair(1: TransferID id, 2: RepairScenario scenario)
         throws (
             1: TransferNotFound ex1
-            2: fistful.MachineAlreadyWorking ex2
+            2: MachineAlreadyWorking ex2
         )
 }

@@ -18,6 +18,9 @@ typedef ID AdjustmentID
 typedef ID WithdrawalID
 typedef ID IdentityID
 typedef ID WalletID
+typedef ID SessionID
+typedef ID ProviderID
+typedef ID TransferID
 typedef i64 Amount
 typedef string SourceName
 
