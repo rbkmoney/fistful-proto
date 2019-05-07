@@ -19,13 +19,14 @@ typedef base.ExternalID                 ExternalID
 typedef base.Cash                       Cash
 typedef base.Timestamp                  Timestamp
 typedef fistful.TransferID              TransferID
+typedef fistful.WalletID                WalletID
 typedef fistful.MachineAlreadyWorking   MachineAlreadyWorking
 typedef cashflow.FinalCashFlow          FinalCashFlow
 typedef t_deposit.DepositParams         DepositParams
-typedef t_deposit.RevertDepositParams   RevertDepositParams
 typedef t_withdrawal.WithdrawalParams   WithdrawalParams
 typedef t_withdrawal.RouteWithdrawal    RouteWithdrawal
 typedef transaction.TransactionChange   TransactionChange
+typedef transaction.SessionData         SessionData
 typedef eventsink.SequenceID            SequenceID
 typedef eventsink.EventID               EventID
 typedef eventsink.EventRange            EventRange
@@ -33,6 +34,12 @@ typedef eventsink.NoLastEvent           NoLastEvent
 typedef repairer.ComplexAction          ComplexAction
 
 /// Domain
+
+struct Target {
+    1: required base.ID                 root_id
+    2: required TransferType            root_type
+    3: required base.ID                 target_id
+}
 
 union TransferType {
     1: TransferDeposit     deposit
@@ -43,14 +50,7 @@ union TransferType {
 
 struct TransferDeposit {}
 struct TransferWithdrawal {}
-
-union TransferRevert {
-    1: TransferDepositRevert    deposit
-    2: TransferAdjustmentRevert adjustment
-}
-struct TransferDepositRevert {}
-struct TransferAdjustmentRevert {}
-
+struct TransferRevert {}
 struct TransferAdjustment {}
 
 struct Transfer {
@@ -69,8 +69,12 @@ union TransferParams {
     4: AdjustmentParams    adjustment
 }
 
-union RevertParams {
-    1: RevertDepositParams deposit
+struct RevertParams {
+    1: required WalletID        wallet_id
+    2: required SessionData     session_data
+    3: required FinalCashFlow   revert_cash_flow
+    4: required Target          target
+    5: optional string          reason
 }
 
 struct AdjustmentParams {
