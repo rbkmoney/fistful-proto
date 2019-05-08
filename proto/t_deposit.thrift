@@ -17,7 +17,3 @@ struct DepositParams {
     1: required WalletID       wallet_id
     2: required SourceID       source_id
 }
-
-struct RevertDepositParams {
-    1: optional string         reason
-}

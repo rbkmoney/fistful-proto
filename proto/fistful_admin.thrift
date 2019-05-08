@@ -48,7 +48,7 @@ struct DepositParams {
 
 struct RevertParams {
     1: required RevertID        id
-    2: required Target          target
+    2: required transfer.Target target
 
     3: optional base.Cash       body
     4: optional string          reason
@@ -56,7 +56,7 @@ struct RevertParams {
 
 struct Revert {
     1: required RevertID                    id
-    2: required Target                      target
+    2: required transfer.Target             target
     3: required transfer.TransferStatus     status
 
     4: optional base.Cash                   body
@@ -65,15 +65,9 @@ struct Revert {
     7: optional string                      reason
 }
 
-struct Target {
-    1: required base.ID                     root_id
-    2: required transfer.TransferType       root_type
-    3: required base.ID                     target_id
-}
-
 struct AdjustmentParams {
     1: required AdjustmentID            id
-    2: required Target                  target
+    2: required transfer.Target         target
 
     3: optional transfer.TransferStatus target_status
     4: optional base.DomainRevision     domain_revision
@@ -83,7 +77,7 @@ struct AdjustmentParams {
 
 struct Adjustment {
     1: required AdjustmentID            id
-    2: required Target                  target
+    2: required transfer.Target         target
     3: required transfer.TransferStatus status
 
     4: optional cashflow.FinalCashFlow  new_cash_flow
@@ -125,7 +119,7 @@ service FistfulAdmin {
             4: fistful.OperationNotPermitted    ex4
         )
 
-    Revert GetRevert (1: Target target)
+    Revert GetRevert (1: transfer.Target target)
         throws (1: fistful.TransferNotFound     ex1)
 
 
@@ -135,16 +129,16 @@ service FistfulAdmin {
             2: fistful.OperationNotPermitted    ex2
         )
 
-    Adjustment GetAdjustment (1: Target target)
+    Adjustment GetAdjustment (1: transfer.Target target)
         throws (1: fistful.TransferNotFound     ex1)
 
-    Adjustment CaptureAdjustment (1: Target target)
+    Adjustment CaptureAdjustment (1: transfer.Target target)
         throws (
             1: fistful.TransferNotFound         ex1
             2: fistful.OperationNotPermitted    ex2
         )
 
-    Adjustment CancelAdjustment (1: Target target)
+    Adjustment CancelAdjustment (1: transfer.Target target)
         throws (
             1: fistful.TransferNotFound         ex1
             2: fistful.OperationNotPermitted    ex2
