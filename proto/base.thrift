@@ -98,7 +98,7 @@ struct CryptoWallet {
 enum CryptoCurrency {
     bitcoin
     litecoin
-    bitcoincash
+    bitcoin_cash
     ripple
     ethereum
     zcash
