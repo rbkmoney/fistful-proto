@@ -55,13 +55,13 @@ union DepositeEventType {
 
 union SourceEventType {
     1: SourceCreated created
-    2: AccountChanged accountChanged
-    3: StatusChanged statusChanged
+    2: AccountChanged account_changed
+    3: StatusChanged status_changed
 }
 
 union WalletEventType {
     1: WalletCreated created
-    2: AccountChanged accountChanged
+    2: AccountChanged account_changed
 }
 
 struct WithdrawalStarted {}
