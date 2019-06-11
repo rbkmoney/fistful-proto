@@ -22,8 +22,9 @@ struct Webhook {
 
 struct WebhookParams {
     1: required PartyID party_id
-    2: required EventFilter event_filter
-    3: required Url url
+    2: optional ShopID shop_id
+    3: required EventFilter event_filter
+    4: required Url url
 }
 
 struct EventFilter {
