@@ -85,6 +85,26 @@ struct BankCard {
 }
 
 /**
+ * Криптокошелёк
+ */
+struct CryptoWallet {
+    1: required string id
+    2: required CryptoCurrency currency
+}
+
+/**
+ * Криптовалюта
+ */
+enum CryptoCurrency {
+    bitcoin
+    litecoin
+    bitcoin_cash
+    ripple
+    ethereum
+    zcash
+}
+
+/**
  * Платежные системы
  *
  * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1282

@@ -4,6 +4,7 @@ namespace java com.rbkmoney.fistful.webhooker
 namespace erlang webhooker
 
 typedef base.ID PartyID
+typedef base.ID ShopID
 typedef string Url
 typedef string Key
 typedef i64 WebhookID
@@ -12,16 +13,18 @@ exception WebhookNotFound {}
 struct Webhook {
     1: required WebhookID id
     2: required PartyID party_id
-    3: required EventFilter event_filter
-    4: required Url url
-    5: required Key pub_key
-    6: required bool enabled
+    3: optional ShopID shop_id
+    4: required EventFilter event_filter
+    5: required Url url
+    6: required Key pub_key
+    7: required bool enabled
 }
 
 struct WebhookParams {
     1: required PartyID party_id
-    2: required EventFilter event_filter
-    3: required Url url
+    2: optional ShopID shop_id
+    3: required EventFilter event_filter
+    4: required Url url
 }
 
 struct EventFilter {
@@ -30,6 +33,12 @@ struct EventFilter {
 
 union EventType {
     1: WithdrawalEventType withdrawal
+
+    2: DepositeEventType deposit
+
+    3: SourceEventType source
+
+    4: WalletEventType wallet
 }
 
 union WithdrawalEventType {
@@ -38,9 +47,35 @@ union WithdrawalEventType {
     3: WithdrawalFailed failed
 }
 
+union DepositeEventType {
+    1: DepositeStarted started
+    2: DepositeSucceeded succeeded
+    3: DepositeFailed failed
+}
+
+union SourceEventType {
+    1: SourceCreated created
+    2: AccountChanged account_changed
+    3: StatusChanged status_changed
+}
+
+union WalletEventType {
+    1: WalletCreated created
+    2: AccountChanged account_changed
+}
+
 struct WithdrawalStarted {}
 struct WithdrawalSucceeded {}
 struct WithdrawalFailed {}
+
+struct DepositeStarted {}
+struct DepositeSucceeded {}
+struct DepositeFailed {}
+
+struct SourceCreated {}
+struct AccountChanged {}
+struct WalletCreated {}
+struct StatusChanged {}
 
 service WebhookManager {
     list<Webhook> GetList(1: PartyID party_id)

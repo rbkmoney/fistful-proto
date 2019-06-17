@@ -47,7 +47,8 @@ struct DestinationParams {
 }
 
 union Resource {
-    1: base.BankCard    bank_card
+    1: base.BankCard     bank_card
+    2: base.CryptoWallet crypto_wallet
 }
 
 union Status {
