@@ -66,7 +66,7 @@ struct DestinationAuthorized {}
 struct WalletCreated {}
 
 service WebhookManager {
-    list<Webhook> GetList(1: IdentityID party_id)
+    list<Webhook> GetList(1: IdentityID identity_id)
     Webhook Get(1: WebhookID webhook_id) throws (1: WebhookNotFound ex1)
     Webhook Create(1: WebhookParams webhook_params)
     void Delete(1: WebhookID webhook_id) throws (1: WebhookNotFound ex1)
