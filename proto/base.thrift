@@ -15,11 +15,22 @@ typedef string ID
 /** Идентификатор некоторого события */
 typedef i64 EventID
 
+struct EventRange {
+    1: optional EventID after
+    2: required i32     limit
+}
+
 /** ISO 4217 */
 typedef string CurrencySymbolicCode
 
 /** Сумма в минимальных денежных единицах. */
 typedef i64 Amount
+
+/** Внешний идентификатор (идентификатор в системе клиента) для сущностей системы. */
+typedef ID ExternalID
+
+typedef i64 DataRevision
+typedef i64 PartyRevision
 
 /**
  * Идентификатор валюты
@@ -38,7 +49,20 @@ struct Cash {
     2: required CurrencyRef currency
 }
 
+struct CashRange {
+    1: required CashBound upper
+    2: required CashBound lower
+}
+
+union CashBound {
+    1: Cash inclusive
+    2: Cash exclusive
+}
+
 typedef string Token
+
+/** Отображение из строки в строку */
+typedef map<string, string> StringMap
 
 /**
  * Банковская карта
@@ -61,6 +85,26 @@ struct BankCard {
 }
 
 /**
+ * Криптокошелёк
+ */
+struct CryptoWallet {
+    1: required string id
+    2: required CryptoCurrency currency
+}
+
+/**
+ * Криптовалюта
+ */
+enum CryptoCurrency {
+    bitcoin
+    litecoin
+    bitcoin_cash
+    ripple
+    ethereum
+    zcash
+}
+
+/**
  * Платежные системы
  *
  * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1282
@@ -78,4 +122,37 @@ enum BankCardPaymentSystem {
     unionpay
     jcb
     nspkmir
+}
+
+/**
+ * Ошибки
+ *
+ * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L31
+ */
+struct Failure {
+    1: required FailureCode     code;
+
+    2: optional FailureReason   reason;
+    3: optional SubFailure      sub;
+}
+
+typedef string FailureCode;
+typedef string FailureReason; // причина возникшей ошибки и пояснение откуда она взялась
+
+// возможность делать коды ошибок иерархическими
+struct SubFailure {
+    1: required FailureCode  code;
+    2: optional SubFailure   sub;
+}
+
+/**
+ * Данные транзакции
+ *
+ * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L77
+ */
+
+struct TransactionInfo {
+    1: required ID  id
+    2: optional Timestamp timestamp
+    3: required StringMap extra
 }
