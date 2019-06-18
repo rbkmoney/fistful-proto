@@ -3,8 +3,8 @@ include "base.thrift"
 namespace java com.rbkmoney.fistful.webhooker
 namespace erlang webhooker
 
-typedef base.ID PartyID
-typedef base.ID ShopID
+typedef base.ID IdentityID
+typedef base.ID WalletID
 typedef string Url
 typedef string Key
 typedef i64 WebhookID
@@ -12,8 +12,8 @@ exception WebhookNotFound {}
 
 struct Webhook {
     1: required WebhookID id
-    2: required PartyID party_id
-    3: optional ShopID shop_id
+    2: required IdentityID party_id
+    3: optional WalletID shop_id
     4: required EventFilter event_filter
     5: required Url url
     6: required Key pub_key
@@ -21,8 +21,8 @@ struct Webhook {
 }
 
 struct WebhookParams {
-    1: required PartyID party_id
-    2: optional ShopID shop_id
+    1: required IdentityID party_id
+    2: optional WalletID shop_id
     3: required EventFilter event_filter
     4: required Url url
 }
@@ -78,7 +78,7 @@ struct WalletCreated {}
 struct StatusChanged {}
 
 service WebhookManager {
-    list<Webhook> GetList(1: PartyID party_id)
+    list<Webhook> GetList(1: IdentityID party_id)
     Webhook Get(1: WebhookID webhook_id) throws (1: WebhookNotFound ex1)
     Webhook Create(1: WebhookParams webhook_params)
     void Delete(1: WebhookID webhook_id) throws (1: WebhookNotFound ex1)
