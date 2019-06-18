@@ -12,8 +12,8 @@ exception WebhookNotFound {}
 
 struct Webhook {
     1: required WebhookID id
-    2: required IdentityID party_id
-    3: optional WalletID shop_id
+    2: required IdentityID identity_id
+    3: optional WalletID wallet_id
     4: required EventFilter event_filter
     5: required Url url
     6: required Key pub_key
@@ -21,8 +21,8 @@ struct Webhook {
 }
 
 struct WebhookParams {
-    1: required IdentityID party_id
-    2: optional WalletID shop_id
+    1: required IdentityID identity_id
+    2: optional WalletID wallet_id
     3: required EventFilter event_filter
     4: required Url url
 }
