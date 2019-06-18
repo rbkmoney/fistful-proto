@@ -34,11 +34,9 @@ struct EventFilter {
 union EventType {
     1: WithdrawalEventType withdrawal
 
-    2: DepositeEventType deposit
+    2: DestinationEventType deposit
 
-    3: SourceEventType source
-
-    4: WalletEventType wallet
+    3: WalletEventType wallet
 }
 
 union WithdrawalEventType {
@@ -47,35 +45,25 @@ union WithdrawalEventType {
     3: WithdrawalFailed failed
 }
 
-union DepositeEventType {
-    1: DepositeStarted started
-    2: DepositeSucceeded succeeded
-    3: DepositeFailed failed
-}
-
-union SourceEventType {
-    1: SourceCreated created
-    2: AccountChanged account_changed
-    3: StatusChanged status_changed
+union DestinationEventType {
+    1: DestinationCreated created
+    2: DestinationUnauthorized unauthorized
+    3: DestinationAuthorized authorized
 }
 
 union WalletEventType {
     1: WalletCreated created
-    2: AccountChanged account_changed
 }
 
 struct WithdrawalStarted {}
 struct WithdrawalSucceeded {}
 struct WithdrawalFailed {}
 
-struct DepositeStarted {}
-struct DepositeSucceeded {}
-struct DepositeFailed {}
+struct DestinationCreated {}
+struct DestinationUnauthorized {}
+struct DestinationAuthorized {}
 
-struct SourceCreated {}
-struct AccountChanged {}
 struct WalletCreated {}
-struct StatusChanged {}
 
 service WebhookManager {
     list<Webhook> GetList(1: IdentityID party_id)
