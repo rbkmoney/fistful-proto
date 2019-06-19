@@ -35,8 +35,6 @@ union EventType {
     1: WithdrawalEventType withdrawal
 
     2: DestinationEventType deposit
-
-    3: WalletEventType wallet
 }
 
 union WithdrawalEventType {
@@ -51,10 +49,6 @@ union DestinationEventType {
     3: DestinationAuthorized authorized
 }
 
-union WalletEventType {
-    1: WalletCreated created
-}
-
 struct WithdrawalStarted {}
 struct WithdrawalSucceeded {}
 struct WithdrawalFailed {}
@@ -62,8 +56,6 @@ struct WithdrawalFailed {}
 struct DestinationCreated {}
 struct DestinationUnauthorized {}
 struct DestinationAuthorized {}
-
-struct WalletCreated {}
 
 service WebhookManager {
     list<Webhook> GetList(1: IdentityID identity_id)
