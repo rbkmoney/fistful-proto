@@ -34,7 +34,7 @@ struct EventFilter {
 union EventType {
     1: WithdrawalEventType withdrawal
 
-    2: DestinationEventType deposit
+    2: DestinationEventType destination
 }
 
 union WithdrawalEventType {
