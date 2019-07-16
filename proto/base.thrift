@@ -89,6 +89,8 @@ struct BankCard {
  */
 struct CryptoWallet {
     1: required string id
+    3: optional CryptoData data
+    /** Legacy */
     2: required CryptoCurrency currency
 }
 
@@ -103,6 +105,24 @@ enum CryptoCurrency {
     ethereum
     zcash
 }
+
+union CryptoData {
+    1: CryptoDataBitcoin bitcoin
+    2: CryptoDataLitecoin litecoin
+    3: CryptoDataBitcoinCash bitcoin_cash
+    4: CryptoDataRipple ripple
+    5: CryptoDataEthereum ethereum
+    6: CryptoDataZcash zcash
+}
+
+struct CryptoDataBitcoin {}
+struct CryptoDataLitecoin {}
+struct CryptoDataBitcoinCash {}
+struct CryptoDataRipple {
+    1: required string tag
+}
+struct CryptoDataEthereum {}
+struct CryptoDataZcash {}
 
 /**
  * Платежные системы
