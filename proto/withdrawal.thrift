@@ -81,7 +81,7 @@ struct TransferCancelled {}
 
 
 struct Failure {
-    // TODO
+    1: optional base.Failure failure
 }
 
 /// Withdrawal events

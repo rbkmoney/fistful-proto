@@ -42,7 +42,9 @@ union SessionFinishedStatus {
 }
 
 struct SessionFinishedSuccess {}
-struct SessionFinishedFailed {}
+struct SessionFinishedFailed {
+    1: optional base.Failure failure
+}
 
 struct Withdrawal {
     1: required WithdrawalID            id
