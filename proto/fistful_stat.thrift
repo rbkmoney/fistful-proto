@@ -150,4 +150,3 @@ service FistfulStatistics {
     StatResponse GetDeposits(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
 
 }
-
