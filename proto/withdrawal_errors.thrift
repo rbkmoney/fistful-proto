@@ -8,7 +8,7 @@ namespace erlang wthd_errors
 /**
   *
   *
-  * # Статическое представление ошибок. (динамическое представление — domain.Failure)
+  * # Статическое представление ошибок. (динамическое представление — base.Failure)
   *
   * При переводе из статического в динамические формат представления следующий.
   * В поле code пишется строковое представления имени варианта в union,
@@ -24,13 +24,9 @@ namespace erlang wthd_errors
   * ### Статически типизированное представление
   *
   * ```
-  * PaymentFailure{
-  *     authorization_failed = AuthorizationFailure{
-  *         payment_tool_rejected = PaymentToolReject{
-  *             bank_card_rejected = BankCardReject{
-  *                 cvv_invalid = GeneralFailure{}
-  *             }
-  *         }
+  * WithdrawalFailure{
+  *     account_limit_exceeded = LimitExceeded{
+  *         amount = GeneralFailure{}
   *     }
   * }
   * ```
@@ -38,23 +34,16 @@ namespace erlang wthd_errors
   *
   * ### Текстовое представление (нужно только если есть желание представлять ошибки в виде текста)
   *
-  * `authorization_failed:payment_tool_rejected:bank_card_rejected:cvv_invalid`
+  * `account_limit_exceeded:amount:`
   *
   *
   * ### Динамически типизированное представление
   *
   * ```
-  * domain.Failure{
-  *     code = "authorization_failed",
-  *     reason = "sngb error '87' — 'Invalid CVV'",
-  *     sub = domain.SubFailure{
-  *         code = "payment_tool_rejected",
-  *         sub = domain.SubFailure{
-  *             code = "bank_card_rejected",
-  *             sub = domain.SubFailure{
-  *                 code = "cvv_invalid"
-  *             }
-  *         }
+  * base.Failure{
+  *     code = "account_limit_exceeded",
+  *     sub = base.SubFailure{
+  *         code = "amount"
   *     }
   * }
   * ```
