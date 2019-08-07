@@ -12,6 +12,7 @@ include "identity.thrift"
 include "eventsink.thrift"
 include "context.thrift"
 include "repairer.thrift"
+include "msgpack.thrift"
 
 /// Domain
 
@@ -47,8 +48,17 @@ struct DestinationParams {
 }
 
 union Resource {
-    1: base.BankCard     bank_card
-    2: base.CryptoWallet crypto_wallet
+    1: DestinationBankCard bank_card
+    2: DestinationCryptoWallet crypto_wallet
+}
+
+struct DestinationBankCard {
+    1: required base.BankCard bank_card
+    2: optional msgpack.Value bin_data_id
+}
+
+struct DestinationCryptoWallet {
+    1: required base.CryptoWallet crypto_wallet
 }
 
 union Status {

@@ -76,11 +76,12 @@ struct BankCard {
     3: optional string bin
     4: optional string masked_pan
     /*
-    Поля 5-8 зарезервированы для совместимости с BankCard из damsel
+    Поля 5-9 зарезервированы для совместимости с BankCard из damsel
     5: optional BankCardTokenProvider token_provider
     6: optional Residence issuer_country
     7: optional string bank_name
     8: optional map<string, msgpack.Value> metadata
+    9: optional bool is_cvv_empty
     */
 }
 
