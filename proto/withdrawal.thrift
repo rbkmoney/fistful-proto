@@ -41,6 +41,7 @@ struct Withdrawal {
     4: optional ExternalID     external_id
     5: optional WithdrawalID        id
     6: optional WithdrawalStatus    status
+    7: optional Resource       resource
 
     99: optional context.ContextSet context
 }
@@ -55,6 +56,11 @@ struct WithdrawalPending {}
 struct WithdrawalSucceeded {}
 struct WithdrawalFailed {
     1: required Failure failure
+}
+
+union Resource {
+    1: base.BankCard     bank_card
+    2: base.CryptoWallet crypto_wallet
 }
 
 struct Event {
