@@ -75,14 +75,13 @@ struct BankCard {
     2: optional BankCardPaymentSystem payment_system
     3: optional string bin
     4: optional string masked_pan
+    /*
+    Поля 5-8 зарезервированы для совместимости с BankCard из damsel
+    5: optional BankCardTokenProvider token_provider
     6: optional Residence issuer_country
     7: optional string bank_name
-    /*
-    Поля 5,8 зарезервированы для совместимости с BankCard из damsel
-    5: optional BankCardTokenProvider token_provider
     8: optional map<string, msgpack.Value> metadata
     */
-    20: optional CardType card_type
 }
 
 /**
@@ -228,7 +227,7 @@ enum Residence {
     ASM =   6  /*American Samoa*/
     AIA =   7  /*Anguilla*/
     AGO =   8  /*Angola*/
-    //AND =   9  /*Andorra*/
+    AND =   9  /*Andorra*/
     ATA =  10  /*Antarctica*/
     ATG =  11  /*Antigua and Barbuda*/
     ARG =  12  /*Argentina*/
