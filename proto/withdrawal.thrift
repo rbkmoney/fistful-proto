@@ -137,8 +137,8 @@ struct RouteChange {
     1: required ProviderID id
 }
 
-union ResourceChange {
-    1: Resource         created
+struct ResourceChange {
+    1: required Resource resource
 }
 
 service Management {
