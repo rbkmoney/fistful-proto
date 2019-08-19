@@ -22,8 +22,8 @@ typedef fistful.DestinationID DestinationID
 typedef fistful.AccountID     AccountID
 typedef base.ExternalID       ExternalID
 typedef base.EventRange       EventRange
-typedef base.Residence        Residence
-typedef base.CardType         CardType
+typedef base.Resource         Resource
+
 /// Domain
 
 struct WithdrawalParams {
@@ -43,7 +43,6 @@ struct Withdrawal {
     4: optional ExternalID     external_id
     5: optional WithdrawalID        id
     6: optional WithdrawalStatus    status
-    7: optional Resource       resource
 
     99: optional context.ContextSet context
 }
@@ -58,22 +57,6 @@ struct WithdrawalPending {}
 struct WithdrawalSucceeded {}
 struct WithdrawalFailed {
     1: required Failure failure
-}
-
-union Resource {
-    1: ResourceBankCard     bank_card
-    2: ResourceCryptoWallet crypto_wallet
-}
-
-struct ResourceBankCard {
-    1: required base.BankCard     bank_card
-    2: optional Residence         issuer_country
-    3: optional string            bank_name
-    4: optional CardType          card_type
-}
-
-struct ResourceCryptoWallet {
-    1: required base.CryptoWallet crypto_wallet
 }
 
 struct Event {
@@ -137,7 +120,11 @@ struct RouteChange {
     1: required ProviderID id
 }
 
-struct ResourceChange {
+union ResourceChange {
+    1: ResourceGot got
+}
+
+struct ResourceGot {
     1: required Resource resource
 }
 

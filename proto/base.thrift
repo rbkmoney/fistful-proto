@@ -72,11 +72,11 @@ typedef map<string, string> StringMap
  */
 struct BankCard {
     1: required Token token
-    2: optional BankCardPaymentSystem payment_system
     3: optional string bin
     4: optional string masked_pan
     /*
     Поля 5-8 зарезервированы для совместимости с BankCard из damsel
+    2: optional BankCardPaymentSystem payment_system
     5: optional BankCardTokenProvider token_provider
     6: optional Residence issuer_country
     7: optional string bank_name
@@ -93,6 +93,24 @@ struct CryptoWallet {
     /** Legacy */
     2: required CryptoCurrency currency
 }
+
+union Resource {
+    1: ResourceBankCard     bank_card
+    2: ResourceCryptoWallet crypto_wallet
+}
+
+struct ResourceBankCard {
+    1: required BankCard                bank_card
+    2: optional BankCardPaymentSystem   payment_system
+    3: optional Residence               issuer_country
+    4: optional string                  bank_name
+    5: optional CardType                card_type
+}
+
+struct ResourceCryptoWallet {
+    1: required CryptoWallet crypto_wallet
+}
+
 
 /**
  * Криптовалюта
