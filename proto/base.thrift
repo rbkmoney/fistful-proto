@@ -64,24 +64,32 @@ typedef string Token
 /** Отображение из строки в строку */
 typedef map<string, string> StringMap
 
+union Resource {
+    1: BankCard     bank_card
+    2: CryptoWallet crypto_wallet
+}
+
 /**
  * Банковская карта
  *
  * Сделано по мотивам https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1323
  * От оргигинала отличается меньшим количеством полей и меньшими ограничениями на имеющиеся поля
+ * Кроме этого в ней заполнены поля с дополнительной информацией,
+ * полученной из binbase
  */
 struct BankCard {
     1: required Token token
     3: optional string bin
     4: optional string masked_pan
-    /*
-    Поля 2, 5-8 зарезервированы для совместимости с BankCard из damsel
     2: optional BankCardPaymentSystem payment_system
-    5: optional BankCardTokenProvider token_provider
     6: optional Residence issuer_country
     7: optional string bank_name
+    /*
+    Поля 5,8 зарезервированы для совместимости с BankCard из damsel
+    5: optional BankCardTokenProvider token_provider
     8: optional map<string, msgpack.Value> metadata
     */
+    20: optional CardType               card_type
 }
 
 /**
@@ -92,37 +100,6 @@ struct CryptoWallet {
     3: optional CryptoData data
     /** Legacy */
     2: required CryptoCurrency currency
-}
-
-union Resource {
-    1: ResourceBankCard     bank_card
-    2: ResourceCryptoWallet crypto_wallet
-}
-
-/**
- * Банковская карта
- *
- * Сделано по мотивам https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1323
- * От оргигинала отличается расширенным количеством полей и другими ограничениями на поля
- */
-
-struct ResourceBankCard {
-    1: required Token                   token
-    2: optional BankCardPaymentSystem   payment_system
-    3: optional string                  bin
-    4: optional string                  masked_pan
-    6: optional Residence               issuer_country
-    7: optional string                  bank_name
-     /*
-    Поля 5,8 зарезервированы для совместимости с BankCard из damsel
-    5: optional BankCardTokenProvider token_provider
-    8: optional map<string, msgpack.Value> metadata
-    */
-    20: optional CardType               card_type
-}
-
-struct ResourceCryptoWallet {
-    1: required CryptoWallet crypto_wallet
 }
 
 
