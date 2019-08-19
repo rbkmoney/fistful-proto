@@ -75,7 +75,7 @@ struct BankCard {
     3: optional string bin
     4: optional string masked_pan
     /*
-    Поля 5-8 зарезервированы для совместимости с BankCard из damsel
+    Поля 2, 5-8 зарезервированы для совместимости с BankCard из damsel
     2: optional BankCardPaymentSystem payment_system
     5: optional BankCardTokenProvider token_provider
     6: optional Residence issuer_country
@@ -99,12 +99,26 @@ union Resource {
     2: ResourceCryptoWallet crypto_wallet
 }
 
+/**
+ * Банковская карта
+ *
+ * Сделано по мотивам https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1323
+ * От оргигинала отличается расширенным количеством полей и другими ограничениями на поля
+ */
+
 struct ResourceBankCard {
-    1: required BankCard                bank_card
+    1: required Token                   token
     2: optional BankCardPaymentSystem   payment_system
-    3: optional Residence               issuer_country
-    4: optional string                  bank_name
-    5: optional CardType                card_type
+    3: optional string                  bin
+    4: optional string                  masked_pan
+    6: optional Residence               issuer_country
+    7: optional string                  bank_name
+     /*
+    Поля 5,8 зарезервированы для совместимости с BankCard из damsel
+    5: optional BankCardTokenProvider token_provider
+    8: optional map<string, msgpack.Value> metadata
+    */
+    20: optional CardType               card_type
 }
 
 struct ResourceCryptoWallet {
