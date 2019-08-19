@@ -17,6 +17,8 @@ typedef fistful.WithdrawalID  WithdrawalID
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
 typedef msgpack.Value         AdapterState
+typedef base.Resource         Resource
+
 /// Domain
 
 struct Session {
@@ -48,7 +50,7 @@ struct SessionFinishedFailed {
 
 struct Withdrawal {
     1: required WithdrawalID            id
-    2: required destination.Destination destination
+    2: required Resource                destination_resource
     3: required base.Cash               cash
     4: optional identity.Identity       sender
     5: optional identity.Identity       receiver
