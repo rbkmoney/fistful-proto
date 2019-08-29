@@ -7,45 +7,20 @@ namespace erlang deposit
 
 include "base.thrift"
 include "fistful.thrift"
-include "cashflow.thrift"
 include "eventsink.thrift"
+include "transfer.thrift"
+include "deposit_revert.thrift"
+include "deposit_adjustment.thrift"
+include "deposit_status.thrift"
 include "repairer.thrift"
 
-typedef fistful.WithdrawalID  WithdrawalID
-
-typedef base.ID               SessionID
-typedef base.ID               ProviderID
-typedef fistful.DepositID     DepositID
-typedef fistful.RepositID     RepositID
-typedef fistful.WalletID      WalletID
-typedef fistful.SourceID      SourceID
-typedef fistful.AccountID     AccountID
-typedef base.ExternalID       ExternalID
-
-/// Domain
-
-struct Reposit {
-    1: required DepositID           deposit
-    2: required WalletID            source
-    3: required SourceID            destination
-    4: required base.Cash           body
-    5: required base.Timestamp      created_at
-    6: optional base.DataRevision   domain_revision
-    7: optional base.PartyRevision  party_revision
-    8: optional string              reason
-}
-
-union RepositStatus {
-    1: RepositPending pending
-    2: RepositSucceeded succeeded
-    3: RepositFailed failed
-}
-
-struct RepositPending {}
-struct RepositSucceeded {}
-struct RepositFailed {
-    1: required Failure failure
-}
+typedef fistful.DepositID       DepositID
+typedef fistful.AdjustmentID    AdjustmentID
+typedef fistful.DepositRevertID RevertID
+typedef fistful.WalletID        WalletID
+typedef fistful.SourceID        SourceID
+typedef base.ExternalID         ExternalID
+typedef deposit_status.Status   Status
 
 struct Deposit {
     1: required WalletID       wallet
@@ -54,44 +29,6 @@ struct Deposit {
     4: optional ExternalID     external_id
 }
 
-union DepositStatus {
-    1: DepositPending pending
-    2: DepositSucceeded succeeded
-    3: DepositFailed failed
-    4: DepositReverted reverted
-}
-
-struct DepositPending {}
-struct DepositSucceeded {}
-struct DepositFailed {
-    1: required Failure failure
-}
-struct DepositReverted {
-    1: optional string details
-}
-
-struct Transfer {
-    1: required cashflow.FinalCashFlow cashflow
-}
-
-union TransferStatus {
-    1: TransferCreated   created
-    2: TransferPrepared  prepared
-    3: TransferCommitted committed
-    4: TransferCancelled cancelled
-}
-
-struct TransferCreated {}
-struct TransferPrepared {}
-struct TransferCommitted {}
-struct TransferCancelled {}
-
-struct Failure {
-    // TODO
-}
-
-/// Withdrawal events
-
 struct Event {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp occured_at
@@ -99,20 +36,33 @@ struct Event {
 }
 
 union Change {
-    1: Deposit          created
-    2: DepositStatus    status_changed
+    1: CreatedChange    created
+    2: StatusChange     status_changed
     3: TransferChange   transfer
-    4: RepositChange    reposit
+    4: RevertChange     revert
+    5: AdjustmentChange adjustment
 }
 
-union TransferChange {
-    1: Transfer         created
-    2: TransferStatus   status_changed
+struct CreatedChange {
+    1: required Deposit deposit
 }
 
-union RepositChange {
-    1: Reposit          created
-    2: RepositStatus    status_changed
+struct StatusChange {
+    1: required Status status
+}
+
+struct TransferChange {
+    1: required transfer.Change payload
+}
+
+struct RevertChange {
+    1: required RevertID id
+    2: required deposit_revert.Change payload
+}
+
+struct AdjustmentChange {
+    1: required AdjustmentID id
+    2: required deposit_adjustment.Change payload
 }
 
 /// Event sink
@@ -141,7 +91,7 @@ union RepairScenario {
 }
 
 struct AddEventsRepair {
-    1: required list<Event>             events
+    1: required list<Change>            events
     2: optional repairer.ComplexAction  action
 }
 
