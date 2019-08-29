@@ -60,8 +60,8 @@ union AccountChange {
     1: Account          created
 }
 
-union StatusChange {
-    1: Status          changed
+struct StatusChange {
+    1: required Status status
 }
 
 /// Event sink
