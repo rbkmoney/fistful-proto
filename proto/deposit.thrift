@@ -23,9 +23,11 @@ typedef base.ExternalID         ExternalID
 typedef deposit_status.Status   Status
 
 struct Deposit {
+    5: required DepositID      id
     1: required WalletID       wallet
     2: required SourceID       source
     3: required base.Cash      body
+    6: optional Status         status
     4: optional ExternalID     external_id
 }
 
