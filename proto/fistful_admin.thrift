@@ -33,8 +33,6 @@ struct SourceParams {
     2: required IdentityID       identity_id
     3: required CurrencyRef      currency
     4: required source.Resource  resource
-
-    99: optional context.ContextSet    context
 }
 
 struct DepositParams {
@@ -42,8 +40,6 @@ struct DepositParams {
     1: required SourceID         source
     2: required WalletID         destination
     3: required DepositBody      body
-
-    99: optional context.ContextSet    context
 }
 
 service FistfulAdmin {
