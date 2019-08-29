@@ -41,6 +41,7 @@ union Change {
     3: TransferChange   transfer
     4: RevertChange     revert
     5: AdjustmentChange adjustment
+    6: LimitCheckChange limit_check
 }
 
 struct CreatedChange {
@@ -64,6 +65,26 @@ struct AdjustmentChange {
     1: required AdjustmentID id
     2: required deposit_adjustment.Change payload
 }
+
+struct LimitCheckChange {
+    1: required LimitCheckDetails details
+}
+
+union LimitCheckDetails {
+    1: WalletLimitCheckDetails wallet
+}
+
+union WalletLimitCheckDetails {
+    1: WalletLimitCheckOk ok
+    2: WalletLimitCheckFailed failed
+}
+
+struct WalletLimitCheckFailed {
+    1: required base.CashRange expected
+    2: required base.Cash balance
+}
+
+struct WalletLimitCheckOk {}
 
 /// Event sink
 
