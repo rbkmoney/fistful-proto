@@ -23,7 +23,6 @@ typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef base.Timestamp            Timestamp
 
 struct Destination {
-    8: required DestinationID id
     1: required string        name
     2: required Resource      resource
     3: optional ExternalID    external_id
