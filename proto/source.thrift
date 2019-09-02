@@ -19,7 +19,7 @@ typedef account.Account Account
 typedef base.ExternalID ExternalID
 
 struct Source {
-    4: required SourceID id
+    4: optional SourceID id
     1: required string   name
     2: required Resource resource
     3: optional ExternalID external_id
