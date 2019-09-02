@@ -24,8 +24,8 @@ struct Committed {}
 struct Cancelled {}
 
 union Change {
-    1: Transfer  created
-    2: Status    status_changed
+    1: CreatedChange  created
+    2: StatusChange   status_changed
 }
 
 struct CreatedChange {
