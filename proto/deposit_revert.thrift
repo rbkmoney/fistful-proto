@@ -10,6 +10,7 @@ include "fistful.thrift"
 include "transfer.thrift"
 include "deposit_revert_adjustment.thrift"
 include "deposit_revert_status.thrift"
+include "limit_check.thrift"
 
 typedef base.Failure            Failure
 typedef fistful.DepositRevertID RevertID
@@ -52,7 +53,7 @@ struct StatusChange {
 }
 
 struct LimitCheckChange {
-    1: required LimitCheckDetails details
+    1: required limit_check.Details details
 }
 
 struct TransferChange {
@@ -63,19 +64,3 @@ struct AdjustmentChange {
     1: required AdjustmentID id
     2: required deposit_revert_adjustment.Change payload
 }
-
-union LimitCheckDetails {
-    1: WalletLimitCheckDetails wallet
-}
-
-union WalletLimitCheckDetails {
-    1: WalletLimitCheckOk ok
-    2: WalletLimitCheckFailed failed
-}
-
-struct WalletLimitCheckFailed {
-    1: required base.CashRange expected
-    2: required base.Cash balance
-}
-
-struct WalletLimitCheckOk {}
