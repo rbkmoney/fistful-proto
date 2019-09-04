@@ -40,7 +40,7 @@ union Change {
 }
 
 struct CreatedChange {
-    1: required Adjustment revert
+    1: required Adjustment adjustment
 }
 
 struct StatusChange {
