@@ -162,6 +162,10 @@ union ResourceExistanceCheck {
     2: ResourceExistanceUnknown unknown
 }
 
+struct ResourceExistanceOk {}
+
+struct ResourceExistanceUnknown {}
+
 service Management {
 
     Withdrawal Create(1: WithdrawalParams params)
