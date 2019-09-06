@@ -130,13 +130,13 @@ struct RouteCheckChange {
 }
 
 union RouteCheckDetails {
-    1: RouteExistanceCheck existance
+    1: RouteExistanceCheck existence
     2: RouteQuoteCheck quote
 }
 
-union RouteExistanceCheck {
-    1: RouteExistanceOk ok
-    2: RouteExistanceNotFound not_found
+union RouteExistenceCheck {
+    1: RouteExistenceOk ok
+    2: RouteExistenceNotFound not_found
 }
 
 union RouteQuoteCheck {
