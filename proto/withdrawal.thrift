@@ -152,7 +152,6 @@ struct RouteQuoteOk {}
 
 struct RouteQuoteInconsistent {
     1: required Route expected
-    2: required Route found
 }
 
 union ResourceChange {
