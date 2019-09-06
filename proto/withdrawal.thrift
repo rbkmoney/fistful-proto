@@ -57,16 +57,14 @@ struct Event {
 }
 
 union Change {
-     1: CreatedChange       created
-     2: StatusChange        status_changed
-     6: ResourceChange      resource
-    10: ResourceCheckChange resource_check
-     5: RouteChange         route
-     9: RouteCheckChange    route_check
-     3: TransferChange      transfer
-     8: LimitCheckChange    limit_check
-     4: SessionChange       session
-     7: AdjustmentChange    adjustment
+    1: CreatedChange       created
+    2: StatusChange        status_changed
+    6: ResourceChange      resource
+    5: RouteChange         route
+    3: TransferChange      transfer
+    8: LimitCheckChange    limit_check
+    4: SessionChange       session
+    7: AdjustmentChange    adjustment
 }
 
 struct CreatedChange {
@@ -125,35 +123,6 @@ struct Route {
     1: required ProviderID id
 }
 
-struct RouteCheckChange {
-    1: required RouteCheckDetails details
-}
-
-union RouteCheckDetails {
-    1: RouteExistenceCheck existence
-    2: RouteQuoteCheck quote
-}
-
-union RouteExistenceCheck {
-    1: RouteExistenceOk ok
-    2: RouteExistenceNotFound not_found
-}
-
-union RouteQuoteCheck {
-    1: RouteQuoteOk ok
-    2: RouteQuoteInconsistent inconsistent
-}
-
-struct RouteExistanceOk {}
-
-struct RouteExistanceNotFound {}
-
-struct RouteQuoteOk {}
-
-struct RouteQuoteInconsistent {
-    1: required Route expected
-}
-
 union ResourceChange {
     1: ResourceGot got
 }
@@ -161,23 +130,6 @@ union ResourceChange {
 struct ResourceGot {
     1: required Resource resource
 }
-
-struct ResourceCheckChange {
-    1: required ResourceCheckDetails details
-}
-
-union ResourceCheckDetails {
-    1: ResourceExistanceCheck existance
-}
-
-union ResourceExistanceCheck {
-    1: ResourceExistanceOk ok
-    2: ResourceExistanceUnknown unknown
-}
-
-struct ResourceExistanceOk {}
-
-struct ResourceExistanceUnknown {}
 
 service Management {
 
