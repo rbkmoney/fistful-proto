@@ -130,7 +130,7 @@ struct RouteCheckChange {
 }
 
 union RouteCheckDetails {
-    1: RouteExistanceCheck existence
+    1: RouteExistenceCheck existence
     2: RouteQuoteCheck quote
 }
 
