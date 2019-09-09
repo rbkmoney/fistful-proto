@@ -122,7 +122,7 @@ struct RouteChange {
 }
 
 struct Route {
-    1: required ProviderID id
+    1: required ProviderID provider_id
 }
 
 union ResourceChange {
