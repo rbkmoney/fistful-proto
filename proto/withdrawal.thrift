@@ -7,22 +7,25 @@ namespace erlang wthd
 
 include "base.thrift"
 include "fistful.thrift"
-include "cashflow.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
+include "transfer.thrift"
+include "withdrawal_adjustment.thrift"
+include "withdrawal_status.thrift"
+include "limit_check.thrift"
 
-typedef fistful.WithdrawalID  WithdrawalID
-
-typedef base.ID               SessionID
-typedef base.ID               ProviderID
-typedef base.EventID          EventID
-typedef fistful.WalletID      WalletID
-typedef fistful.DestinationID DestinationID
-typedef fistful.AccountID     AccountID
-typedef base.ExternalID       ExternalID
-typedef base.EventRange       EventRange
-typedef base.Resource         Resource
+typedef base.ID                  SessionID
+typedef base.ID                  ProviderID
+typedef base.EventID             EventID
+typedef fistful.WithdrawalID     WithdrawalID
+typedef fistful.AdjustmentID     AdjustmentID
+typedef fistful.WalletID         WalletID
+typedef fistful.DestinationID    DestinationID
+typedef base.ExternalID          ExternalID
+typedef withdrawal_status.Status Status
+typedef base.EventRange          EventRange
+typedef base.Resource            Resource
 
 /// Domain
 
@@ -41,22 +44,10 @@ struct Withdrawal {
     2: required DestinationID  destination
     3: required base.Cash      body
     4: optional ExternalID     external_id
-    5: optional WithdrawalID        id
-    6: optional WithdrawalStatus    status
+    5: optional WithdrawalID   id
+    6: optional Status         status
 
     99: optional context.ContextSet context
-}
-
-union WithdrawalStatus {
-    1: WithdrawalPending   pending
-    2: WithdrawalSucceeded succeeded
-    3: WithdrawalFailed    failed
-}
-
-struct WithdrawalPending {}
-struct WithdrawalSucceeded {}
-struct WithdrawalFailed {
-    1: required Failure failure
 }
 
 struct Event {
@@ -65,42 +56,36 @@ struct Event {
     3: required Change               change
 }
 
-struct Transfer {
-    1: required cashflow.FinalCashFlow cashflow
-}
-
-union TransferStatus {
-    1: TransferCreated   created
-    2: TransferPrepared  prepared
-    3: TransferCommitted committed
-    4: TransferCancelled cancelled
-}
-
-struct TransferCreated   {}
-struct TransferPrepared  {}
-struct TransferCommitted {}
-struct TransferCancelled {}
-
-
-struct Failure {
-    1: optional base.Failure failure
-}
-
-/// Withdrawal events
-
-
 union Change {
-    1: Withdrawal       created
-    2: WithdrawalStatus status_changed
-    3: TransferChange   transfer
-    4: SessionChange    session
-    5: RouteChange      route
-    6: ResourceChange   resource
+    1: CreatedChange       created
+    2: StatusChange        status_changed
+    6: ResourceChange      resource
+    5: RouteChange         route
+    3: TransferChange      transfer
+    8: LimitCheckChange    limit_check
+    4: SessionChange       session
+    7: AdjustmentChange    adjustment
 }
 
-union TransferChange {
-    1: Transfer         created
-    2: TransferStatus   status_changed
+struct CreatedChange {
+    1: required Withdrawal withdrawal
+}
+
+struct StatusChange {
+    1: required Status status
+}
+
+struct TransferChange {
+    1: required transfer.Change payload
+}
+
+struct AdjustmentChange {
+    1: required AdjustmentID id
+    2: required withdrawal_adjustment.Change payload
+}
+
+struct LimitCheckChange {
+    1: required limit_check.Details details
 }
 
 struct SessionChange {
@@ -114,10 +99,30 @@ union SessionChangePayload {
 }
 
 struct SessionStarted {}
-struct SessionFinished {}
+
+struct SessionFinished {
+    1: required SessionResult result
+}
+
+union SessionResult {
+    1: SessionSucceeded succeeded
+    2: SessionFailed    failed
+}
+
+struct SessionSucceeded {
+    1: required base.TransactionInfo trx_info
+}
+
+struct SessionFailed {
+    1: required base.Failure failure
+}
 
 struct RouteChange {
-    1: required ProviderID id
+    1: required Route route
+}
+
+struct Route {
+    1: required ProviderID provider_id
 }
 
 union ResourceChange {
@@ -183,7 +188,7 @@ union RepairScenario {
 }
 
 struct AddEventsRepair {
-    1: required list<Event>             events
+    1: required list<Change>             events
     2: optional repairer.ComplexAction  action
 }
 

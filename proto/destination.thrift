@@ -23,11 +23,11 @@ typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef base.Timestamp            Timestamp
 
 struct Destination {
-    1: required string     name
-    2: required Resource   resource
-    3: optional ExternalID external_id
-    4: optional Account    account
-    5: optional Status     status
+    1: required string        name
+    2: required Resource      resource
+    3: optional ExternalID    external_id
+    4: optional Account       account
+    5: optional Status        status
 
     6: optional DestinationID        id
     7: optional Timestamp            created_at

@@ -19,9 +19,11 @@ typedef account.Account Account
 typedef base.ExternalID ExternalID
 
 struct Source {
+    4: optional SourceID id
     1: required string   name
     2: required Resource resource
     3: optional ExternalID external_id
+    5: optional Status status
 }
 
 union Resource {
@@ -58,8 +60,8 @@ union AccountChange {
     1: Account          created
 }
 
-union StatusChange {
-    1: Status          changed
+struct StatusChange {
+    1: required Status status
 }
 
 /// Event sink
