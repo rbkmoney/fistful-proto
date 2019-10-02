@@ -48,9 +48,6 @@ union Clock {
 
 struct LatestClock {}
 
-/** Непрозрачный для пользователя набор данных **/
-typedef binary Opaque
-
 struct VectorClock {
-    1: required Opaque state
+    1: required binary state
 }
