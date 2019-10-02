@@ -26,6 +26,7 @@ struct Cancelled {}
 union Change {
     1: CreatedChange  created
     2: StatusChange   status_changed
+    3: ClockChange    clock_updated
 }
 
 struct CreatedChange {
@@ -34,4 +35,19 @@ struct CreatedChange {
 
 struct StatusChange {
     1: required Status status
+}
+
+struct ClockChange {
+    1: required Clock clock
+}
+
+union Clock {
+    1: LatestClock latest
+    2: VectorClock vector
+}
+
+struct LatestClock {}
+
+struct VectorClock {
+    1: required binary state
 }
