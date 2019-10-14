@@ -21,8 +21,6 @@ typedef base.EventID             EventID
 typedef fistful.P2PTransferID    P2PTransferID
 typedef fistful.AdjustmentID     AdjustmentID
 typedef fistful.IdentityID       IdentityID
-typedef fistful.DestinationID    DestinationID
-typedef fistful.SourceID         SourceID
 typedef base.ExternalID          ExternalID
 typedef p2p_status.Status        Status
 typedef base.EventRange          EventRange
@@ -62,13 +60,12 @@ struct Event {
 union Change {
     1: CreatedChange       created
     2: StatusChange        status_changed
-    6: ResourceChange      resource
-    5: RouteChange         route
-    3: TransferChange      transfer
-    8: LimitCheckChange    limit_check
-    4: SessionChange       session
-    7: AdjustmentChange    adjustment
-    9: RiskScoreChange     risk_score
+    3: ResourceChange      resource
+    4: RouteChange         route
+    5: RiskScoreChange     risk_score
+    6: TransferChange      transfer
+    8: SessionChange       session
+    9: AdjustmentChange    adjustment
 }
 
 struct CreatedChange {
@@ -86,10 +83,6 @@ struct TransferChange {
 struct AdjustmentChange {
     1: required AdjustmentID id
     2: required p2p_adjustment.Change payload
-}
-
-struct LimitCheckChange {
-    1: required limit_check.Details details
 }
 
 struct SessionChange {
@@ -129,12 +122,17 @@ struct Route {
     1: required ProviderID provider_id
 }
 
-union ResourceChange {
+struct ResourceChange {
+    1: required ResourcePayload payload
+}
+
+union ResourcePayload {
     1: ResourceGot got
 }
 
 struct ResourceGot {
-    1: required Resource resource
+    1: required Resource sender
+    2: required Resource receiver
 }
 
 struct RiskScoreChange {
