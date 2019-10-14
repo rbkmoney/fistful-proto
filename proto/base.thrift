@@ -26,6 +26,15 @@ typedef string CurrencySymbolicCode
 /** Сумма в минимальных денежных единицах. */
 typedef i64 Amount
 
+/** Рациональное число. */
+struct Rational {
+    1: required i64 p
+    2: required i64 q
+}
+
+/** Значение ассоциации */
+typedef string Tag
+
 /** Внешний идентификатор (идентификатор в системе клиента) для сущностей системы. */
 typedef ID ExternalID
 
