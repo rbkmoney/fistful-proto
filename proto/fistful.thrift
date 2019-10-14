@@ -16,7 +16,7 @@ typedef ID DepositID
 typedef ID DepositRevertID
 typedef ID AdjustmentID
 typedef ID WithdrawalID
-typedef ID P2PID
+typedef ID P2PTransferID
 typedef ID IdentityID
 typedef ID WalletID
 typedef i64 Amount

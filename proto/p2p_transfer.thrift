@@ -2,8 +2,8 @@
  * Переводы
  */
 
-namespace java   com.rbkmoney.fistful.p2p
-namespace erlang p2p
+namespace java   com.rbkmoney.fistful.p2p_transfer
+namespace erlang p2p_transfer
 
 include "base.thrift"
 include "fistful.thrift"
@@ -18,7 +18,7 @@ include "limit_check.thrift"
 typedef base.ID                  SessionID
 typedef base.ID                  ProviderID
 typedef base.EventID             EventID
-typedef fistful.P2PID            P2PID
+typedef fistful.P2PTransferID    P2PTransferID
 typedef fistful.AdjustmentID     AdjustmentID
 typedef fistful.IdentityID       IdentityID
 typedef fistful.DestinationID    DestinationID
@@ -31,24 +31,24 @@ typedef base.ContactInfo         ContactInfo
 
 /// Domain
 
-struct P2P {
+struct P2PTransfer {
     1: required IdentityID     owner
-    2: required P2PSource      source
-    3: required P2PDestination destination
+    2: required Sender         sender
+    3: required Receiver       receiver
     4: required base.Cash      body
     5: optional ExternalID     external_id
     6: optional Status         status
 }
 
-union P2PSource {
-    1: P2PResourceRaw raw
+union Sender {
+    1: RawResource raw
 }
 
-union P2PDestination {
-    1: P2PResourceRaw raw
+union Receiver {
+    1: RawResource raw
 }
 
-struct P2PResourceRaw {
+struct RawResource {
     1: required Resource resource
     2: required ContactInfo contact_info
 }
@@ -72,7 +72,7 @@ union Change {
 }
 
 struct CreatedChange {
-    1: required P2P p2p
+    1: required P2PTransfer p2p_transfer
 }
 
 struct StatusChange {
@@ -160,7 +160,7 @@ struct EventSinkPayload {
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
-    3: required P2PID                source
+    3: required P2PTransferID        source
     4: required EventSinkPayload     payload
 }
 
@@ -186,7 +186,7 @@ struct AddEventsRepair {
 }
 
 service Repairer {
-    void Repair(1: P2PID id, 2: RepairScenario scenario)
+    void Repair(1: P2PTransferID id, 2: RepairScenario scenario)
         throws (
             1: fistful.P2PNotFound ex1
             2: fistful.MachineAlreadyWorking ex2
