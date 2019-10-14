@@ -6,7 +6,7 @@ namespace java   com.rbkmoney.fistful.p2p.status
 namespace erlang p2p_status
 
 include "base.thrift"
-typedef base.Failure          Failure
+typedef base.Failure Failure
 
 union Status {
     1: Pending pending

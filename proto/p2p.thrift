@@ -14,8 +14,6 @@ include "transfer.thrift"
 include "p2p_adjustment.thrift"
 include "p2p_status.thrift"
 include "limit_check.thrift"
-//include "source.thrift"
-//include "destination.thrift"
 
 typedef base.ID                  SessionID
 typedef base.ID                  ProviderID
@@ -29,34 +27,30 @@ typedef base.ExternalID          ExternalID
 typedef p2p_status.Status        Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
-//typedef base.ContactInfo         ContactInfo
-//typedef destination.Destination  Destination
-//typedef source.Source            Source
+typedef base.ContactInfo         ContactInfo
 
 /// Domain
 
 struct P2P {
     1: required IdentityID     owner
-    1: required P2PSource      source
-    2: required P2PDestination destination
-    3: required base.Cash      body
-    4: optional ExternalID     external_id
+    2: required P2PSource      source
+    3: required P2PDestination destination
+    4: required base.Cash      body
+    5: optional ExternalID     external_id
     6: optional Status         status
 }
 
 union P2PSource {
     1: P2PResourceRaw raw
-    //2: Source source
 }
 
 union P2PDestination {
     1: P2PResourceRaw raw
-    //2: Destination destination
 }
 
 struct P2PResourceRaw {
     1: required Resource resource
-    //2: required ContactInfo contact_info
+    2: required ContactInfo contact_info
 }
 
 struct Event {
@@ -144,7 +138,7 @@ struct ResourceGot {
 }
 
 struct RiskScoreChange {
-    1: required map<RiskType, RiskScore> scores
+    1: required map<ScoreID, RiskScore> scores
 }
 
 enum RiskScore {
@@ -153,7 +147,7 @@ enum RiskScore {
     fatal = 9999
 }
 
-typedef base.ID RiskType
+typedef base.ID ScoreID
 
 /// Event sink
 
