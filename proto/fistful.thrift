@@ -16,6 +16,7 @@ typedef ID DepositID
 typedef ID DepositRevertID
 typedef ID AdjustmentID
 typedef ID WithdrawalID
+typedef ID P2PID
 typedef ID IdentityID
 typedef ID WalletID
 typedef i64 Amount
@@ -58,3 +59,4 @@ exception WithdrawalCashAmountInvalid {
     2: required base.CashRange range
 }
 exception OperationNotPermitted { 1: optional string details }
+exception P2PNotFound        {}

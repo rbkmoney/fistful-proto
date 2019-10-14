@@ -64,6 +64,12 @@ typedef string Token
 /** Отображение из строки в строку */
 typedef map<string, string> StringMap
 
+/** Контактная информация. **/
+struct ContactInfo {
+    1: optional string phone_number
+    2: optional string email
+}
+
 union Resource {
     1: BankCard     bank_card
     2: CryptoWallet crypto_wallet
