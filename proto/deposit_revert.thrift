@@ -36,6 +36,11 @@ struct Revert {
     10: optional ExternalID          external_id
 }
 
+struct RevertState {
+    1: required Revert revert
+    2: required list<deposit_revert_adjustment.AdjustmentState> adjustments
+}
+
 union Change {
     1: CreatedChange     created
     2: StatusChange      status_changed

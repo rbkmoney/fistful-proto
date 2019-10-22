@@ -35,8 +35,6 @@ struct WithdrawalParams {
     3: required DestinationID destination
     4: required base.Cash     body
     5: required ExternalID    external_id
-
-    99: optional context.ContextSet   context
 }
 
 struct Withdrawal {
@@ -46,8 +44,12 @@ struct Withdrawal {
     4: optional ExternalID     external_id
     5: optional WithdrawalID   id
     6: optional Status         status
+}
 
-    99: optional context.ContextSet context
+struct WithdrawalState {
+    1: required Withdrawal withdrawal
+    2: required context.ContextSet context
+    3: required list<withdrawal_adjustment.AdjustmentState> adjustments
 }
 
 struct Event {
@@ -133,26 +135,59 @@ struct ResourceGot {
     1: required Resource resource
 }
 
+exception InvalidWithdrawalStatus {
+    1: required Status status
+}
+
+exception UnavailableStatusChange {
+    1: required Status status
+}
+
+exception AlreadyHasStatus {
+    1: required Status status
+}
+
+exception AnotherAdjustmentInProgress {
+    1: required AdjustmentID id
+}
+
 service Management {
 
-    Withdrawal Create(1: WithdrawalParams params)
+    WithdrawalState Create(
+        1: WithdrawalParams params
+        2: context.ContextSet context
+    )
         throws (
-            1: fistful.IDExists                    ex1
-            2: fistful.WalletNotFound              ex2
-            3: fistful.DestinationNotFound         ex3
-            4: fistful.DestinationUnauthorized     ex4
-            5: fistful.WithdrawalCurrencyInvalid   ex5
+            2: fistful.WalletNotFound ex2
+            3: fistful.DestinationNotFound ex3
+            4: fistful.DestinationUnauthorized ex4
+            5: fistful.WithdrawalCurrencyInvalid ex5
             6: fistful.WithdrawalCashAmountInvalid ex6
         )
 
-    Withdrawal Get(1: WithdrawalID id)
-        throws ( 1: fistful.WithdrawalNotFound ex1)
-
-    list<Event> GetEvents(
+    WithdrawalState Get(
         1: WithdrawalID id
-        2: EventRange range)
+        2: EventRange range
+    )
         throws (
             1: fistful.WithdrawalNotFound ex1
+        )
+
+    context.ContextSet GetContext(1: WithdrawalID id)
+        throws (
+            1: fistful.WithdrawalNotFound ex1
+        )
+
+    void CreateAdjustment(
+        1: WithdrawalID id
+        2: withdrawal_adjustment.AdjustmentParams params
+    )
+        throws (
+            1: fistful.WithdrawalNotFound ex1
+            2: InvalidWithdrawalStatus ex2
+            3: UnavailableStatusChange ex3
+            4: AlreadyHasStatus ex4
+            5: AnotherAdjustmentInProgress ex5
         )
 }
 

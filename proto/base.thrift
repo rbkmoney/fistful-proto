@@ -17,7 +17,7 @@ typedef i64 EventID
 
 struct EventRange {
     1: optional EventID after
-    2: required i32     limit
+    2: optional i32     limit
 }
 
 /** ISO 4217 */
