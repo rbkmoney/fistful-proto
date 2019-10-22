@@ -36,6 +36,15 @@ struct Revert {
     10: optional ExternalID          external_id
 }
 
+struct RevertParams {
+    1: required RevertID             id
+    2: required WalletID             wallet_id
+    3: required SourceID             source_id
+    4: required base.Cash            body
+    5: optional string               reason
+    6: optional ExternalID           external_id
+}
+
 struct RevertState {
     1: required Revert revert
     2: required list<deposit_revert_adjustment.AdjustmentState> adjustments

@@ -119,7 +119,7 @@ exception InsufficientDepositAmount {
 }
 
 exception InvalidRevertAmount {
-    1: required base.Cash body
+    1: required base.Cash revert_body
 }
 
 exception InvalidRevertStatus {
@@ -165,7 +165,7 @@ service Management {
             1: fistful.DepositNotFound ex1
         )
 
-    void CreateAdjustment(
+    deposit_adjustment.AdjustmentState CreateAdjustment(
         1: DepositID id
         2: deposit_adjustment.AdjustmentParams params
     )
@@ -177,9 +177,9 @@ service Management {
             5: AnotherAdjustmentInProgress ex5
         )
 
-    void CreateRevert(
+    deposit_revert.RevertState CreateRevert(
         1: DepositID id
-        2: deposit_adjustment.AdjustmentParams params
+        2: deposit_revert.RevertParams params
     )
         throws (
             1: fistful.DepositNotFound ex1
@@ -189,7 +189,7 @@ service Management {
             5: InvalidRevertAmount ex5
         )
 
-    void CreateRevertAdjustment(
+    deposit_revert_adjustment.AdjustmentState CreateRevertAdjustment(
         1: DepositID id
         2: RevertID revert_id
         3: deposit_revert_adjustment.AdjustmentParams params
