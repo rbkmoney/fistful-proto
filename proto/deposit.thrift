@@ -93,19 +93,19 @@ struct LimitCheckChange {
 }
 
 exception InvalidDepositStatus {
-    1: required Status status
+    1: required Status deposit_status
 }
 
 exception UnavailableStatusChange {
-    1: required Status status
+    1: required Status target_status
 }
 
 exception AlreadyHasStatus {
-    1: required Status status
+    1: required Status deposit_status
 }
 
 exception AnotherAdjustmentInProgress {
-    1: required AdjustmentID id
+    1: required AdjustmentID another_adjustment_id
 }
 
 exception InconsistentRevertCurrency {
@@ -123,15 +123,15 @@ exception InvalidRevertAmount {
 }
 
 exception InvalidRevertStatus {
-    1: required deposit_revert_status.Status status
+    1: required deposit_revert_status.Status revert_status
 }
 
 exception UnavailableRevertStatusChange {
-    1: required deposit_revert_status.Status status
+    1: required deposit_revert_status.Status target_status
 }
 
 exception RevertAlreadyHasStatus {
-    1: required deposit_revert_status.Status status
+    1: required deposit_revert_status.Status revert_status
 }
 
 exception RevertNotFound {

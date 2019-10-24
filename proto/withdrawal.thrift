@@ -136,19 +136,19 @@ struct ResourceGot {
 }
 
 exception InvalidWithdrawalStatus {
-    1: required Status status
+    1: required Status withdrawal_status
 }
 
 exception UnavailableStatusChange {
-    1: required Status status
+    1: required Status target_status
 }
 
 exception AlreadyHasStatus {
-    1: required Status status
+    1: required Status withdrawal_status
 }
 
 exception AnotherAdjustmentInProgress {
-    1: required AdjustmentID id
+    1: required AdjustmentID another_adjustment_id
 }
 
 service Management {
