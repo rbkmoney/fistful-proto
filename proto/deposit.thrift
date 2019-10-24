@@ -96,7 +96,7 @@ exception InvalidDepositStatus {
     1: required Status deposit_status
 }
 
-exception UnavailableStatusChange {
+exception ForbiddenStatusChange {
     1: required Status target_status
 }
 
@@ -126,7 +126,7 @@ exception InvalidRevertStatus {
     1: required deposit_revert_status.Status revert_status
 }
 
-exception UnavailableRevertStatusChange {
+exception ForbiddenRevertStatusChange {
     1: required deposit_revert_status.Status target_status
 }
 
@@ -172,7 +172,7 @@ service Management {
         throws (
             1: fistful.DepositNotFound ex1
             2: InvalidDepositStatus ex2
-            3: UnavailableStatusChange ex3
+            3: ForbiddenStatusChange ex3
             4: AlreadyHasStatus ex4
             5: AnotherAdjustmentInProgress ex5
         )
@@ -198,7 +198,7 @@ service Management {
             1: fistful.DepositNotFound ex1
             2: RevertNotFound ex2
             3: InvalidRevertStatus ex3
-            4: UnavailableRevertStatusChange ex4
+            4: ForbiddenRevertStatusChange ex4
             5: RevertAlreadyHasStatus ex5
             6: AnotherAdjustmentInProgress ex6
         )

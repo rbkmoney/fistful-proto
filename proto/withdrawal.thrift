@@ -139,7 +139,7 @@ exception InvalidWithdrawalStatus {
     1: required Status withdrawal_status
 }
 
-exception UnavailableStatusChange {
+exception ForbiddenStatusChange {
     1: required Status target_status
 }
 
@@ -185,7 +185,7 @@ service Management {
         throws (
             1: fistful.WithdrawalNotFound ex1
             2: InvalidWithdrawalStatus ex2
-            3: UnavailableStatusChange ex3
+            3: ForbiddenStatusChange ex3
             4: AlreadyHasStatus ex4
             5: AnotherAdjustmentInProgress ex5
         )
