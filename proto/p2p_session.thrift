@@ -33,8 +33,6 @@ struct Session {
 union SessionStatus {
     1: SessionActive    active
     2: SessionFinished  finished
-    3: SessionSuspended suspended
-    4: SessionActivated activated
 }
 
 struct SessionActive {}
