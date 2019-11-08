@@ -17,7 +17,7 @@ include "user_interaction.thrift"
 typedef fistful.P2PTransferID P2PTransferID
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
-// typedef string                AdapterState
+typedef string                AdapterState
 typedef base.Resource         Resource
 typedef base.ID               UserInterationID
 
@@ -58,14 +58,14 @@ struct P2PTransfer {
     5: optional identity.Identity       owner
 }
 
-// struct SessionCallback {
-//     1: required base.Tag tag
-// }
+struct SessionCallback {
+    1: required base.Tag tag
+}
 
-// struct UserInteraction {
-//     1: required UserInterationID id
-//     2: required user_interaction.UserInteraction user_interaction
-// }
+struct UserInteraction {
+    1: required UserInterationID id
+    2: required user_interaction.UserInteraction user_interaction
+}
 
 /// Session events
 
@@ -77,62 +77,62 @@ struct Event {
 
 union Change {
     1: Session                      created
-    // 2: SessionAdapterState          adapter_state
-    // 3: SessionTransactionBound      transaction_bound
-    // 4: SessionResult                finished
-    // 5: SessionCallbackChange        callback
-    // 6: SessionInteractionChange     user_interaction
+    2: SessionAdapterState          adapter_state
+    3: SessionTransactionBound      transaction_bound
+    4: SessionResult                finished
+    5: SessionCallbackChange        callback
+    6: SessionInteractionChange     user_interaction
 }
 
-// struct SessionAdapterState {
-//     1: required AdapterState state
-// }
-
-// struct SessionTransactionBound {
-//     1: required base.TransactionInfo trx_info
-// }
-
-// union SessionResult {
-//     1: SessionResultSuccess  success
-//     2: SessionResultFailed   failed
-// }
-
-// struct SessionResultSuccess {}
-
-// struct SessionResultFailed {
-//     1: required base.Failure failure
+struct SessionAdapterState {
+    1: required AdapterState state
 }
 
-// union SessionCallbackChange {
-//     1: SessionCallback         created
-//     2: SessionCallbackStatus   status_changed
-//     3: SessionCallbackResult   finished
-// }
+struct SessionTransactionBound {
+    1: required base.TransactionInfo trx_info
+}
 
-// union SessionCallbackStatus {
-//     1: SessionCallbackStatusPending pending
-//     2: SessionCallbackStatusSucceeded succeeded
-// }
+union SessionResult {
+    1: SessionResultSuccess  success
+    2: SessionResultFailed   failed
+}
 
-// struct SessionCallbackStatusPending {}
-// struct SessionCallbackStatusSucceeded {}
+struct SessionResultSuccess {}
 
-// struct SessionCallbackResult {
-//     1: required string payload
-// }
+struct SessionResultFailed {
+    1: required base.Failure failure
+}
 
-// union SessionInteractionChange {
-//     1: UserInteraction         created
-//     2: UserInteractionStatus   status_changed
-// }
+union SessionCallbackChange {
+    1: SessionCallback         created
+    2: SessionCallbackStatus   status_changed
+    3: SessionCallbackResult   finished
+}
 
-// union UserInteractionStatus {
-//     1: UserInteractionStatusPending pending
-//     2: UserInteractionStatusFinished finished
-// }
+union SessionCallbackStatus {
+    1: SessionCallbackStatusPending pending
+    2: SessionCallbackStatusSucceeded succeeded
+}
 
-// struct UserInteractionStatusPending {}
-// struct UserInteractionStatusFinished {}
+struct SessionCallbackStatusPending {}
+struct SessionCallbackStatusSucceeded {}
+
+struct SessionCallbackResult {
+    1: required string payload
+}
+
+union SessionInteractionChange {
+    1: UserInteraction         created
+    2: UserInteractionStatus   status_changed
+}
+
+union UserInteractionStatus {
+    1: UserInteractionStatusPending pending
+    2: UserInteractionStatusFinished finished
+}
+
+struct UserInteractionStatusPending {}
+struct UserInteractionStatusFinished {}
 
 /// Event sink
 
