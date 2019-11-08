@@ -61,11 +61,11 @@ union Change {
     1: CreatedChange       created
     2: StatusChange        status_changed
     3: ResourceChange      resource
-    4: RouteChange         route
-    5: RiskScoreChange     risk_score
+    4: RiskScoreChange     risk_score
+    5: RouteChange         route
     6: TransferChange      transfer
-    8: SessionChange       session
-    9: AdjustmentChange    adjustment
+    7: SessionChange       session
+    8: AdjustmentChange    adjustment
 }
 
 struct CreatedChange {
