@@ -11,6 +11,7 @@ include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
 include "transfer.thrift"
+include "cashflow.thrift"
 include "withdrawal_adjustment.thrift"
 include "withdrawal_status.thrift"
 include "limit_check.thrift"
@@ -48,8 +49,29 @@ struct Withdrawal {
 
 struct WithdrawalState {
     1: required Withdrawal withdrawal
+
+    /** Контекст операции заданный при её старте */
     2: required context.ContextSet context
-    3: required list<withdrawal_adjustment.AdjustmentState> adjustments
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    3: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Текущий действующий маршрут */
+    4: optional Route effective_route
+
+    /** Перечень сессий взаимодействия с провайдером */
+    5: required list<SessionState> sessions
+
+    /** Перечень корректировок */
+    6: required list<withdrawal_adjustment.AdjustmentState> adjustments
+}
+
+struct SessionState {
+    1: required SessionID id
+    2: optional SessionResult result
 }
 
 struct Event {
