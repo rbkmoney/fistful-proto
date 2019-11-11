@@ -1,5 +1,5 @@
 namespace java   com.rbkmoney.fistful.user_interaction
-namespace erlang user_interaction
+namespace erlang ui
 
 include "base.thrift"
 

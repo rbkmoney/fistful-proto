@@ -30,23 +30,27 @@ typedef base.ContactInfo         ContactInfo
 /// Domain
 
 struct P2PTransfer {
-    1: required IdentityID     owner
-    2: required Sender         sender
-    3: required Receiver       receiver
-    4: required base.Cash      body
-    5: optional ExternalID     external_id
-    6: optional Status         status
+    1: required IdentityID          client
+    2: required Participant         sender
+    3: required Participant         receiver
+    4: required base.Cash           body
+    5: required Status              status
+    6: required base.Timestamp      created_at
+    7: required base.DataRevision   domain_revision
+    8: required base.PartyRevision  party_revision
+    9: required base.Timestamp      operation_timestamp
+    10: optional P2PFees            fees
+    11: optional ExternalID         external_id
+    12: optional base.Timestamp     deadline
 }
 
-union Sender {
-    1: RawResource raw
+struct P2PFees {}
+
+union Participant {
+    1: ParticipantResource resource
 }
 
-union Receiver {
-    1: RawResource raw
-}
-
-struct RawResource {
+struct ParticipantResource {
     1: required Resource resource
     2: required ContactInfo contact_info
 }

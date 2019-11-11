@@ -17,9 +17,9 @@ include "user_interaction.thrift"
 typedef fistful.P2PTransferID P2PTransferID
 typedef base.ID               SessionID
 typedef base.ID               ProviderID
-typedef string                AdapterState
+typedef binary                AdapterState
 typedef base.Resource         Resource
-typedef base.ID               UserInterationID
+typedef base.ID               UserInteractionID
 
 /// Domain
 
@@ -55,7 +55,7 @@ struct P2PTransfer {
     2: required Resource                sender
     3: required Resource                receiver
     4: required base.Cash               cash
-    5: optional identity.Identity       owner
+    5: optional identity.Identity       client
 }
 
 struct Callback {
@@ -63,7 +63,7 @@ struct Callback {
 }
 
 struct UserInteraction {
-    1: required UserInterationID id
+    1: required UserInteractionID id
     2: required user_interaction.UserInteraction user_interaction
 }
 
@@ -76,15 +76,15 @@ struct Event {
 }
 
 union Change {
-    1: CreateChange                 created
+    1: CreatedChange                created
     2: AdapterStateChange           adapter_state
     3: TransactionBoundChange       transaction_bound
     4: ResultChange                 finished
     5: CallbackChange               callback
-    6: InteractionChange            ui
+    6: UserInteractionChange        ui
 }
 
-struct CreateChange {
+struct CreatedChange {
     1: required Session session
 }
 
@@ -107,13 +107,22 @@ struct ResultFailed {
     1: required base.Failure failure
 }
 
-union CallbackChange {
-    1: Callback         created
-    2: CallbackStatus   status_changed
-    3: CallbackResult   finished
+struct CallbackChange {
+    1: required base.Tag tag
+    2: required CallbackChangePayload payload
 }
 
-union CallbackStatus {
+union CallbackChangePayload {
+    1: CallbackCreatedChange  created
+    2: CallbackStatusChange   status_changed
+    3: CallbackResultChange   finished
+}
+
+struct CallbackCreatedChange {
+    1: required Callback callback
+}
+
+union CallbackStatusChange {
     1: CallbackStatusPending pending
     2: CallbackStatusSucceeded succeeded
 }
@@ -121,16 +130,25 @@ union CallbackStatus {
 struct CallbackStatusPending {}
 struct CallbackStatusSucceeded {}
 
-struct CallbackResult {
+struct CallbackResultChange {
     1: required string payload
 }
 
-union InteractionChange {
-    1: UserInteraction         created
-    2: UserInteractionStatus   status_changed
+struct UserInteractionChange {
+    1: required UserInteractionID id
+    2: required UserInteractionChangePayload payload
 }
 
-union UserInteractionStatus {
+union UserInteractionChangePayload {
+    1: UserInteractionCreatedChange  created
+    2: UserInteractionStatusChange   status_changed
+}
+
+struct UserInteractionCreatedChange {
+    1: required UserInteraction ui
+}
+
+union UserInteractionStatusChange {
     1: UserInteractionStatusPending pending
     2: UserInteractionStatusFinished finished
 }
@@ -170,7 +188,7 @@ struct AddEventsRepair {
 }
 
 struct SetResultRepair {
-    1: required ResultChange           result
+    1: required ResultChange            result
 }
 
 service Repairer {
