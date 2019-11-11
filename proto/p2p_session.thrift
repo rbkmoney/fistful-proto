@@ -195,7 +195,7 @@ union RepairScenario {
 }
 
 struct AddEventsRepair {
-    1: required list<Change>            changes
+    1: required list<Change>            events
     2: optional repairer.ComplexAction  action
 }
 

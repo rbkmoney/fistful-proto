@@ -39,12 +39,13 @@ struct P2PTransfer {
     7: required base.DataRevision   domain_revision
     8: required base.PartyRevision  party_revision
     9: required base.Timestamp      operation_timestamp
-    10: optional P2PFees            fees
+    10: optional P2PFeeQuote        fee_quote
     11: optional ExternalID         external_id
     12: optional base.Timestamp     deadline
 }
 
-struct P2PFees {}
+/// Пока используется как признак того, что операция была проведена по котировке
+struct P2PFeeQuote {}
 
 union Sender {
     1: DisposableResource resource
