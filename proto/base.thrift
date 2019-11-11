@@ -26,12 +26,6 @@ typedef string CurrencySymbolicCode
 /** Сумма в минимальных денежных единицах. */
 typedef i64 Amount
 
-/** Рациональное число. */
-struct Rational {
-    1: required i64 p
-    2: required i64 q
-}
-
 /** Значение ассоциации */
 typedef string Tag
 

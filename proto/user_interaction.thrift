@@ -2,6 +2,7 @@ namespace java   com.rbkmoney.fistful.user_interaction
 namespace erlang ui
 
 include "base.thrift"
+include "fistful.thrift"
 
 /**
  * Строковый шаблон согласно [RFC6570](https://tools.ietf.org/html/rfc6570) Level 4.
@@ -17,7 +18,7 @@ typedef string CryptoAddress
 typedef string CryptoCurrencySymbolicCode
 
 struct CryptoCash {
-    1: required base.Rational crypto_amount
+    1: required fistful.Rational crypto_amount
     2: required CryptoCurrencySymbolicCode crypto_symbolic_code
 }
 
