@@ -30,9 +30,9 @@ typedef base.ContactInfo         ContactInfo
 /// Domain
 
 struct P2PTransfer {
-    1: required IdentityID          client
-    2: required Participant         sender
-    3: required Participant         receiver
+    1: required IdentityID          owner
+    2: required Sender              sender
+    3: required Receiver            receiver
     4: required base.Cash           body
     5: required Status              status
     6: required base.Timestamp      created_at
@@ -46,11 +46,15 @@ struct P2PTransfer {
 
 struct P2PFees {}
 
-union Participant {
-    1: ParticipantResource resource
+union Sender {
+    1: DisposableResource resource
 }
 
-struct ParticipantResource {
+union Receiver {
+    1: DisposableResource resource
+}
+
+struct DisposableResource {
     1: required Resource resource
     2: required ContactInfo contact_info
 }
@@ -140,7 +144,7 @@ struct ResourceGot {
 }
 
 struct RiskScoreChange {
-    1: required map<ScoreID, RiskScore> scores
+    1: required RiskScore score
 }
 
 enum RiskScore {
@@ -148,8 +152,6 @@ enum RiskScore {
     high = 100
     fatal = 9999
 }
-
-typedef base.ID ScoreID
 
 /// Event sink
 

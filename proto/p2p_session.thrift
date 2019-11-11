@@ -55,7 +55,7 @@ struct P2PTransfer {
     2: required Resource                sender
     3: required Resource                receiver
     4: required base.Cash               cash
-    5: optional identity.Identity       client
+    5: optional identity.Identity       owner
 }
 
 struct Callback {
@@ -96,7 +96,11 @@ struct TransactionBoundChange {
     1: required base.TransactionInfo trx_info
 }
 
-union ResultChange {
+struct ResultChange {
+    1: required Result result
+}
+
+union Result {
     1: ResultSuccess  success
     2: ResultFailed   failed
 }
@@ -122,7 +126,11 @@ struct CallbackCreatedChange {
     1: required Callback callback
 }
 
-union CallbackStatusChange {
+struct CallbackStatusChange {
+    1: required CallbackStatus status
+}
+
+union CallbackStatus {
     1: CallbackStatusPending pending
     2: CallbackStatusSucceeded succeeded
 }
@@ -131,7 +139,7 @@ struct CallbackStatusPending {}
 struct CallbackStatusSucceeded {}
 
 struct CallbackResultChange {
-    1: required string payload
+    1: required binary payload
 }
 
 struct UserInteractionChange {
@@ -148,7 +156,11 @@ struct UserInteractionCreatedChange {
     1: required UserInteraction ui
 }
 
-union UserInteractionStatusChange {
+struct UserInteractionStatusChange {
+    1: required UserInteractionStatus status
+}
+
+union UserInteractionStatus {
     1: UserInteractionStatusPending pending
     2: UserInteractionStatusFinished finished
 }
