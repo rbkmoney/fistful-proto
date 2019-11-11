@@ -58,7 +58,7 @@ struct P2PTransfer {
     5: optional identity.Identity       owner
 }
 
-struct SessionCallback {
+struct Callback {
     1: required base.Tag tag
 }
 
@@ -76,52 +76,56 @@ struct Event {
 }
 
 union Change {
-    1: Session                      created
-    2: SessionAdapterState          adapter_state
-    3: SessionTransactionBound      transaction_bound
-    4: SessionResult                finished
-    5: SessionCallbackChange        callback
-    6: SessionInteractionChange     user_interaction
+    1: CreateChange                 created
+    2: AdapterStateChange           adapter_state
+    3: TransactionBoundChange       transaction_bound
+    4: ResultChange                 finished
+    5: CallbackChange               callback
+    6: InteractionChange            ui
 }
 
-struct SessionAdapterState {
+struct CreateChange {
+    1: required Session session
+}
+
+struct AdapterStateChange {
     1: required AdapterState state
 }
 
-struct SessionTransactionBound {
+struct TransactionBoundChange {
     1: required base.TransactionInfo trx_info
 }
 
-union SessionResult {
-    1: SessionResultSuccess  success
-    2: SessionResultFailed   failed
+union ResultChange {
+    1: ResultSuccess  success
+    2: ResultFailed   failed
 }
 
-struct SessionResultSuccess {}
+struct ResultSuccess {}
 
-struct SessionResultFailed {
+struct ResultFailed {
     1: required base.Failure failure
 }
 
-union SessionCallbackChange {
-    1: SessionCallback         created
-    2: SessionCallbackStatus   status_changed
-    3: SessionCallbackResult   finished
+union CallbackChange {
+    1: Callback         created
+    2: CallbackStatus   status_changed
+    3: CallbackResult   finished
 }
 
-union SessionCallbackStatus {
-    1: SessionCallbackStatusPending pending
-    2: SessionCallbackStatusSucceeded succeeded
+union CallbackStatus {
+    1: CallbackStatusPending pending
+    2: CallbackStatusSucceeded succeeded
 }
 
-struct SessionCallbackStatusPending {}
-struct SessionCallbackStatusSucceeded {}
+struct CallbackStatusPending {}
+struct CallbackStatusSucceeded {}
 
-struct SessionCallbackResult {
+struct CallbackResult {
     1: required string payload
 }
 
-union SessionInteractionChange {
+union InteractionChange {
     1: UserInteraction         created
     2: UserInteractionStatus   status_changed
 }
@@ -161,12 +165,12 @@ union RepairScenario {
 }
 
 struct AddEventsRepair {
-    1: required list<Event>             events
+    1: required list<Change>            changes
     2: optional repairer.ComplexAction  action
 }
 
 struct SetResultRepair {
-    1: required SessionResult           result
+    1: required ResultChange           result
 }
 
 service Repairer {
