@@ -5,7 +5,11 @@
  * `2016-03-22T06:12:27Z`.
  */
 
- namespace java com.rbkmoney.fistful.base
+namespace java com.rbkmoney.fistful.base
+
+include "msgpack.thrift"
+
+typedef msgpack.Value BinDataId
 
 typedef string Timestamp
 
@@ -98,7 +102,8 @@ struct BankCard {
     5: optional BankCardTokenProvider token_provider
     8: optional map<string, msgpack.Value> metadata
     */
-    20: optional CardType               card_type
+    20: optional CardType card_type
+    21: optional BinDataId bin_data_id
 }
 
 /**

@@ -26,12 +26,6 @@ typedef base.CurrencyRef CurrencyRef
 typedef base.Cash DepositBody
 typedef base.CashRange CashRange
 
-/** Рациональное число. */
-struct Rational {
-    1: required i64 p
-    2: required i64 q
-}
-
 exception IdentityNotFound          {}
 exception CurrencyNotFound          {}
 exception SourceNotFound            {}
