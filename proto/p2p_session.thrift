@@ -37,17 +37,7 @@ union SessionStatus {
 
 struct SessionActive {}
 struct SessionFinished {
-    1: SessionFinishedStatus status
-}
-
-union SessionFinishedStatus {
-    1: SessionFinishedSuccess success
-    2: SessionFinishedFailed  failed
-}
-
-struct SessionFinishedSuccess {}
-struct SessionFinishedFailed {
-    1: optional base.Failure failure
+    1: Result result
 }
 
 struct P2PTransfer {
