@@ -206,7 +206,7 @@ struct SetResultRepair {
 service Repairer {
     void Repair(1: SessionID id, 2: RepairScenario scenario)
         throws (
-            1: fistful.WithdrawalSessionNotFound ex1
+            1: fistful.P2PSessionNotFound ex1
             2: fistful.MachineAlreadyWorking ex2
         )
 }

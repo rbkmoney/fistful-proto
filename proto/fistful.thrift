@@ -60,3 +60,4 @@ exception WithdrawalCashAmountInvalid {
 }
 exception OperationNotPermitted { 1: optional string details }
 exception P2PNotFound        {}
+exception P2PSessionNotFound {}
