@@ -44,6 +44,7 @@ struct P2PTransfer {
     2: required Resource                sender
     3: required Resource                receiver
     4: required base.Cash               cash
+    5: optional base.Timestamp          deadline
 }
 
 struct Callback {
