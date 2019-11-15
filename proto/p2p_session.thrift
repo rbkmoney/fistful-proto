@@ -10,7 +10,6 @@ include "fistful.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "destination.thrift"
-include "identity.thrift"
 include "msgpack.thrift"
 include "user_interaction.thrift"
 
@@ -45,7 +44,6 @@ struct P2PTransfer {
     2: required Resource                sender
     3: required Resource                receiver
     4: required base.Cash               cash
-    5: optional identity.Identity       owner
 }
 
 struct Callback {
