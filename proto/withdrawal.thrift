@@ -32,15 +32,15 @@ typedef base.Resource            Resource
 
 struct WithdrawalParams {
     1: required WithdrawalID  id
-    2: required WalletID      source
-    3: required DestinationID destination
+    2: required WalletID      wallet_id
+    3: required DestinationID destination_id
     4: required base.Cash     body
     5: required ExternalID    external_id
 }
 
 struct Withdrawal {
-    1: required WalletID       source
-    2: required DestinationID  destination
+    1: required WalletID       wallet_id
+    2: required DestinationID  destination_id
     3: required base.Cash      body
     4: optional ExternalID     external_id
     5: optional WithdrawalID   id

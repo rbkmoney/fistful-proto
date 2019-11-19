@@ -29,8 +29,8 @@ typedef base.EventRange         EventRange
 
 struct Deposit {
     5: required DepositID      id
-    1: required WalletID       wallet
-    2: required SourceID       source
+    1: required WalletID       wallet_id
+    2: required SourceID       source_id
     3: required base.Cash      body
     6: optional Status         status
     4: optional ExternalID     external_id
@@ -45,8 +45,8 @@ struct DepositState {
 
 struct DepositParams {
     1: required DepositID      id
-    2: required WalletID       destination
-    3: required SourceID       source
+    2: required WalletID       wallet_id
+    3: required SourceID       source_id
     4: required base.Cash      body
     5: optional ExternalID     external_id
 }
