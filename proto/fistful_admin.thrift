@@ -42,6 +42,9 @@ struct DepositParams {
     3: required DepositBody      body
 }
 
+exception DepositCurrencyInvalid    {}
+exception DepositAmountInvalid      {}
+
 service FistfulAdmin {
 
     source.Source CreateSource (1: SourceParams params)
@@ -60,8 +63,8 @@ service FistfulAdmin {
             1: fistful.SourceNotFound         ex1
             2: fistful.WalletNotFound         ex2
             3: fistful.SourceUnauthorized     ex3
-            4: fistful.DepositCurrencyInvalid ex4
-            5: fistful.DepositAmountInvalid   ex5
+            4: DepositCurrencyInvalid ex4
+            5: DepositAmountInvalid   ex5
         )
 
     deposit.Deposit GetDeposit (1: DepositID id)

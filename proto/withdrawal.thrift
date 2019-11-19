@@ -157,6 +157,14 @@ struct ResourceGot {
     1: required Resource resource
 }
 
+exception InconsistentWithdrawalCurrency {
+    1: required base.CurrencyRef withdrawal_currency
+    2: required base.CurrencyRef destination_currency
+    3: required base.CurrencyRef wallet_currency
+}
+
+exception NoDestinationResourceInfo {}
+
 exception InvalidWithdrawalStatus {
     1: required Status withdrawal_status
 }
@@ -183,8 +191,11 @@ service Management {
             2: fistful.WalletNotFound ex2
             3: fistful.DestinationNotFound ex3
             4: fistful.DestinationUnauthorized ex4
-            5: fistful.WithdrawalCurrencyInvalid ex5
-            6: fistful.WithdrawalCashAmountInvalid ex6
+            5: fistful.ForbiddenOperationCurrency ex5
+            6: fistful.ForbiddenOperationAmount ex6
+            7: fistful.InvalidOperationAmount ex7
+            8: InconsistentWithdrawalCurrency ex8
+            9: NoDestinationResourceInfo ex9
         )
 
     WithdrawalState Get(

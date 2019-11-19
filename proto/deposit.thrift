@@ -92,6 +92,12 @@ struct LimitCheckChange {
     1: required limit_check.Details details
 }
 
+exception InconsistentDepositCurrency {
+    1: required base.CurrencyRef deposit_currency
+    2: required base.CurrencyRef source_currency
+    3: required base.CurrencyRef wallet_currency
+}
+
 exception InvalidDepositStatus {
     1: required Status deposit_status
 }
@@ -118,10 +124,6 @@ exception InsufficientDepositAmount {
     2: required base.Cash deposit_amount
 }
 
-exception InvalidRevertAmount {
-    1: required base.Cash revert_body
-}
-
 exception InvalidRevertStatus {
     1: required deposit_revert_status.Status revert_status
 }
@@ -145,11 +147,12 @@ service Management {
         2: context.ContextSet context
     )
         throws (
-            1: fistful.WalletNotFound ex2
-            2: fistful.SourceNotFound ex3
-            3: fistful.SourceUnauthorized ex4
-            4: fistful.DepositCurrencyInvalid ex5
-            5: fistful.DepositAmountInvalid ex6
+            1: fistful.WalletNotFound ex1
+            2: fistful.SourceNotFound ex2
+            3: fistful.SourceUnauthorized ex3
+            4: fistful.InvalidOperationAmount ex4
+            5: fistful.ForbiddenOperationCurrency ex5
+            6: InconsistentDepositCurrency ex6
         )
 
     DepositState Get(
@@ -186,7 +189,7 @@ service Management {
             2: InvalidDepositStatus ex2
             3: InconsistentRevertCurrency ex3
             4: InsufficientDepositAmount ex4
-            5: InvalidRevertAmount ex5
+            5: fistful.InvalidOperationAmount ex5
         )
 
     deposit_revert_adjustment.AdjustmentState CreateRevertAdjustment(
