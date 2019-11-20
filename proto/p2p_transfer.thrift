@@ -42,20 +42,21 @@ struct P2PTransfer {
     10: optional P2PQuote           quote
     11: optional ExternalID         external_id
     12: optional base.Timestamp     deadline
+    13: optional base.ClientInfo    client_info
 }
 
 /// Пока используется как признак того, что операция была проведена по котировке
 struct P2PQuote {}
 
 union Sender {
-    1: DisposableResource resource
+    1: RawResource resource
 }
 
 union Receiver {
-    1: DisposableResource resource
+    1: RawResource resource
 }
 
-struct DisposableResource {
+struct RawResource {
     1: required Resource resource
     2: required ContactInfo contact_info
 }

@@ -77,6 +77,14 @@ struct ContactInfo {
     2: optional string email
 }
 
+typedef string Fingerprint
+typedef string IPAddress
+
+struct ClientInfo {
+    1: optional IPAddress ip_address
+    2: optional Fingerprint fingerprint
+}
+
 union Resource {
     1: BankCard     bank_card
     2: CryptoWallet crypto_wallet
