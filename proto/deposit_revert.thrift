@@ -47,7 +47,15 @@ struct RevertParams {
 
 struct RevertState {
     1: required Revert revert
-    2: required list<deposit_revert_adjustment.AdjustmentState> adjustments
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    2: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Перечень корректировок */
+    3: required list<deposit_revert_adjustment.AdjustmentState> adjustments
 }
 
 union Change {

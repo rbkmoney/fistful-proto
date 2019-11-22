@@ -38,9 +38,21 @@ struct Deposit {
 
 struct DepositState {
     1: required Deposit deposit
+
+    /** Контекст операции заданный при её старте */
     2: required context.ContextSet context
-    3: required list<deposit_revert.RevertState> reverts
-    4: required list<deposit_adjustment.AdjustmentState> adjustments
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    3: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Перечень возвратов пополнения */
+    4: required list<deposit_revert.RevertState> reverts
+
+    /** Перечень корректировок */
+    5: required list<deposit_adjustment.AdjustmentState> adjustments
 }
 
 struct DepositParams {
