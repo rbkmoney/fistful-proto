@@ -17,6 +17,7 @@ include "deposit_status.thrift"
 include "limit_check.thrift"
 include "repairer.thrift"
 include "context.thrift"
+include "cashflow.thrift"
 
 typedef fistful.DepositID       DepositID
 typedef fistful.AdjustmentID    AdjustmentID

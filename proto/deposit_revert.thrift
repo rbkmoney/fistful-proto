@@ -11,6 +11,7 @@ include "transfer.thrift"
 include "deposit_revert_adjustment.thrift"
 include "deposit_revert_status.thrift"
 include "limit_check.thrift"
+include "cashflow.thrift"
 
 typedef base.Failure            Failure
 typedef fistful.DepositRevertID RevertID
