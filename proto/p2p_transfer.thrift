@@ -116,9 +116,7 @@ union SessionResult {
     2: SessionFailed    failed
 }
 
-struct SessionSucceeded {
-    1: required base.TransactionInfo trx_info
-}
+struct SessionSucceeded {}
 
 struct SessionFailed {
     1: required base.Failure failure
