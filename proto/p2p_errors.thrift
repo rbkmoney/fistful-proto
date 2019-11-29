@@ -1,5 +1,5 @@
 /**
- * Ошибки выводов
+ * Ошибки переводов
  */
 
 namespace java   com.rbkmoney.fistful.p2p_errors
