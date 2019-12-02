@@ -23,10 +23,12 @@ typedef base.ID               UserInteractionID
 /// Domain
 
 struct Session {
-    1: required SessionID      id
-    2: required SessionStatus  status
-    3: required P2PTransfer    p2p_transfer
-    4: required ProviderID     provider
+    1: required SessionID           id
+    2: required SessionStatus       status
+    3: required P2PTransfer         p2p_transfer
+    4: required ProviderID          provider
+    5: required base.DataRevision   domain_revision
+    6: required base.PartyRevision  party_revision
 }
 
 union SessionStatus {
