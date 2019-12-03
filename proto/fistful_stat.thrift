@@ -36,6 +36,7 @@ struct StatWithdrawal {
     3:  required IdentityID           identity_id
     4:  required WalletID             source_id
     5:  required DestinationID        destination_id
+    6:  optional base.ExternalID      external_id
     7:  required base.Amount          amount
     8:  required base.Amount          fee
     9:  required CurrencySymbolicCode currency_symbolic_code
