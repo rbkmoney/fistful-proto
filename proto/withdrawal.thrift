@@ -75,7 +75,7 @@ struct SessionState {
 }
 
 struct Event {
-    1: required EventID              event
+    1: required EventID              event_id
     2: required base.Timestamp       occured_at
     3: required Change               change
 }

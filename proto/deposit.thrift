@@ -19,6 +19,7 @@ include "repairer.thrift"
 include "context.thrift"
 include "cashflow.thrift"
 
+typedef base.EventID            EventID
 typedef fistful.DepositID       DepositID
 typedef fistful.AdjustmentID    AdjustmentID
 typedef fistful.DepositRevertID RevertID
@@ -65,9 +66,9 @@ struct DepositParams {
 }
 
 struct Event {
-    1: required eventsink.SequenceID sequence
+    1: required EventID        event_id
     2: required base.Timestamp occured_at
-    3: required list<Change> changes
+    3: required Change         change
 }
 
 union Change {
