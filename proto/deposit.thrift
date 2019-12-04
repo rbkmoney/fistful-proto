@@ -231,11 +231,17 @@ service Management {
 
 /// Event sink
 
+struct EventSinkPayload {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp       occured_at
+    3: required list<Change>         changes
+}
+
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required DepositID            source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {
