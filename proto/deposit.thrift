@@ -181,6 +181,14 @@ service Management {
             1: fistful.DepositNotFound ex1
         )
 
+    list<Event> GetEvents(
+        1: DepositID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.DepositNotFound ex1
+        )
+
     deposit_adjustment.AdjustmentState CreateAdjustment(
         1: DepositID id
         2: deposit_adjustment.AdjustmentParams params

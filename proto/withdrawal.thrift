@@ -211,6 +211,14 @@ service Management {
             1: fistful.WithdrawalNotFound ex1
         )
 
+    list<Event> GetEvents(
+        1: WithdrawalID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.WithdrawalNotFound ex1
+        )
+
     withdrawal_adjustment.AdjustmentState CreateAdjustment(
         1: WithdrawalID id
         2: withdrawal_adjustment.AdjustmentParams params
