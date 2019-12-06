@@ -39,12 +39,15 @@ struct WithdrawalParams {
 }
 
 struct Withdrawal {
-    1: required WalletID       wallet_id
-    2: required DestinationID  destination_id
-    3: required base.Cash      body
-    4: optional ExternalID     external_id
-    5: optional WithdrawalID   id
-    6: optional Status         status
+    5: optional WithdrawalID id
+    1: required WalletID wallet_id
+    2: required DestinationID destination_id
+    3: required base.Cash body
+    4: optional ExternalID external_id
+    6: optional Status status
+    7: optional base.Timestamp created_at
+    8: optional base.DataRevision domain_revision
+    9: optional base.PartyRevision party_revision
 }
 
 struct WithdrawalState {

@@ -30,12 +30,15 @@ typedef deposit_status.Status   Status
 typedef base.EventRange         EventRange
 
 struct Deposit {
-    5: required DepositID      id
-    1: required WalletID       wallet_id
-    2: required SourceID       source_id
-    3: required base.Cash      body
-    6: optional Status         status
-    4: optional ExternalID     external_id
+    5: required DepositID id
+    1: required WalletID wallet_id
+    2: required SourceID source_id
+    3: required base.Cash body
+    6: optional Status status
+    4: optional ExternalID external_id
+    7: optional base.Timestamp created_at
+    8: optional base.DataRevision domain_revision
+    9: optional base.PartyRevision party_revision
 }
 
 struct DepositState {
