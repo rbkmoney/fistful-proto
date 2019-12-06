@@ -39,11 +39,9 @@ struct Revert {
 
 struct RevertParams {
     1: required RevertID             id
-    2: required WalletID             wallet_id
-    3: required SourceID             source_id
-    4: required base.Cash            body
-    5: optional string               reason
-    6: optional ExternalID           external_id
+    2: required base.Cash            body
+    3: optional string               reason
+    4: optional ExternalID           external_id
 }
 
 struct RevertState {
