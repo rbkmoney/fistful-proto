@@ -34,6 +34,7 @@ struct Deposit {
     1: required WalletID wallet_id
     2: required SourceID source_id
     3: required base.Cash body
+    6: optional Status status
     4: optional ExternalID external_id
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
@@ -42,22 +43,21 @@ struct Deposit {
 
 struct DepositState {
     1: required Deposit deposit
-    2: required Status status
 
     /** Контекст операции заданный при её старте */
-    3: required context.ContextSet context
+    2: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    4: required cashflow.FinalCashFlow effective_final_cash_flow
+    3: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Перечень возвратов пополнения */
-    5: required list<deposit_revert.RevertState> reverts
+    4: required list<deposit_revert.RevertState> reverts
 
     /** Перечень корректировок */
-    6: required list<deposit_adjustment.AdjustmentState> adjustments
+    5: required list<deposit_adjustment.AdjustmentState> adjustments
 }
 
 struct DepositParams {

@@ -16,12 +16,13 @@ typedef base.ExternalID         ExternalID
 typedef deposit_status.Status   TargetStatus
 
 struct Adjustment {
-    1: required AdjustmentID        id
-    2: required ChangesPlan         changes_plan
-    3: required base.Timestamp      created_at
-    4: required base.DataRevision   domain_revision
-    5: required base.PartyRevision  party_revision
-    6: optional ExternalID          external_id
+     1: required AdjustmentID        id
+     2: required Status              status
+     3: required ChangesPlan         changes_plan
+     4: required base.Timestamp      created_at
+     5: required base.DataRevision   domain_revision
+     6: required base.PartyRevision  party_revision
+     7: optional ExternalID          external_id
 }
 
 struct AdjustmentParams {
@@ -32,7 +33,6 @@ struct AdjustmentParams {
 
 struct AdjustmentState {
     1: required Adjustment adjustment
-    2: required Status status
 }
 
 union Status {
