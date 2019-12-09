@@ -73,7 +73,6 @@ struct CashFlowChangePlan {
 
 struct StatusChangePlan {
     1: required TargetStatus new_status
-    2: optional base.TransactionInfo new_trx_info
 }
 
 union ChangeRequest {
@@ -82,5 +81,4 @@ union ChangeRequest {
 
 struct ChangeStatusRequest {
     1: required TargetStatus new_status
-    2: optional base.TransactionInfo new_trx_info
 }
