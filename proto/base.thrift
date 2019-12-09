@@ -5,7 +5,11 @@
  * `2016-03-22T06:12:27Z`.
  */
 
- namespace java com.rbkmoney.fistful.base
+namespace java com.rbkmoney.fistful.base
+
+include "msgpack.thrift"
+
+typedef msgpack.Value BinDataId
 
 typedef string Timestamp
 
@@ -25,6 +29,9 @@ typedef string CurrencySymbolicCode
 
 /** Сумма в минимальных денежных единицах. */
 typedef i64 Amount
+
+/** Значение ассоциации */
+typedef string Tag
 
 /** Внешний идентификатор (идентификатор в системе клиента) для сущностей системы. */
 typedef ID ExternalID
@@ -64,6 +71,20 @@ typedef string Token
 /** Отображение из строки в строку */
 typedef map<string, string> StringMap
 
+/** Контактная информация. **/
+struct ContactInfo {
+    1: optional string phone_number
+    2: optional string email
+}
+
+typedef string Fingerprint
+typedef string IPAddress
+
+struct ClientInfo {
+    1: optional IPAddress ip_address
+    2: optional Fingerprint fingerprint
+}
+
 union Resource {
     1: BankCard     bank_card
     2: CryptoWallet crypto_wallet
@@ -89,7 +110,8 @@ struct BankCard {
     5: optional BankCardTokenProvider token_provider
     8: optional map<string, msgpack.Value> metadata
     */
-    20: optional CardType               card_type
+    20: optional CardType card_type
+    21: optional BinDataId bin_data_id
 }
 
 /**

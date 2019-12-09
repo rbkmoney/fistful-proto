@@ -16,6 +16,7 @@ typedef ID DepositID
 typedef ID DepositRevertID
 typedef ID AdjustmentID
 typedef ID WithdrawalID
+typedef ID P2PTransferID
 typedef ID IdentityID
 typedef ID WalletID
 typedef i64 Amount
@@ -66,3 +67,5 @@ exception InvalidOperationAmount {
 }
 
 exception OperationNotPermitted { 1: optional string details }
+exception P2PNotFound        {}
+exception P2PSessionNotFound {}
