@@ -16,7 +16,7 @@ include "p2p_status.thrift"
 include "limit_check.thrift"
 
 typedef base.ID                  SessionID
-typedef base.ID                  ProviderID
+typedef base.ObjectID            ProviderID
 typedef base.EventID             EventID
 typedef fistful.P2PTransferID    P2PTransferID
 typedef fistful.AdjustmentID     AdjustmentID

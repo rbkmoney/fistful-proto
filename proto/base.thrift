@@ -15,6 +15,7 @@ typedef string Timestamp
 
 /** Идентификатор объекта */
 typedef string ID
+typedef i32 ObjectID
 
 /** Идентификатор некоторого события */
 typedef i64 EventID
