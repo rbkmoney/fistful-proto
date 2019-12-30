@@ -61,9 +61,9 @@ struct UserInteraction {
 /// Session events
 
 struct Event {
-    1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
+    1: required base.EventID         event
+    2: required base.Timestamp       occured_at
+    3: required Change               change
 }
 
 union Change {
@@ -161,11 +161,17 @@ struct UserInteractionStatusFinished {}
 
 /// Event sink
 
+struct EventSinkPayload {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp       occured_at
+    3: required list<Change>         changes
+}
+
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required SessionID            source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {
