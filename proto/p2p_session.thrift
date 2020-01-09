@@ -15,7 +15,7 @@ include "user_interaction.thrift"
 
 typedef fistful.P2PTransferID P2PTransferID
 typedef base.ID               SessionID
-typedef base.ID               ProviderID
+typedef base.ObjectID         ProviderID
 typedef binary                AdapterState
 typedef base.Resource         Resource
 typedef base.ID               UserInteractionID
