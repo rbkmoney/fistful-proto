@@ -32,8 +32,6 @@ exception SourceNotFound            {}
 exception DestinationNotFound       {}
 exception DepositNotFound           {}
 exception SourceUnauthorized        {}
-exception DepositCurrencyInvalid    {}
-exception DepositAmountInvalid      {}
 exception PartyInaccessible         {}
 exception ProviderNotFound          {}
 exception IdentityClassNotFound     {}
@@ -50,14 +48,24 @@ exception WithdrawalSessionNotFound {}
 exception MachineAlreadyWorking     {}
 exception IDExists                  {}
 exception DestinationUnauthorized   {}
-exception WithdrawalCurrencyInvalid {
-    1: required CurrencyRef withdrawal_currency
-    2: required CurrencyRef wallet_currency
+
+/** Условия запрещают проводить операцию с такой валютой */
+exception ForbiddenOperationCurrency {
+    1: required CurrencyRef currency
+    2: required set<CurrencyRef> allowed_currencies
 }
-exception WithdrawalCashAmountInvalid {
-    1: required base.Cash      cash
-    2: required base.CashRange range
+
+/** Условия запрещают проводить операцию с такой суммой */
+exception ForbiddenOperationAmount {
+    1: required base.Cash amount
+    2: required base.CashRange allowed_range
 }
+
+/** Операцию с такой суммой невозможно провести */
+exception InvalidOperationAmount {
+    1: required base.Cash amount
+}
+
 exception OperationNotPermitted { 1: optional string details }
 exception P2PNotFound        {}
 exception P2PSessionNotFound {}

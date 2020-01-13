@@ -11,6 +11,7 @@ include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
 include "transfer.thrift"
+include "cashflow.thrift"
 include "withdrawal_adjustment.thrift"
 include "withdrawal_status.thrift"
 include "limit_check.thrift"
@@ -31,27 +32,53 @@ typedef base.Resource            Resource
 
 struct WithdrawalParams {
     1: required WithdrawalID  id
-    2: required WalletID      source
-    3: required DestinationID destination
+    2: required WalletID      wallet_id
+    3: required DestinationID destination_id
     4: required base.Cash     body
-    5: required ExternalID    external_id
-
-    99: optional context.ContextSet   context
+    5: optional ExternalID    external_id
 }
 
 struct Withdrawal {
-    1: required WalletID       source
-    2: required DestinationID  destination
-    3: required base.Cash      body
-    4: optional ExternalID     external_id
-    5: optional WithdrawalID   id
-    6: optional Status         status
+    5: optional WithdrawalID id
+    1: required WalletID wallet_id
+    2: required DestinationID destination_id
+    3: required base.Cash body
+    4: optional ExternalID external_id
+    6: optional Status status
+    7: optional base.Timestamp created_at
+    8: optional base.DataRevision domain_revision
+    9: optional base.PartyRevision party_revision
+}
 
-    99: optional context.ContextSet context
+struct WithdrawalState {
+    1: required Withdrawal withdrawal
+
+    /** Контекст операции заданный при её старте */
+    2: required context.ContextSet context
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    3: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Текущий действующий маршрут */
+    4: optional Route effective_route
+
+    /** Перечень сессий взаимодействия с провайдером */
+    5: required list<SessionState> sessions
+
+    /** Перечень корректировок */
+    6: required list<withdrawal_adjustment.AdjustmentState> adjustments
+}
+
+struct SessionState {
+    1: required SessionID id
+    2: optional SessionResult result
 }
 
 struct Event {
-    1: required EventID              event
+    1: required EventID              event_id
     2: required base.Timestamp       occured_at
     3: required Change               change
 }
@@ -133,26 +160,78 @@ struct ResourceGot {
     1: required Resource resource
 }
 
+exception InconsistentWithdrawalCurrency {
+    1: required base.CurrencyRef withdrawal_currency
+    2: required base.CurrencyRef destination_currency
+    3: required base.CurrencyRef wallet_currency
+}
+
+exception NoDestinationResourceInfo {}
+
+exception InvalidWithdrawalStatus {
+    1: required Status withdrawal_status
+}
+
+exception ForbiddenStatusChange {
+    1: required Status target_status
+}
+
+exception AlreadyHasStatus {
+    1: required Status withdrawal_status
+}
+
+exception AnotherAdjustmentInProgress {
+    1: required AdjustmentID another_adjustment_id
+}
+
 service Management {
 
-    Withdrawal Create(1: WithdrawalParams params)
+    WithdrawalState Create(
+        1: WithdrawalParams params
+        2: context.ContextSet context
+    )
         throws (
-            1: fistful.IDExists                    ex1
-            2: fistful.WalletNotFound              ex2
-            3: fistful.DestinationNotFound         ex3
-            4: fistful.DestinationUnauthorized     ex4
-            5: fistful.WithdrawalCurrencyInvalid   ex5
-            6: fistful.WithdrawalCashAmountInvalid ex6
+            2: fistful.WalletNotFound ex2
+            3: fistful.DestinationNotFound ex3
+            4: fistful.DestinationUnauthorized ex4
+            5: fistful.ForbiddenOperationCurrency ex5
+            6: fistful.ForbiddenOperationAmount ex6
+            7: fistful.InvalidOperationAmount ex7
+            8: InconsistentWithdrawalCurrency ex8
+            9: NoDestinationResourceInfo ex9
         )
 
-    Withdrawal Get(1: WithdrawalID id)
-        throws ( 1: fistful.WithdrawalNotFound ex1)
+    WithdrawalState Get(
+        1: WithdrawalID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.WithdrawalNotFound ex1
+        )
+
+    context.ContextSet GetContext(1: WithdrawalID id)
+        throws (
+            1: fistful.WithdrawalNotFound ex1
+        )
 
     list<Event> GetEvents(
         1: WithdrawalID id
-        2: EventRange range)
+        2: EventRange range
+    )
         throws (
             1: fistful.WithdrawalNotFound ex1
+        )
+
+    withdrawal_adjustment.AdjustmentState CreateAdjustment(
+        1: WithdrawalID id
+        2: withdrawal_adjustment.AdjustmentParams params
+    )
+        throws (
+            1: fistful.WithdrawalNotFound ex1
+            2: InvalidWithdrawalStatus ex2
+            3: ForbiddenStatusChange ex3
+            4: AlreadyHasStatus ex4
+            5: AnotherAdjustmentInProgress ex5
         )
 }
 

@@ -25,6 +25,16 @@ struct Adjustment {
      7: optional ExternalID          external_id
 }
 
+struct AdjustmentParams {
+     1: required AdjustmentID        id
+     2: required ChangeRequest       change
+     3: optional ExternalID          external_id
+}
+
+struct AdjustmentState {
+    1: required Adjustment adjustment
+}
+
 union Status {
     1: Pending pending
     2: Succeeded succeeded
@@ -62,5 +72,13 @@ struct CashFlowChangePlan {
 }
 
 struct StatusChangePlan {
+    1: required TargetStatus new_status
+}
+
+union ChangeRequest {
+    1: ChangeStatusRequest change_status
+}
+
+struct ChangeStatusRequest {
     1: required TargetStatus new_status
 }

@@ -11,6 +11,7 @@ include "transfer.thrift"
 include "deposit_revert_adjustment.thrift"
 include "deposit_revert_status.thrift"
 include "limit_check.thrift"
+include "cashflow.thrift"
 
 typedef base.Failure            Failure
 typedef fistful.DepositRevertID RevertID
@@ -34,6 +35,26 @@ struct Revert {
      8: required base.PartyRevision  party_revision
      9: optional string              reason
     10: optional ExternalID          external_id
+}
+
+struct RevertParams {
+    1: required RevertID             id
+    2: required base.Cash            body
+    3: optional string               reason
+    4: optional ExternalID           external_id
+}
+
+struct RevertState {
+    1: required Revert revert
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    2: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Перечень корректировок */
+    3: required list<deposit_revert_adjustment.AdjustmentState> adjustments
 }
 
 union Change {
