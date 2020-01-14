@@ -111,8 +111,18 @@ struct BankCard {
     5: optional BankCardTokenProvider token_provider
     8: optional map<string, msgpack.Value> metadata
     */
+    10: optional BankCardExpDate exp_date
+    11: optional string cardholder_name
     20: optional CardType card_type
     21: optional BinDataId bin_data_id
+}
+
+/** Дата экспирации */
+struct BankCardExpDate {
+    /** Месяц 1..12 */
+    1: required i8 month
+    /** Год 2015..∞ */
+    2: required i16 year
 }
 
 /**
