@@ -122,7 +122,7 @@ struct CryptoWallet {
     1: required string id
     3: optional CryptoData data
     /** Legacy */
-    2: required CryptoCurrency currency
+    2: optional CryptoCurrency currency
 }
 
 
