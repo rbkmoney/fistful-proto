@@ -122,7 +122,7 @@ struct CryptoWallet {
     1: required string id
     3: optional CryptoData data
     /** Legacy */
-    2: optional CryptoCurrency currency
+    2: required CryptoCurrency currency
 }
 
 
@@ -151,7 +151,7 @@ struct CryptoDataBitcoin {}
 struct CryptoDataLitecoin {}
 struct CryptoDataBitcoinCash {}
 struct CryptoDataRipple {
-    1: required string tag
+    1: optional string tag
 }
 struct CryptoDataEthereum {}
 struct CryptoDataZcash {}
