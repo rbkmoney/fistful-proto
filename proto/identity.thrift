@@ -24,7 +24,7 @@ typedef base.ID LevelID
 typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
-typedef base.EventRange EventRange
+typedef eventsink.EventRange EventRange
 
 struct IdentityParams {
     1: required PartyID     party

@@ -17,14 +17,13 @@ include "limit_check.thrift"
 
 typedef base.ID                  SessionID
 typedef base.ID                  ProviderID
-typedef base.EventID             EventID
 typedef fistful.WithdrawalID     WithdrawalID
 typedef fistful.AdjustmentID     AdjustmentID
 typedef fistful.WalletID         WalletID
 typedef fistful.DestinationID    DestinationID
 typedef base.ExternalID          ExternalID
 typedef withdrawal_status.Status Status
-typedef base.EventRange          EventRange
+typedef eventsink.EventRange     EventRange
 typedef base.Resource            Resource
 
 /// Domain
@@ -51,7 +50,7 @@ struct Withdrawal {
 }
 
 struct Event {
-    1: required EventID              event
+    1: required eventsink.EventID    event
     2: required base.Timestamp       occured_at
     3: required Change               change
 }

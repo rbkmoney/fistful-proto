@@ -17,13 +17,12 @@ include "limit_check.thrift"
 
 typedef base.ID                  SessionID
 typedef base.ObjectID            ProviderID
-typedef base.EventID             EventID
 typedef fistful.P2PTransferID    P2PTransferID
 typedef fistful.AdjustmentID     AdjustmentID
 typedef fistful.IdentityID       IdentityID
 typedef base.ExternalID          ExternalID
 typedef p2p_status.Status        Status
-typedef base.EventRange          EventRange
+typedef eventsink.EventRange     EventRange
 typedef base.Resource            Resource
 typedef base.ContactInfo         ContactInfo
 
@@ -62,7 +61,7 @@ struct RawResource {
 }
 
 struct Event {
-    1: required EventID              event
+    1: required eventsink.EventID    event
     2: required base.Timestamp       occured_at
     3: required Change               change
 }

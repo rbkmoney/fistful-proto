@@ -61,7 +61,7 @@ struct UserInteraction {
 /// Session events
 
 struct Event {
-    1: required base.EventID         event
+    1: required eventsink.EventID    event
     2: required base.Timestamp       occured_at
     3: required Change               change
 }

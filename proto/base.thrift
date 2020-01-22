@@ -17,14 +17,6 @@ typedef string Timestamp
 typedef string ID
 typedef i32 ObjectID
 
-/** Идентификатор некоторого события */
-typedef i64 EventID
-
-struct EventRange {
-    1: optional EventID after
-    2: required i32     limit
-}
-
 /** ISO 4217 */
 typedef string CurrencySymbolicCode
 
