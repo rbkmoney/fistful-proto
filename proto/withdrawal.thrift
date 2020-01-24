@@ -30,11 +30,10 @@ typedef base.Resource            Resource
 /// Domain
 
 struct WithdrawalParams {
-    1: required WithdrawalID  id
-    2: required WalletID      source
-    3: required DestinationID destination
-    4: required base.Cash     body
-    5: required ExternalID    external_id
+    1: required WalletID      source
+    2: required DestinationID destination
+    3: required base.Cash     body
+    4: required ExternalID    external_id
 
     99: optional context.ContextSet   context
 }
@@ -134,8 +133,9 @@ struct ResourceGot {
 }
 
 service Management {
-
-    Withdrawal Create(1: WithdrawalParams params)
+    Withdrawal Create(
+        1: WithdrawalID id
+        2: WithdrawalParams params)
         throws (
             1: fistful.IDExists                    ex1
             2: fistful.WalletNotFound              ex2
