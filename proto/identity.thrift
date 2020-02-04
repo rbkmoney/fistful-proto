@@ -25,6 +25,7 @@ typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
 typedef base.EventRange EventRange
+typedef base.Timestamp Timestamp
 
 struct IdentityParams {
     1: required PartyID     party
@@ -45,6 +46,7 @@ struct Identity {
     7:  optional ChallengeID effective_challenge
     8:  optional bool        blocked
     9:  optional LevelID     level
+    10: optional Timestamp   created_at
 
     99: optional ContextSet  context
 }

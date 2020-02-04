@@ -26,6 +26,7 @@ typedef base.ExternalID          ExternalID
 typedef withdrawal_status.Status Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
+typedef base.Timestamp           Timestamp
 
 /// Domain
 
@@ -46,6 +47,7 @@ struct Withdrawal {
     4: optional ExternalID     external_id
     5: optional WithdrawalID   id
     6: optional Status         status
+    7: optional Timestamp      created_at
 
     99: optional context.ContextSet context
 }
