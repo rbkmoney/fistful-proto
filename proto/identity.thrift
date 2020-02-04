@@ -26,6 +26,7 @@ typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
 typedef base.EventRange EventRange
 typedef base.Timestamp Timestamp
+typedef fistful.Blocking Blocking
 
 struct IdentityParams {
     1: required PartyID     party
@@ -44,7 +45,7 @@ struct Identity {
     5:  optional ExternalID  external_id
     6:  optional IdentityID  id
     7:  optional ChallengeID effective_challenge
-    8:  optional bool        blocked
+    8:  optional Blocking    blocked
     9:  optional LevelID     level
     10: optional Timestamp   created_at
 

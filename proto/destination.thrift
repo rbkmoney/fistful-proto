@@ -21,6 +21,7 @@ typedef identity.IdentityID       IdentityID
 typedef base.ExternalID           ExternalID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef base.Timestamp            Timestamp
+typedef fistful.Blocking          Blocking
 
 struct Destination {
     1: required string        name
@@ -31,7 +32,7 @@ struct Destination {
 
     6: optional DestinationID        id
     7: optional Timestamp            created_at
-    8: optional bool                 blocked
+    8: optional Blocking             blocked
 
     99: optional context.ContextSet  context
 }

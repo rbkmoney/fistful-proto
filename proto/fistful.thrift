@@ -26,6 +26,11 @@ typedef base.CurrencyRef CurrencyRef
 typedef base.Cash DepositBody
 typedef base.CashRange CashRange
 
+enum Blocking {
+    unblocked
+    blocked
+}
+
 exception IdentityNotFound          {}
 exception CurrencyNotFound          {}
 exception SourceNotFound            {}

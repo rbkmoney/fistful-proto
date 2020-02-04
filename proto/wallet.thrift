@@ -22,12 +22,7 @@ typedef base.ID ContractID
 typedef base.Timestamp Timestamp
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef account.AccountParams AccountParams
-
-/// Wallet status
-enum Blocking {
-    unblocked
-    blocked
-}
+typedef fistful.Blocking Blocking
 
 struct WalletParams {
     1: required string         name
