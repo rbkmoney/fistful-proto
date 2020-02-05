@@ -38,11 +38,12 @@ struct Destination {
 }
 
 struct DestinationParams {
-    1: required IdentityID            identity
-    2: required string                name
-    3: required CurrencySymbolicCode  currency
-    4: required Resource              resource
-    5: optional ExternalID            external_id
+    1: DestinationID                  id
+    2: required IdentityID            identity
+    3: required string                name
+    4: required CurrencySymbolicCode  currency
+    5: required Resource              resource
+    6: optional ExternalID            external_id
 
     99: optional context.ContextSet   context
 }
@@ -63,8 +64,7 @@ struct Unauthorized {}
 service Management {
 
     Destination Create(
-        1: DestinationID id
-        2: DestinationParams params)
+        1: DestinationParams params)
         throws(
             1: fistful.IDExists              ex1
             2: fistful.IdentityNotFound      ex2
