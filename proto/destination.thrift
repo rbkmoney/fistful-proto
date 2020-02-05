@@ -32,7 +32,7 @@ struct Destination {
 
     6: optional DestinationID        id
     7: optional Timestamp            created_at
-    8: optional Blocking             blocked
+    8: optional Blocking             blocking
 
     99: optional context.ContextSet  context
 }

@@ -45,7 +45,7 @@ struct Identity {
     5:  optional ExternalID  external_id
     6:  optional IdentityID  id
     7:  optional ChallengeID effective_challenge
-    8:  optional Blocking    blocked
+    8:  optional Blocking    blocking
     9:  optional LevelID     level
     10: optional Timestamp   created_at
 
