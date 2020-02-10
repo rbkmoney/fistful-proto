@@ -27,6 +27,7 @@ typedef base.ExternalID          ExternalID
 typedef withdrawal_status.Status Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
+typedef base.Timestamp           Timestamp
 
 /// Domain
 

@@ -21,6 +21,7 @@ typedef identity.IdentityID       IdentityID
 typedef base.ExternalID           ExternalID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef base.Timestamp            Timestamp
+typedef fistful.Blocking          Blocking
 
 struct Destination {
     1: required string        name
@@ -31,12 +32,13 @@ struct Destination {
 
     6: optional DestinationID        id
     7: optional Timestamp            created_at
+    8: optional Blocking             blocking
 
     99: optional context.ContextSet  context
 }
 
 struct DestinationParams {
-    1: required DestinationID         id
+    1: DestinationID                  id
     2: required IdentityID            identity
     3: required string                name
     4: required CurrencySymbolicCode  currency
@@ -61,7 +63,8 @@ struct Unauthorized {}
 
 service Management {
 
-    Destination Create(1: DestinationParams params)
+    Destination Create(
+        1: DestinationParams params)
         throws(
             1: fistful.IDExists              ex1
             2: fistful.IdentityNotFound      ex2

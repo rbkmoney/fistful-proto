@@ -25,12 +25,15 @@ typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
 typedef base.EventRange EventRange
+typedef base.Timestamp Timestamp
+typedef fistful.Blocking Blocking
 
 struct IdentityParams {
-    1: required PartyID     party
-    2: required ProviderID  provider
-    3: required ClassID     cls
-    4: optional ExternalID  external_id
+    1: IdentityID           id
+    2: required PartyID     party
+    3: required ProviderID  provider
+    4: required ClassID     cls
+    5: optional ExternalID  external_id
 
     99: optional ContextSet context
 }
@@ -43,8 +46,9 @@ struct Identity {
     5:  optional ExternalID  external_id
     6:  optional IdentityID  id
     7:  optional ChallengeID effective_challenge
-    8:  optional bool        blocked
+    8:  optional Blocking    blocking
     9:  optional LevelID     level
+    10: optional Timestamp   created_at
 
     99: optional ContextSet  context
 }
@@ -105,8 +109,7 @@ struct ChallengeProof {
 service Management {
 
     Identity Create (
-        1: IdentityID     id
-        2: IdentityParams params)
+        1: IdentityParams params)
         throws (
             1: fistful.ProviderNotFound      ex1
             2: fistful.IdentityClassNotFound ex2

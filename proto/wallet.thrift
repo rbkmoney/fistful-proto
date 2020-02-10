@@ -22,17 +22,12 @@ typedef base.ID ContractID
 typedef base.Timestamp Timestamp
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef account.AccountParams AccountParams
-
-/// Wallet status
-enum Blocking {
-    unblocked
-    blocked
-}
+typedef fistful.Blocking Blocking
 
 struct WalletParams {
-    1: required WalletID       id
-    2: required string         name
-    3: required AccountParams  account_params
+    1: WalletID id
+    2: required string name
+    3: required AccountParams account_params
 
     98: optional ExternalID          external_id
     99: optional context.ContextSet  context
@@ -69,7 +64,8 @@ union AccountChange {
 ///
 
 service Management {
-    Wallet Create (1: WalletParams params)
+    Wallet Create (
+        1: WalletParams params)
         throws (
             1: fistful.IdentityNotFound     ex1
             2: fistful.CurrencyNotFound     ex2
