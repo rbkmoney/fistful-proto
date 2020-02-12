@@ -43,7 +43,8 @@ struct DestinationState {
     8: optional Blocking blocking
     9: optional context.ContextSet metadata
 
-    99: optional context.ContextSet context
+    /** Контекст сущности заданный при её старте */
+    10: optional context.ContextSet context
 }
 
 struct DestinationParams {

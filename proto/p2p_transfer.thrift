@@ -10,6 +10,7 @@ include "fistful.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
+include "cashflow.thrift"
 include "transfer.thrift"
 include "p2p_adjustment.thrift"
 include "p2p_status.thrift"
@@ -30,19 +31,60 @@ typedef base.ContactInfo         ContactInfo
 /// Domain
 
 struct P2PTransfer {
-    1: required IdentityID          owner
-    2: required Sender              sender
-    3: required Receiver            receiver
-    4: required base.Cash           body
-    5: required Status              status
-    6: required base.Timestamp      created_at
-    7: required base.DataRevision   domain_revision
-    8: required base.PartyRevision  party_revision
-    9: required base.Timestamp      operation_timestamp
-    10: optional P2PQuote           quote
-    11: optional ExternalID         external_id
-    12: optional base.Timestamp     deadline
-    13: optional base.ClientInfo    client_info
+    1: required IdentityID owner
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: required Status status
+    6: required base.Timestamp created_at
+    7: required base.DataRevision domain_revision
+    8: required base.PartyRevision party_revision
+    9: required base.Timestamp operation_timestamp
+    10: optional P2PQuote quote
+    11: optional ExternalID external_id
+    12: optional base.Timestamp deadline
+    13: optional base.ClientInfo client_info
+    14: optional context.ContextSet metadata
+}
+
+struct P2PTransferState {
+    1: required IdentityID owner
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: required Status status
+    6: required base.Timestamp created_at
+    7: required base.DataRevision domain_revision
+    8: required base.PartyRevision party_revision
+    9: required base.Timestamp operation_timestamp
+    10: optional P2PQuote quote
+    11: optional ExternalID external_id
+    12: optional base.Timestamp deadline
+    13: optional base.ClientInfo client_info
+    14: optional context.ContextSet metadata
+
+    /** Контекст сущности заданный при её старте */
+    15: required context.ContextSet context
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    16: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Текущий действующий маршрут */
+    17: optional Route effective_route
+
+    /** Перечень сессий взаимодействия с провайдером */
+    18: required list<SessionState> sessions
+
+    /** Перечень корректировок */
+    19: required list<p2p_adjustment.AdjustmentState> adjustments
+}
+
+struct SessionState {
+    1: required SessionID id
+    2: optional SessionResult result
 }
 
 /// Пока используется как признак того, что операция была проведена по котировке

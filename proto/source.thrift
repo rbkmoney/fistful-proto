@@ -11,19 +11,37 @@ include "account.thrift"
 include "identity.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
+include "context.thrift"
 
 /// Domain
 
 typedef fistful.SourceID SourceID
 typedef account.Account Account
 typedef base.ExternalID ExternalID
+typedef base.Timestamp Timestamp
+typedef fistful.Blocking Blocking
 
 struct Source {
+    1: required string   name
+    2: required Resource resource
+    3: optional ExternalID external_id
+    6: optional Timestamp created_at
+    7: optional context.ContextSet metadata
+}
+
+struct SourceState {
     4: optional SourceID id
     1: required string   name
     2: required Resource resource
     3: optional ExternalID external_id
     5: optional Status status
+    6: optional Timestamp created_at
+    7: optional context.ContextSet metadata
+    8: optional Account account
+    9: optional Blocking blocking
+
+    /** Контекст сущности заданный при её старте */
+    10: optional context.ContextSet context
 }
 
 union Resource {

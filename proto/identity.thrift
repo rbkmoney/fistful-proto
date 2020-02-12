@@ -65,7 +65,8 @@ struct IdentityState {
     10: optional Timestamp created_at
     11: optional ContextSet metadata
 
-    99: optional ContextSet context
+    /** Контекст сущности заданный при её старте */
+    12: optional ContextSet context
 }
 
 struct IdentityEvent {

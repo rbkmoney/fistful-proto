@@ -28,6 +28,7 @@ typedef withdrawal_status.Status Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
 typedef base.Timestamp           Timestamp
+typedef map<string, string>      Quote
 
 /// Domain
 
@@ -45,32 +46,43 @@ struct Withdrawal {
     2: required DestinationID destination_id
     3: required base.Cash body
     4: optional ExternalID external_id
-    6: optional Status status
+    11: optional Quote quote
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
+    10: optional context.ContextSet metadata
 }
 
 struct WithdrawalState {
-    1: required Withdrawal withdrawal
+    1: optional WithdrawalID id
+    2: required WalletID wallet_id
+    3: required DestinationID destination_id
+    4: required base.Cash body
+    5: optional ExternalID external_id
+    6: optional Quote quote
+    7: optional Status status
+    8: optional base.Timestamp created_at
+    9: optional base.DataRevision domain_revision
+    10: optional base.PartyRevision party_revision
+    11: optional context.ContextSet metadata
 
     /** Контекст операции заданный при её старте */
-    2: required context.ContextSet context
+    12: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    3: required cashflow.FinalCashFlow effective_final_cash_flow
+    13: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Текущий действующий маршрут */
-    4: optional Route effective_route
+    14: optional Route effective_route
 
     /** Перечень сессий взаимодействия с провайдером */
-    5: required list<SessionState> sessions
+    15: required list<SessionState> sessions
 
     /** Перечень корректировок */
-    6: required list<withdrawal_adjustment.AdjustmentState> adjustments
+    16: required list<withdrawal_adjustment.AdjustmentState> adjustments
 }
 
 struct SessionState {

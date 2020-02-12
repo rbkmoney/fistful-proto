@@ -50,7 +50,8 @@ struct WalletState {
     6: optional Timestamp created_at
     7: optional context.ContextSet metadata
 
-    99: optional context.ContextSet context
+    /** Контекст сущности заданный при её старте */
+    8: optional context.ContextSet context
 }
 
 /// Wallet events
