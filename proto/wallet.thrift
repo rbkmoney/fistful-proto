@@ -85,6 +85,11 @@ service Management {
 
     WalletState Get (1: WalletID id)
         throws (1: fistful.WalletNotFound ex1)
+    
+    context.ContextSet GetContext(1: WalletID id)
+        throws (
+            1: fistful.WalletNotFound ex1
+        )
 }
 
 /// Event sink

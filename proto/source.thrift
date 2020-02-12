@@ -23,6 +23,8 @@ typedef fistful.Blocking Blocking
 typedef fistful.SourceName SourceName
 typedef identity.IdentityID IdentityID
 typedef base.CurrencyRef CurrencyRef
+typedef base.EventID EventID
+typedef base.EventRange EventRange
 
 struct Source {
     1: required string   name
@@ -73,7 +75,7 @@ struct Unauthorized {}
 
 service Management {
 
-    SourceState CreateSource (1: SourceParams params)
+    SourceState Create (1: SourceParams params)
         throws (
             1: fistful.IDExists ex1
             2: fistful.IdentityNotFound ex2
@@ -81,7 +83,20 @@ service Management {
             4: fistful.PartyInaccessible ex4
         )
 
-    SourceState GetSource (1: SourceID id)
+    SourceState Get (1: SourceID id)
+        throws (
+            1: fistful.SourceNotFound ex1
+        )
+    
+    context.ContextSet GetContext(1: SourceID id)
+        throws (
+            1: fistful.SourceNotFound ex1
+        )
+    
+    list<Event> GetEvents(
+        1: SourceID id
+        2: EventRange range
+    )
         throws (
             1: fistful.SourceNotFound ex1
         )
@@ -90,9 +105,9 @@ service Management {
 /// Source events
 
 struct Event {
-    1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
+    1: required EventID              event_id
+    2: required base.Timestamp       occured_at
+    3: required Change               change
 }
 
 union Change {
@@ -111,11 +126,17 @@ struct StatusChange {
 
 /// Event sink
 
+struct EventSinkPayload {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp occured_at
+    3: required list<Change> changes
+}
+
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required SourceID             source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {

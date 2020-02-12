@@ -28,7 +28,6 @@ typedef withdrawal_status.Status Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
 typedef base.Timestamp           Timestamp
-typedef map<string, string>      Quote
 
 /// Domain
 
@@ -46,7 +45,6 @@ struct Withdrawal {
     2: required DestinationID destination_id
     3: required base.Cash body
     4: optional ExternalID external_id
-    11: optional Quote quote
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
@@ -59,7 +57,6 @@ struct WithdrawalState {
     3: required DestinationID destination_id
     4: required base.Cash body
     5: optional ExternalID external_id
-    6: optional Quote quote
     7: optional Status status
     8: optional base.Timestamp created_at
     9: optional base.DataRevision domain_revision

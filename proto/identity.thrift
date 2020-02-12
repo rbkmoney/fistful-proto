@@ -21,9 +21,6 @@ typedef base.ID ContractID
 typedef base.ID ProviderID
 typedef base.ID ClassID
 typedef base.ID LevelID
-typedef base.ID ClaimID
-typedef base.ID MasterID
-typedef string Claimant
 typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
@@ -81,9 +78,6 @@ struct Challenge {
     2: optional list<ChallengeProof> proofs
     5: optional ProviderID provider_id
     6: optional ClassID class_id
-    7: optional ClaimID claim_id
-    8: optional MasterID master_id
-    9: optional Claimant claimant
 }
 
 struct ChallengeState {
@@ -93,9 +87,6 @@ struct ChallengeState {
     4: optional ChallengeStatus status
     5: optional ProviderID provider_id
     6: optional ClassID class_id
-    7: optional ClaimID claim_id
-    8: optional MasterID master_id
-    9: optional Claimant claimant
 }
 
 struct ChallengeParams {
@@ -149,6 +140,11 @@ service Management {
         )
 
     IdentityState Get (1: IdentityID id)
+        throws (
+            1: fistful.IdentityNotFound ex1
+        )
+
+    context.ContextSet GetContext(1: IdentityID id)
         throws (
             1: fistful.IdentityNotFound ex1
         )
