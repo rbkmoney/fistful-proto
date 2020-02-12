@@ -20,6 +20,9 @@ typedef account.Account Account
 typedef base.ExternalID ExternalID
 typedef base.Timestamp Timestamp
 typedef fistful.Blocking Blocking
+typedef fistful.SourceName SourceName
+typedef identity.IdentityID IdentityID
+typedef base.CurrencyRef CurrencyRef
 
 struct Source {
     1: required string   name
@@ -44,6 +47,14 @@ struct SourceState {
     10: optional context.ContextSet context
 }
 
+struct SourceParams {
+    5: required SourceID id
+    1: required SourceName name
+    2: required IdentityID identity_id
+    3: required CurrencyRef currency
+    4: required Resource resource
+}
+
 union Resource {
     1: Internal         internal
 }
@@ -59,6 +70,22 @@ union Status {
 
 struct Authorized {}
 struct Unauthorized {}
+
+service Management {
+
+    SourceState CreateSource (1: SourceParams params)
+        throws (
+            1: fistful.IDExists ex1
+            2: fistful.IdentityNotFound ex2
+            3: fistful.CurrencyNotFound ex3
+            4: fistful.PartyInaccessible ex4
+        )
+
+    SourceState GetSource (1: SourceID id)
+        throws (
+            1: fistful.SourceNotFound ex1
+        )
+}
 
 /// Source events
 
