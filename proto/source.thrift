@@ -27,9 +27,12 @@ typedef base.EventID EventID
 typedef base.EventRange EventRange
 
 struct Source {
-    1: required string   name
+    4: optional SourceID id
+    1: required string name
     2: required Resource resource
     3: optional ExternalID external_id
+    /** TODO Выпилить статус после ухода от интерфейса админки */
+    5: optional Status status
     6: optional Timestamp created_at
     7: optional context.ContextSet metadata
 }

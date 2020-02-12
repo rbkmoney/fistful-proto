@@ -34,6 +34,8 @@ struct Deposit {
     1: required WalletID wallet_id
     2: required SourceID source_id
     3: required base.Cash body
+    /** TODO Выпилить статус после ухода от интерфейса админки */
+    6: optional Status status
     4: optional ExternalID external_id
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
