@@ -34,12 +34,21 @@ struct WalletParams {
 }
 
 struct Wallet {
-    1: optional string     name
+    1: optional string name
     2: optional ExternalID external_id
-    3: optional WalletID   id
-    4: optional Blocking   blocking
-    5: optional Account    account
-    6: optional Timestamp  created_at
+    4: optional Blocking blocking
+    6: optional Timestamp created_at
+    7: optional context.ContextSet metadata
+}
+
+struct WalletState {
+    1: optional string name
+    2: optional ExternalID external_id
+    3: optional WalletID id
+    4: optional Blocking blocking
+    5: optional Account account
+    6: optional Timestamp created_at
+    7: optional context.ContextSet metadata
 
     99: optional context.ContextSet context
 }
@@ -64,7 +73,7 @@ union AccountChange {
 ///
 
 service Management {
-    Wallet Create (
+    WalletState Create (
         1: WalletParams params)
         throws (
             1: fistful.IdentityNotFound     ex1
@@ -73,7 +82,7 @@ service Management {
             4: fistful.IDExists             ex4
         )
 
-    Wallet Get (1: WalletID id)
+    WalletState Get (1: WalletID id)
         throws (1: fistful.WalletNotFound ex1)
 }
 

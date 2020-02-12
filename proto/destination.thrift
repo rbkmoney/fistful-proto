@@ -24,17 +24,26 @@ typedef base.Timestamp            Timestamp
 typedef fistful.Blocking          Blocking
 
 struct Destination {
-    1: required string        name
-    2: required Resource      resource
-    3: optional ExternalID    external_id
-    4: optional Account       account
-    5: optional Status        status
+    1: required string name
+    2: required Resource resource
+    3: optional ExternalID external_id
+    7: optional Timestamp created_at
+    9: optional context.ContextSet metadata
+}
 
-    6: optional DestinationID        id
-    7: optional Timestamp            created_at
-    8: optional Blocking             blocking
+struct DestinationState {
+    1: required string name
+    2: required Resource resource
+    3: optional ExternalID external_id
+    4: optional Account account
+    5: optional Status status
 
-    99: optional context.ContextSet  context
+    6: optional DestinationID id
+    7: optional Timestamp created_at
+    8: optional Blocking blocking
+    9: optional context.ContextSet metadata
+
+    99: optional context.ContextSet context
 }
 
 struct DestinationParams {
@@ -63,7 +72,7 @@ struct Unauthorized {}
 
 service Management {
 
-    Destination Create(
+    DestinationState Create(
         1: DestinationParams params)
         throws(
             1: fistful.IDExists              ex1
@@ -72,7 +81,7 @@ service Management {
             4: fistful.PartyInaccessible     ex4
         )
 
-    Destination Get(1: DestinationID id)
+    DestinationState Get(1: DestinationID id)
         throws(
             1: fistful.DestinationNotFound ex1
         )
