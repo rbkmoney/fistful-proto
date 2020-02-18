@@ -9,9 +9,6 @@ include "base.thrift"
 include "fistful.thrift"
 include "eventsink.thrift"
 include "transfer.thrift"
-include "w2w_revert.thrift"
-include "w2w_revert_status.thrift"
-include "w2w_revert_adjustment.thrift"
 include "w2w_adjustment.thrift"
 include "w2w_status.thrift"
 include "limit_check.thrift"
@@ -22,7 +19,6 @@ include "cashflow.thrift"
 typedef base.EventID EventID
 typedef fistful.W2WTransferID W2WTransferID
 typedef fistful.AdjustmentID AdjustmentID
-typedef fistful.W2WTransferRevertID RevertID
 typedef fistful.WalletID WalletToID
 typedef fistful.WalletID WalletFromID
 typedef base.ExternalID ExternalID
@@ -51,9 +47,8 @@ union Change {
     1: CreatedChange created
     2: StatusChange status_changed
     3: TransferChange transfer
-    4: RevertChange revert
-    5: AdjustmentChange adjustment
-    6: LimitCheckChange limit_check
+    4: AdjustmentChange adjustment
+    5: LimitCheckChange limit_check
 }
 
 struct CreatedChange {
@@ -66,11 +61,6 @@ struct StatusChange {
 
 struct TransferChange {
     1: required transfer.Change payload
-}
-
-struct RevertChange {
-    1: required RevertID id
-    2: required w2w_revert.Change payload
 }
 
 struct AdjustmentChange {
@@ -102,32 +92,6 @@ exception AlreadyHasStatus {
 
 exception AnotherAdjustmentInProgress {
     1: required AdjustmentID another_adjustment_id
-}
-
-exception InconsistentRevertCurrency {
-    1: required base.CurrencyRef revert_currency
-    2: required base.CurrencyRef w2w_transfer_currency
-}
-
-exception InsufficientW2WTransferAmount {
-    1: required base.Cash revert_body
-    2: required base.Cash w2w_transfer_amount
-}
-
-exception InvalidRevertStatus {
-    1: required w2w_revert_status.Status revert_status
-}
-
-exception ForbiddenRevertStatusChange {
-    1: required w2w_revert_status.Status target_status
-}
-
-exception RevertAlreadyHasStatus {
-    1: required w2w_revert_status.Status revert_status
-}
-
-exception RevertNotFound {
-    1: required RevertID id
 }
 
 /// Event sink
