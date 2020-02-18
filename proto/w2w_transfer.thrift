@@ -9,11 +9,11 @@ include "base.thrift"
 include "fistful.thrift"
 include "eventsink.thrift"
 include "transfer.thrift"
-include "w2w_transfer_revert.thrift"
-include "w2w_transfer_revert_status.thrift"
-include "w2w_transfer_revert_adjustment.thrift"
-include "w2w_transfer_adjustment.thrift"
-include "w2w_transfer_status.thrift"
+include "w2w_revert.thrift"
+include "w2w_revert_status.thrift"
+include "w2w_revert_adjustment.thrift"
+include "w2w_adjustment.thrift"
+include "w2w_status.thrift"
 include "limit_check.thrift"
 include "repairer.thrift"
 include "context.thrift"
@@ -26,7 +26,7 @@ typedef fistful.W2WTransferRevertID RevertID
 typedef fistful.WalletID WalletToID
 typedef fistful.WalletID WalletFromID
 typedef base.ExternalID ExternalID
-typedef w2w_transfer_status.Status Status
+typedef w2w_status.Status Status
 typedef base.EventRange EventRange
 
 struct W2WTransfer {
@@ -70,12 +70,12 @@ struct TransferChange {
 
 struct RevertChange {
     1: required RevertID id
-    2: required w2w_transfer_revert.Change payload
+    2: required w2w_revert.Change payload
 }
 
 struct AdjustmentChange {
     1: required AdjustmentID id
-    2: required w2w_transfer_adjustment.Change payload
+    2: required w2w_adjustment.Change payload
 }
 
 struct LimitCheckChange {
@@ -115,15 +115,15 @@ exception InsufficientW2WTransferAmount {
 }
 
 exception InvalidRevertStatus {
-    1: required w2w_transfer_revert_status.Status revert_status
+    1: required w2w_revert_status.Status revert_status
 }
 
 exception ForbiddenRevertStatusChange {
-    1: required w2w_transfer_revert_status.Status target_status
+    1: required w2w_revert_status.Status target_status
 }
 
 exception RevertAlreadyHasStatus {
-    1: required w2w_transfer_revert_status.Status revert_status
+    1: required w2w_revert_status.Status revert_status
 }
 
 exception RevertNotFound {
@@ -169,7 +169,7 @@ struct AddEventsRepair {
 service Repairer {
     void Repair(1: W2WTransferID id, 2: RepairScenario scenario)
         throws (
-            1: fistful.W2WTransferNotFound ex1
+            1: fistful.W2WNotFound ex1
             2: fistful.MachineAlreadyWorking ex2
         )
 }

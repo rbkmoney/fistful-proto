@@ -76,3 +76,4 @@ exception InvalidOperationAmount {
 exception OperationNotPermitted { 1: optional string details }
 exception P2PNotFound        {}
 exception P2PSessionNotFound {}
+exception W2WNotFound        {}

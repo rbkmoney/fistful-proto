@@ -9,11 +9,11 @@ include "base.thrift"
 include "fistful.thrift"
 include "cashflow.thrift"
 include "transfer.thrift"
-include "w2w_transfer_revert_status.thrift"
+include "w2w_revert_status.thrift"
 
 typedef fistful.AdjustmentID AdjustmentID
 typedef base.ExternalID ExternalID
-typedef w2w_transfer_revert_status.Status TargetStatus
+typedef w2w_revert_status.Status TargetStatus
 
 struct Adjustment {
      1: required AdjustmentID id
@@ -30,10 +30,6 @@ struct AdjustmentParams {
      1: required AdjustmentID id
      2: required ChangeRequest change
      3: optional ExternalID external_id
-}
-
-struct AdjustmentState {
-    1: required Adjustment adjustment
 }
 
 union Status {

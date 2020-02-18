@@ -8,8 +8,8 @@ namespace erlang w2w_rev
 include "base.thrift"
 include "fistful.thrift"
 include "transfer.thrift"
-include "w2w_transfer_revert_adjustment.thrift"
-include "w2w_transfer_revert_status.thrift"
+include "w2w_revert_adjustment.thrift"
+include "w2w_revert_status.thrift"
 include "limit_check.thrift"
 include "cashflow.thrift"
 
@@ -20,7 +20,7 @@ typedef fistful.WalletID WalletFromID
 typedef fistful.AdjustmentID AdjustmentID
 typedef base.ExternalID ExternalID
 
-typedef w2w_transfer_revert_status.Status Status
+typedef w2w_revert_status.Status Status
 
 /// Domain
 
@@ -44,25 +44,12 @@ struct RevertParams {
     4: optional ExternalID external_id
 }
 
-struct RevertState {
-    1: required Revert revert
-
-    /**
-      * Набор проводок, который отражает предполагаемое движение денег между счетами.
-      * Может меняться в процессе прохождения операции или после применения корректировок.
-      */
-    2: required cashflow.FinalCashFlow effective_final_cash_flow
-
-    /** Перечень корректировок */
-    3: required list<w2w_transfer_revert_adjustment.AdjustmentState> adjustments
-}
-
 union Change {
-    1: CreatedChange     created
-    2: StatusChange      status_changed
-    3: LimitCheckChange  limit_check
-    4: TransferChange    transfer
-    5: AdjustmentChange  adjustment
+    1: CreatedChange created
+    2: StatusChange status_changed
+    3: LimitCheckChange limit_check
+    4: TransferChange transfer
+    5: AdjustmentChange adjustment
 }
 
 struct CreatedChange {
@@ -83,5 +70,5 @@ struct TransferChange {
 
 struct AdjustmentChange {
     1: required AdjustmentID id
-    2: required w2w_transfer_revert_adjustment.Change payload
+    2: required w2w_revert_adjustment.Change payload
 }
