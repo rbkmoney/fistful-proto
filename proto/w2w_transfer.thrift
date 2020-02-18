@@ -1,5 +1,5 @@
 /**
- * Вводы
+ * Переводы с кошелька на кошелек
  */
 
 namespace java   com.rbkmoney.fistful.w2w_transfer

@@ -1,5 +1,5 @@
 /**
- * Возврат ввода
+ * Возврат перевода
  */
 
 namespace java   com.rbkmoney.fistful.w2w_transfer.revert

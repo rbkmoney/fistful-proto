@@ -1,5 +1,5 @@
 /**
- * Статусы возврата ввода
+ * Статусы возврата перевода
  */
 
 namespace java   com.rbkmoney.fistful.w2w_transfer.revert.status

@@ -1,5 +1,5 @@
 /**
- * Корректировка ввода
+ * Корректировка перевода
  */
 
 namespace java   com.rbkmoney.fistful.w2w_transfer.adjustment
