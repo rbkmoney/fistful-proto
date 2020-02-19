@@ -24,7 +24,7 @@ namespace erlang w2w_errors
   * ### Статически типизированное представление
   *
   * ```
-  * P2PFailure{
+  * W2WFailure{
   *     account_limit_exceeded = LimitExceeded{
   *         amount = GeneralFailure{}
   *     }
