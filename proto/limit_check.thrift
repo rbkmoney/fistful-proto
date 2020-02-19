@@ -9,6 +9,12 @@ include "base.thrift"
 
 union Details {
     1: WalletDetails wallet
+    2: W2WDetails w2w
+}
+
+union W2WDetails {
+    1: WalletDetails wallet_from
+    2: WalletDetails wallet_to
 }
 
 union WalletDetails {
