@@ -105,7 +105,7 @@ struct EventSinkPayload {
 struct SinkEvent {
     1: required eventsink.EventID id
     2: required base.Timestamp created_at
-    3: required W2WTransferID wallet_from_id
+    3: required W2WTransferID source
     4: required EventSinkPayload payload
 }
 
