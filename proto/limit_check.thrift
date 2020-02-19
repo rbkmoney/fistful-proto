@@ -8,13 +8,8 @@ namespace erlang lim_check
 include "base.thrift"
 
 union Details {
-    1: WalletDetails wallet
-    2: W2WDetails w2w
-}
-
-union W2WDetails {
-    1: WalletDetails wallet_from
-    2: WalletDetails wallet_to
+    1: WalletDetails wallet_sender
+    2: WalletDetails wallet_receiver
 }
 
 union WalletDetails {
