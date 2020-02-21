@@ -49,6 +49,7 @@ struct Withdrawal {
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
+    10: optional Route route
 }
 
 struct WithdrawalState {
