@@ -31,6 +31,7 @@ typedef base.ContactInfo         ContactInfo
 /// Domain
 
 struct P2PTransfer {
+    15: optional P2PTransferID id
     1: required IdentityID owner
     2: required Sender sender
     3: required Receiver receiver
@@ -47,7 +48,16 @@ struct P2PTransfer {
     14: optional context.ContextSet metadata
 }
 
+struct P2PTransferParams {
+    1: required P2PTransferID id
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: optional ExternalID external_id
+}
+
 struct P2PTransferState {
+    15: optional P2PTransferID id
     1: required IdentityID owner
     2: required Sender sender
     3: required Receiver receiver
@@ -64,22 +74,22 @@ struct P2PTransferState {
     14: optional context.ContextSet metadata
 
     /** Контекст сущности заданный при её старте */
-    15: required context.ContextSet context
+    16: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    16: required cashflow.FinalCashFlow effective_final_cash_flow
+    17: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Текущий действующий маршрут */
-    17: optional Route effective_route
+    18: optional Route effective_route
 
     /** Перечень сессий взаимодействия с провайдером */
-    18: required list<SessionState> sessions
+    19: required list<SessionState> sessions
 
     /** Перечень корректировок */
-    19: required list<p2p_adjustment.AdjustmentState> adjustments
+    20: required list<p2p_adjustment.AdjustmentState> adjustments
 }
 
 struct SessionState {
@@ -193,6 +203,68 @@ enum RiskScore {
     low = 1
     high = 100
     fatal = 9999
+}
+
+exception InvalidP2PTransferStatus {
+    1: required Status p2p_status
+}
+
+exception ForbiddenStatusChange {
+    1: required Status target_status
+}
+
+exception AlreadyHasStatus {
+    1: required Status p2p_status
+}
+
+exception AnotherAdjustmentInProgress {
+    1: required AdjustmentID another_adjustment_id
+}
+
+service Management {
+
+    P2PTransferState Create(
+        1: P2PTransferParams params
+        2: context.ContextSet context
+    )
+        throws (
+            1: fistful.IdentityNotFound ex1
+            2: fistful.ForbiddenOperationCurrency ex2
+            3: fistful.ForbiddenOperationAmount ex3
+        )
+
+    P2PTransferState Get(
+        1: P2PTransferID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
+        )
+
+    context.ContextSet GetContext(1: P2PTransferID id)
+        throws (
+            1: fistful.P2PNotFound ex1
+        )
+
+    list<Event> GetEvents(
+        1: P2PTransferID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
+        )
+
+    p2p_adjustment.AdjustmentState CreateAdjustment(
+        1: P2PTransferID id
+        2: p2p_adjustment.AdjustmentParams params
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
+            2: InvalidP2PTransferStatus ex2
+            3: ForbiddenStatusChange ex3
+            4: AlreadyHasStatus ex4
+            5: AnotherAdjustmentInProgress ex5
+        )
 }
 
 /// Event sink
