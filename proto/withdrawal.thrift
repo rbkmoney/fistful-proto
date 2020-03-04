@@ -48,7 +48,8 @@ struct Withdrawal {
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
-    10: optional context.ContextSet metadata
+    10: optional Route route
+    11: optional context.ContextSet metadata
 }
 
 struct WithdrawalState {
@@ -61,25 +62,26 @@ struct WithdrawalState {
     8: optional base.Timestamp created_at
     9: optional base.DataRevision domain_revision
     10: optional base.PartyRevision party_revision
-    11: optional context.ContextSet metadata
+	11: optional Route route
+    12: optional context.ContextSet metadata
 
     /** Контекст операции заданный при её старте */
-    12: required context.ContextSet context
+    13: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    13: required cashflow.FinalCashFlow effective_final_cash_flow
+    14: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Текущий действующий маршрут */
-    14: optional Route effective_route
+    15: optional Route effective_route
 
     /** Перечень сессий взаимодействия с провайдером */
-    15: required list<SessionState> sessions
+    16: required list<SessionState> sessions
 
     /** Перечень корректировок */
-    16: required list<withdrawal_adjustment.AdjustmentState> adjustments
+    17: required list<withdrawal_adjustment.AdjustmentState> adjustments
 }
 
 struct SessionState {

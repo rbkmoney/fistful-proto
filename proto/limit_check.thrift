@@ -8,7 +8,8 @@ namespace erlang lim_check
 include "base.thrift"
 
 union Details {
-    1: WalletDetails wallet
+    1: WalletDetails wallet_sender
+    2: WalletDetails wallet_receiver
 }
 
 union WalletDetails {
