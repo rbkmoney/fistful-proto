@@ -146,6 +146,7 @@ enum CryptoCurrency {
     ripple
     ethereum
     zcash
+    usdt
 }
 
 union CryptoData {
@@ -155,6 +156,7 @@ union CryptoData {
     4: CryptoDataRipple ripple
     5: CryptoDataEthereum ethereum
     6: CryptoDataZcash zcash
+    7: CryptoDataUSDT usdt
 }
 
 struct CryptoDataBitcoin {}
@@ -165,6 +167,7 @@ struct CryptoDataRipple {
 }
 struct CryptoDataEthereum {}
 struct CryptoDataZcash {}
+struct CryptoDataUSDT {}
 
 /**
  * Платежные системы
