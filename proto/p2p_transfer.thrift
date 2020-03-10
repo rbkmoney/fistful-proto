@@ -31,7 +31,7 @@ typedef base.ContactInfo         ContactInfo
 /// Domain
 
 struct P2PTransfer {
-    15: optional P2PTransferID id
+    15: required P2PTransferID id
     1: required IdentityID owner
     2: required Sender sender
     3: required Receiver receiver
@@ -57,7 +57,7 @@ struct P2PTransferParams {
 }
 
 struct P2PTransferState {
-    15: optional P2PTransferID id
+    15: required P2PTransferID id
     1: required IdentityID owner
     2: required Sender sender
     3: required Receiver receiver
