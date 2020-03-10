@@ -62,7 +62,7 @@ struct WithdrawalState {
     8: optional base.Timestamp created_at
     9: optional base.DataRevision domain_revision
     10: optional base.PartyRevision party_revision
-	11: optional Route route
+    11: optional Route route
     12: optional context.ContextSet metadata
 
     /** Контекст операции заданный при её старте */
