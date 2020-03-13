@@ -88,7 +88,7 @@ struct ClientInfo {
 
 union Resource {
     1: ResourceBankCard bank_card
-    2: CryptoWallet crypto_wallet
+    2: ResourceCryptoWallet crypto_wallet
 }
 
 struct ResourceBankCard {
@@ -114,7 +114,7 @@ struct RecurrentIssuer {
 }
 
 struct ResourceCryptoWallet {
-    1: CryptoWallet crypto_wallet
+    1: required CryptoWallet crypto_wallet
 }
 
 /**
