@@ -87,8 +87,34 @@ struct ClientInfo {
 }
 
 union Resource {
-    1: BankCard     bank_card
+    1: ResourceBankCard bank_card
     2: CryptoWallet crypto_wallet
+}
+
+struct ResourceBankCard {
+    1: required BankCard bank_card
+    2: optional BankCardAuthData auth_data
+}
+
+union BankCardAuthData {
+    1: SessionAuthData session_data
+    2: RecurrentAuthData recurrent_data
+}
+
+struct SessionAuthData {
+    1: required ID id
+}
+
+struct RecurrentAuthData {
+    1: required RecurrentIssuer issuer
+}
+
+struct RecurrentIssuer {
+    1: required Token token
+}
+
+struct ResourceCryptoWallet {
+    1: CryptoWallet crypto_wallet
 }
 
 /**
