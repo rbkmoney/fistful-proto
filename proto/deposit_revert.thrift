@@ -45,25 +45,16 @@ struct RevertParams {
 }
 
 struct RevertState {
-    1: required RevertID id
-    2: required WalletID wallet_id
-    3: required SourceID source_id
-    4: required Status status
-    5: required base.Cash body
-    6: required base.Timestamp created_at
-    7: required base.DataRevision domain_revision
-    8: required base.PartyRevision party_revision
-    9: optional string reason
-    10: optional ExternalID external_id
+    1: required Revert revert
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    11: required cashflow.FinalCashFlow effective_final_cash_flow
+    2: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Перечень корректировок */
-    12: required list<deposit_revert_adjustment.AdjustmentState> adjustments
+    3: required list<deposit_revert_adjustment.AdjustmentState> adjustments
 }
 
 union Change {
