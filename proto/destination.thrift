@@ -22,6 +22,7 @@ typedef base.ExternalID           ExternalID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef base.Timestamp            Timestamp
 typedef fistful.Blocking          Blocking
+typedef base.Resource             Resource
 
 struct Destination {
     1: required string        name
@@ -46,11 +47,6 @@ struct DestinationParams {
     6: optional ExternalID            external_id
 
     99: optional context.ContextSet   context
-}
-
-union Resource {
-    1: base.BankCard     bank_card
-    2: base.CryptoWallet crypto_wallet
 }
 
 union Status {
