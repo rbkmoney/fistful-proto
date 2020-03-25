@@ -66,7 +66,7 @@ struct IdentityState {
     12: optional ContextSet context
 }
 
-struct IdentityEvent {
+struct Event {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp       occured_at
     3: required Change               change
@@ -168,7 +168,7 @@ service Management {
             1: fistful.IdentityNotFound  ex1
         )
 
-    list<IdentityEvent> GetEvents (
+    list<Event> GetEvents (
         1: IdentityID identity_id
         2: EventRange range)
         throws (
@@ -176,9 +176,9 @@ service Management {
         )
 }
 
-/// Wallet events
+/// Identity events
 
-struct Event {
+struct EventSinkPayload {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp occured_at
     3: required list<Change> changes
@@ -207,7 +207,7 @@ struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required IdentityID           source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {
