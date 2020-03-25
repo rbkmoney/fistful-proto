@@ -39,18 +39,31 @@ struct IdentityParams {
 }
 
 struct Identity {
+    6:  optional IdentityID  id
     1:  required PartyID     party
     2:  required ProviderID  provider
     3:  required ClassID     cls
     4:  optional ContractID  contract
     5:  optional ExternalID  external_id
-    6:  optional IdentityID  id
-    7:  optional ChallengeID effective_challenge
-    8:  optional Blocking    blocking
-    9:  optional LevelID     level
     10: optional Timestamp   created_at
+    11: optional ContextSet  metadata
+}
 
-    99: optional ContextSet  context
+struct IdentityState {
+    6:  optional IdentityID id
+    1:  required PartyID party_id
+    2:  required ProviderID provider_id
+    3:  required ClassID class_id
+    4:  optional ContractID contract_id
+    5:  optional ExternalID external_id
+    7:  optional ChallengeID effective_challenge_id
+    8:  optional Blocking blocking
+    9:  optional LevelID level_id
+    10: optional Timestamp created_at
+    11: optional ContextSet metadata
+
+    /** Контекст сущности заданный при её старте */
+    12: optional ContextSet context
 }
 
 struct IdentityEvent {
@@ -60,10 +73,20 @@ struct IdentityEvent {
 }
 
 struct Challenge {
-    1: required ChallengeClassID     cls
+    3: optional ChallengeID id
+    1: required ChallengeClassID cls
     2: optional list<ChallengeProof> proofs
-    3: optional ChallengeID          id
-    4: optional ChallengeStatus      status
+    5: optional ProviderID provider_id
+    6: optional ClassID class_id
+}
+
+struct ChallengeState {
+    3: optional ChallengeID id
+    1: required ChallengeClassID cls
+    2: optional list<ChallengeProof> proofs
+    4: optional ChallengeStatus status
+    5: optional ProviderID provider_id
+    6: optional ClassID class_id
 }
 
 struct ChallengeParams {
@@ -108,7 +131,7 @@ struct ChallengeProof {
 
 service Management {
 
-    Identity Create (
+    IdentityState Create (
         1: IdentityParams params)
         throws (
             1: fistful.ProviderNotFound      ex1
@@ -116,12 +139,17 @@ service Management {
             3: fistful.PartyInaccessible     ex3
         )
 
-    Identity Get (1: IdentityID id)
+    IdentityState Get (1: IdentityID id)
         throws (
             1: fistful.IdentityNotFound ex1
         )
 
-    Challenge StartChallenge (
+    context.ContextSet GetContext(1: IdentityID id)
+        throws (
+            1: fistful.IdentityNotFound ex1
+        )
+
+    ChallengeState StartChallenge (
         1: IdentityID      id
         2: ChallengeParams params)
         throws (
@@ -135,7 +163,7 @@ service Management {
             8: fistful.PartyInaccessible       ex8
         )
 
-    list<Challenge> GetChallenges(1: IdentityID  id)
+    list<ChallengeState> GetChallenges(1: IdentityID  id)
         throws (
             1: fistful.IdentityNotFound  ex1
         )

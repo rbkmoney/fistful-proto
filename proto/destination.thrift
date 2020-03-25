@@ -23,19 +23,32 @@ typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef base.Timestamp            Timestamp
 typedef fistful.Blocking          Blocking
 typedef base.Resource             Resource
+typedef base.EventID              EventID
+typedef base.EventRange           EventRange
+
 
 struct Destination {
-    1: required string        name
-    2: required Resource      resource
-    3: optional ExternalID    external_id
-    4: optional Account       account
-    5: optional Status        status
+    1: required string name
+    2: required Resource resource
+    3: optional ExternalID external_id
+    7: optional Timestamp created_at
+    9: optional context.ContextSet metadata
+}
 
-    6: optional DestinationID        id
-    7: optional Timestamp            created_at
-    8: optional Blocking             blocking
+struct DestinationState {
+    1: required string name
+    2: required Resource resource
+    3: optional ExternalID external_id
+    4: optional Account account
+    5: optional Status status
 
-    99: optional context.ContextSet  context
+    6: optional DestinationID id
+    7: optional Timestamp created_at
+    8: optional Blocking blocking
+    9: optional context.ContextSet metadata
+
+    /** Контекст сущности заданный при её старте */
+    10: optional context.ContextSet context
 }
 
 struct DestinationParams {
@@ -59,7 +72,7 @@ struct Unauthorized {}
 
 service Management {
 
-    Destination Create(
+    DestinationState Create(
         1: DestinationParams params)
         throws(
             1: fistful.IDExists              ex1
@@ -68,18 +81,30 @@ service Management {
             4: fistful.PartyInaccessible     ex4
         )
 
-    Destination Get(1: DestinationID id)
+    DestinationState Get(1: DestinationID id)
         throws(
+            1: fistful.DestinationNotFound ex1
+        )
+
+    context.ContextSet GetContext(1: DestinationID id)
+        throws (
+            1: fistful.DestinationNotFound ex1
+        )
+    
+    list<Event> GetEvents(
+        1: DestinationID id
+        2: EventRange range
+    )
+        throws (
             1: fistful.DestinationNotFound ex1
         )
 }
 
 /// Source events
-
 struct Event {
-    1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
+    1: required EventID              event_id
+    2: required base.Timestamp       occured_at
+    3: required Change               change
 }
 
 union Change {
@@ -98,11 +123,17 @@ union StatusChange {
 
 /// Event sink
 
+struct EventSinkPayload {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp occured_at
+    3: required list<Change> changes
+}
+
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required DestinationID        source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {

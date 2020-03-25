@@ -10,6 +10,7 @@ include "fistful.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
+include "cashflow.thrift"
 include "transfer.thrift"
 include "p2p_adjustment.thrift"
 include "p2p_status.thrift"
@@ -30,19 +31,70 @@ typedef base.ContactInfo         ContactInfo
 /// Domain
 
 struct P2PTransfer {
-    1: required IdentityID          owner
-    2: required Sender              sender
-    3: required Receiver            receiver
-    4: required base.Cash           body
-    5: required Status              status
-    6: required base.Timestamp      created_at
-    7: required base.DataRevision   domain_revision
-    8: required base.PartyRevision  party_revision
-    9: required base.Timestamp      operation_timestamp
-    10: optional P2PQuote           quote
-    11: optional ExternalID         external_id
-    12: optional base.Timestamp     deadline
-    13: optional base.ClientInfo    client_info
+    15: required P2PTransferID id
+    1: required IdentityID owner
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: required Status status
+    6: required base.Timestamp created_at
+    7: required base.DataRevision domain_revision
+    8: required base.PartyRevision party_revision
+    9: required base.Timestamp operation_timestamp
+    10: optional P2PQuote quote
+    11: optional ExternalID external_id
+    12: optional base.Timestamp deadline
+    13: optional base.ClientInfo client_info
+    14: optional context.ContextSet metadata
+}
+
+struct P2PTransferParams {
+    1: required P2PTransferID id
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: optional ExternalID external_id
+}
+
+struct P2PTransferState {
+    15: required P2PTransferID id
+    1: required IdentityID owner
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: required Status status
+    6: required base.Timestamp created_at
+    7: required base.DataRevision domain_revision
+    8: required base.PartyRevision party_revision
+    9: required base.Timestamp operation_timestamp
+    10: optional P2PQuote quote
+    11: optional ExternalID external_id
+    12: optional base.Timestamp deadline
+    13: optional base.ClientInfo client_info
+    14: optional context.ContextSet metadata
+
+    /** Контекст сущности заданный при её старте */
+    16: required context.ContextSet context
+
+    /**
+      * Набор проводок, который отражает предполагаемое движение денег между счетами.
+      * Может меняться в процессе прохождения операции или после применения корректировок.
+      */
+    17: required cashflow.FinalCashFlow effective_final_cash_flow
+
+    /** Текущий действующий маршрут */
+    18: optional Route effective_route
+
+    /** Перечень сессий взаимодействия с провайдером */
+    19: required list<SessionState> sessions
+
+    /** Перечень корректировок */
+    20: required list<p2p_adjustment.AdjustmentState> adjustments
+}
+
+struct SessionState {
+    1: required SessionID id
+    2: optional SessionResult result
 }
 
 /// Пока используется как признак того, что операция была проведена по котировке
@@ -151,6 +203,68 @@ enum RiskScore {
     low = 1
     high = 100
     fatal = 9999
+}
+
+exception InvalidP2PTransferStatus {
+    1: required Status p2p_status
+}
+
+exception ForbiddenStatusChange {
+    1: required Status target_status
+}
+
+exception AlreadyHasStatus {
+    1: required Status p2p_status
+}
+
+exception AnotherAdjustmentInProgress {
+    1: required AdjustmentID another_adjustment_id
+}
+
+service Management {
+
+    P2PTransferState Create(
+        1: P2PTransferParams params
+        2: context.ContextSet context
+    )
+        throws (
+            1: fistful.IdentityNotFound ex1
+            2: fistful.ForbiddenOperationCurrency ex2
+            3: fistful.ForbiddenOperationAmount ex3
+        )
+
+    P2PTransferState Get(
+        1: P2PTransferID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
+        )
+
+    context.ContextSet GetContext(1: P2PTransferID id)
+        throws (
+            1: fistful.P2PNotFound ex1
+        )
+
+    list<Event> GetEvents(
+        1: P2PTransferID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
+        )
+
+    p2p_adjustment.AdjustmentState CreateAdjustment(
+        1: P2PTransferID id
+        2: p2p_adjustment.AdjustmentParams params
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
+            2: InvalidP2PTransferStatus ex2
+            3: ForbiddenStatusChange ex3
+            4: AlreadyHasStatus ex4
+            5: AnotherAdjustmentInProgress ex5
+        )
 }
 
 /// Event sink

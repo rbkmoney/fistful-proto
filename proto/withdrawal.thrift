@@ -45,33 +45,43 @@ struct Withdrawal {
     2: required DestinationID destination_id
     3: required base.Cash body
     4: optional ExternalID external_id
-    6: optional Status status
     7: optional base.Timestamp created_at
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
     10: optional Route route
+    11: optional context.ContextSet metadata
 }
 
 struct WithdrawalState {
-    1: required Withdrawal withdrawal
+    1: optional WithdrawalID id
+    2: required WalletID wallet_id
+    3: required DestinationID destination_id
+    4: required base.Cash body
+    5: optional ExternalID external_id
+    7: optional Status status
+    8: optional base.Timestamp created_at
+    9: optional base.DataRevision domain_revision
+    10: optional base.PartyRevision party_revision
+    11: optional Route route
+    12: optional context.ContextSet metadata
 
     /** Контекст операции заданный при её старте */
-    2: required context.ContextSet context
+    13: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    3: required cashflow.FinalCashFlow effective_final_cash_flow
+    14: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Текущий действующий маршрут */
-    4: optional Route effective_route
+    15: optional Route effective_route
 
     /** Перечень сессий взаимодействия с провайдером */
-    5: required list<SessionState> sessions
+    16: required list<SessionState> sessions
 
     /** Перечень корректировок */
-    6: required list<withdrawal_adjustment.AdjustmentState> adjustments
+    17: required list<withdrawal_adjustment.AdjustmentState> adjustments
 }
 
 struct SessionState {
