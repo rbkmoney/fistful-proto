@@ -46,6 +46,7 @@ struct WithdrawalParams {
     4: required base.Cash body
     5: optional ExternalID external_id
     6: optional WithdrawalQuote quote
+    7: optional context.ContextSet metadata
 }
 
 struct Withdrawal {

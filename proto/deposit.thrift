@@ -72,11 +72,12 @@ struct DepositState {
 }
 
 struct DepositParams {
-    1: required DepositID      id
-    2: required WalletID       wallet_id
-    3: required SourceID       source_id
-    4: required base.Cash      body
-    5: optional ExternalID     external_id
+    1: required DepositID id
+    2: required WalletID wallet_id
+    3: required SourceID source_id
+    4: required base.Cash body
+    5: optional ExternalID external_id
+    6: optional context.ContextSet metadata
 }
 
 struct Event {

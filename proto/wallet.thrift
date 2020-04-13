@@ -28,6 +28,7 @@ struct WalletParams {
     1: WalletID id
     2: required string name
     3: required AccountParams account_params
+    4: optional context.ContextSet metadata
 
     98: optional ExternalID          external_id
     99: optional context.ContextSet  context

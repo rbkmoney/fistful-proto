@@ -58,6 +58,7 @@ struct SourceParams {
     2: required IdentityID identity_id
     3: required CurrencyRef currency
     4: required Resource resource
+    6: optional context.ContextSet metadata
 }
 
 union Resource {

@@ -67,13 +67,14 @@ struct W2WTransferParams {
     3: required WalletToID wallet_to_id
     4: required base.Cash body
     5: optional ExternalID external_id
+    6: optional context.ContextSet metadata
 }
 
 struct Event {
     1: required EventID event_id
     2: required base.Timestamp occured_at
     3: required Change change
-} 
+}
 
 union Change {
     1: CreatedChange created

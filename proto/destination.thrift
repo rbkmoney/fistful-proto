@@ -58,6 +58,7 @@ struct DestinationParams {
     4: required CurrencySymbolicCode  currency
     5: required Resource              resource
     6: optional ExternalID            external_id
+    7: optional context.ContextSet    metadata
 
     99: optional context.ContextSet   context
 }

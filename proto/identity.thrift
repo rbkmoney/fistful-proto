@@ -34,6 +34,7 @@ struct IdentityParams {
     3: required ProviderID  provider
     4: required ClassID     cls
     5: optional ExternalID  external_id
+    6: optional ContextSet  metadata
 
     99: optional ContextSet context
 }
