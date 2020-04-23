@@ -127,6 +127,11 @@ union SessionChangePayload {
     2: SessionFinished  finished
 }
 
+struct InitArgs {
+    1: required list<Change> changes
+    2: required context.ContextSet context
+}
+
 struct SessionStarted {}
 
 struct SessionFinished {
