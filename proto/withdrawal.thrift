@@ -132,6 +132,11 @@ struct InitArgs {
     2: required context.ContextSet context
 }
 
+struct NoIdEvent {
+    1: required base.Timestamp occured_at
+    2: required Change change
+}
+
 struct SessionStarted {}
 
 struct SessionFinished {
