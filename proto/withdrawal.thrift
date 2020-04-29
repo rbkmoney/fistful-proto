@@ -137,6 +137,13 @@ struct NoIdEvent {
     2: required Change change
 }
 
+
+union WithdrawalEventPayload {
+    1: InitArgs init_args
+    2: context.ContextSet aux_state
+    3: NoIdEvent event
+}
+
 struct SessionStarted {}
 
 struct SessionFinished {
