@@ -17,6 +17,7 @@ typedef ID DepositRevertID
 typedef ID AdjustmentID
 typedef ID WithdrawalID
 typedef ID P2PTransferID
+typedef ID P2PTemplateID
 typedef ID W2WTransferID
 typedef ID IdentityID
 typedef ID WalletID
@@ -73,6 +74,7 @@ exception InvalidOperationAmount {
 }
 
 exception OperationNotPermitted { 1: optional string details }
-exception P2PNotFound        {}
+exception P2PNotFound {}
 exception P2PSessionNotFound {}
-exception W2WNotFound        {}
+exception W2WNotFound {}
+exception P2PTemplateNotFound {}
