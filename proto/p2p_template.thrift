@@ -20,6 +20,13 @@ typedef base.ExternalID ExternalID
 typedef base.Timestamp Timestamp
 typedef fistful.Blocking Blocking
 
+struct P2PTemplateParams {
+    1: required P2PTemplateID id
+    2: required IdentityID identity_id
+    3: required P2PTemplateFields fields
+    4: optional ExternalID external_id
+}
+
 struct P2PTemplate {
     1: required P2PTemplateID id
     2: required IdentityID identity_id
@@ -53,7 +60,35 @@ struct Event {
 }
 
 union Change {
-    1: P2PTemplate created
+    1: CreatedChange created
+    2: BlockingChange blocking_changed
+}
+
+struct CreatedChange {
+    1: required P2PTemplate p2p_template
+}
+
+struct BlockingChange {
+    1: required Blocking blocking
+}
+
+///
+
+service Management {
+    P2PTemplate Create (
+        1: P2PTemplateParams params)
+        throws (
+            1: fistful.IdentityNotFound     ex1
+            2: fistful.CurrencyNotFound     ex2
+            3: fistful.PartyInaccessible    ex3
+            4: fistful.IDExists             ex4
+        )
+
+    P2PTemplate Get (1: P2PTemplateID id)
+        throws (1: fistful.P2PTemplateNotFound ex1)
+
+    void SetBlocking (1: P2PTemplateID id, 2: Blocking value)
+        throws (1: fistful.P2PTemplateNotFound ex1)
 }
 
 /// Event sink
