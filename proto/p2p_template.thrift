@@ -76,7 +76,8 @@ struct BlockingChange {
 
 service Management {
     P2PTemplate Create (
-        1: P2PTemplateParams params)
+        1: P2PTemplateParams params
+    )
         throws (
             1: fistful.IdentityNotFound     ex1
             2: fistful.CurrencyNotFound     ex2
