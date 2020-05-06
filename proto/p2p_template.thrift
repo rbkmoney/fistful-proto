@@ -19,12 +19,24 @@ typedef fistful.IdentityID IdentityID
 typedef base.ExternalID ExternalID
 typedef base.Timestamp Timestamp
 typedef fistful.Blocking Blocking
+typedef base.EventRange EventRange
 
 struct P2PTemplateParams {
     1: required P2PTemplateID id
     2: required IdentityID identity_id
     3: required P2PTemplateFields fields
     4: optional ExternalID external_id
+}
+
+struct P2PTemplateState {
+    1: required P2PTemplateID id
+    2: required IdentityID identity_id
+    3: required Blocking blocking
+    4: required Timestamp created_at
+    5: required base.DataRevision domain_revision
+    6: required base.PartyRevision party_revision
+    7: required P2PTemplateFields fields
+    8: optional ExternalID external_id
 }
 
 struct P2PTemplate {
@@ -75,17 +87,22 @@ struct BlockingChange {
 ///
 
 service Management {
-    P2PTemplate Create (
-        1: P2PTemplateParams params
-    )
+    P2PTemplateState Create (
+        1: P2PTemplateParams params)
         throws (
-            1: fistful.IdentityNotFound     ex1
-            2: fistful.CurrencyNotFound     ex2
-            3: fistful.PartyInaccessible    ex3
-            4: fistful.IDExists             ex4
+            1: fistful.IdentityNotFound ex1
+            2: fistful.CurrencyNotFound ex2
+            3: fistful.PartyInaccessible ex3
+            4: fistful.IDExists ex4
+            5: fistful.ForbiddenOperationCurrency ex5
+            6: fistful.ForbiddenOperationAmount ex6
+            7: fistful.InvalidOperationAmount ex7
         )
 
-    P2PTemplate Get (1: P2PTemplateID id)
+    P2PTemplateState Get (
+        1: P2PTemplateID id
+        2: EventRange range
+    )
         throws (1: fistful.P2PTemplateNotFound ex1)
 
     void SetBlocking (1: P2PTemplateID id, 2: Blocking value)
