@@ -94,9 +94,7 @@ service Management {
             2: fistful.CurrencyNotFound ex2
             3: fistful.PartyInaccessible ex3
             4: fistful.IDExists ex4
-            5: fistful.ForbiddenOperationCurrency ex5
-            6: fistful.ForbiddenOperationAmount ex6
-            7: fistful.InvalidOperationAmount ex7
+            5: fistful.InvalidOperationAmount ex5
         )
 
     P2PTemplateState Get (
