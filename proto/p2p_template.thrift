@@ -24,7 +24,7 @@ typedef base.EventRange EventRange
 struct P2PTemplateParams {
     1: required P2PTemplateID id
     2: required IdentityID identity_id
-    3: required P2PTemplateFields fields
+    3: required P2PTemplateFields template_fields
     4: optional ExternalID external_id
 }
 
@@ -35,7 +35,7 @@ struct P2PTemplateState {
     4: required Timestamp created_at
     5: required base.DataRevision domain_revision
     6: required base.PartyRevision party_revision
-    7: required P2PTemplateFields fields
+    7: required P2PTemplateFields template_fields
     8: optional ExternalID external_id
 }
 
@@ -46,7 +46,7 @@ struct P2PTemplate {
     4: required Timestamp created_at
     5: required base.DataRevision domain_revision
     6: required base.PartyRevision party_revision
-    7: required P2PTemplateFields fields
+    7: required P2PTemplateFields template_fields
     8: optional ExternalID external_id
 }
 
