@@ -24,7 +24,7 @@ typedef base.EventRange EventRange
 struct P2PTemplateParams {
     1: required P2PTemplateID id
     2: required IdentityID identity_id
-    3: required P2PTemplateFields template_fields
+    3: required P2PTemplateDetails template_details
     4: optional ExternalID external_id
 }
 
@@ -35,7 +35,7 @@ struct P2PTemplateState {
     4: required Timestamp created_at
     5: required base.DataRevision domain_revision
     6: required base.PartyRevision party_revision
-    7: required P2PTemplateFields template_fields
+    7: required P2PTemplateDetails template_details
     8: optional ExternalID external_id
 }
 
@@ -46,20 +46,25 @@ struct P2PTemplate {
     4: required Timestamp created_at
     5: required base.DataRevision domain_revision
     6: required base.PartyRevision party_revision
-    7: required P2PTemplateFields template_fields
+    7: required P2PTemplateDetails template_details
     8: optional ExternalID external_id
 }
 
-struct P2PTemplateFields {
-    1: optional P2PTemplateFieldBody body
-    2: optional P2PTemplateFieldMetadata metadata
+struct P2PTemplateDetails {
+    1: optional P2PTemplateBody body
+    2: optional P2PTemplateMetadata metadata
 }
 
-struct P2PTemplateFieldBody {
-    1: required base.Cash value
+struct P2PTemplateBody {
+    1: required Cash value
 }
 
-struct P2PTemplateFieldMetadata {
+struct Cash {
+    1: optional base.Amount amount
+    2: required base.CurrencyRef currency
+}
+
+struct P2PTemplateMetadata {
     1: required context.ContextSet value
 }
 
