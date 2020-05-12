@@ -114,6 +114,7 @@ service Management {
             1: fistful.ProviderNotFound      ex1
             2: fistful.IdentityClassNotFound ex2
             3: fistful.PartyInaccessible     ex3
+            4: fistful.IDExists              ex4
         )
 
     Identity Get (1: IdentityID id)
