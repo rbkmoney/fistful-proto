@@ -15,7 +15,7 @@ include "context.thrift"
 
 typedef fistful.P2PTemplateID P2PTemplateID
 typedef fistful.IdentityID IdentityID
-
+typedef base.EventID EventID
 typedef base.ExternalID ExternalID
 typedef base.Timestamp Timestamp
 typedef fistful.Blocking Blocking
@@ -31,23 +31,22 @@ struct P2PTemplateParams {
 struct P2PTemplateState {
     1: required P2PTemplateID id
     2: required IdentityID identity_id
-    3: required Blocking blocking
-    4: required Timestamp created_at
-    5: required base.DataRevision domain_revision
-    6: required base.PartyRevision party_revision
-    7: required P2PTemplateDetails template_details
+    3: required Timestamp created_at
+    4: required base.DataRevision domain_revision
+    5: required base.PartyRevision party_revision
+    6: required P2PTemplateDetails template_details
+    7: optional Blocking blocking
     8: optional ExternalID external_id
 }
 
 struct P2PTemplate {
     1: required P2PTemplateID id
     2: required IdentityID identity_id
-    3: required Blocking blocking
-    4: required Timestamp created_at
-    5: required base.DataRevision domain_revision
-    6: required base.PartyRevision party_revision
-    7: required P2PTemplateDetails template_details
-    8: optional ExternalID external_id
+    3: required Timestamp created_at
+    4: required base.DataRevision domain_revision
+    5: required base.PartyRevision party_revision
+    6: required P2PTemplateDetails template_details
+    7: optional ExternalID external_id
 }
 
 struct P2PTemplateDetails {
@@ -71,9 +70,9 @@ struct P2PTemplateMetadata {
 /// P2PTemplate events
 
 struct Event {
-    1: required eventsink.SequenceID sequence
-    2: required base.Timestamp occured_at
-    3: required list<Change> changes
+    1: required EventID              event_id
+    2: required base.Timestamp       occured_at
+    3: required Change               change
 }
 
 union Change {
@@ -114,11 +113,17 @@ service Management {
 
 /// Event sink
 
+struct EventSinkPayload {
+    1: required eventsink.SequenceID sequence
+    2: required base.Timestamp occured_at
+    3: required list<Change> changes
+}
+
 struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required P2PTemplateID        source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {
