@@ -5,10 +5,12 @@
 namespace java   com.rbkmoney.fistful.transfer
 namespace erlang transfer
 
+include "base.thrift"
 include "cashflow.thrift"
 
 struct Transfer {
     1: required cashflow.FinalCashFlow cashflow
+    2: optional base.ID id
 }
 
 union Status {
