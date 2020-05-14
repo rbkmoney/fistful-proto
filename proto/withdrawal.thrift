@@ -19,7 +19,6 @@ include "limit_check.thrift"
 typedef base.ID                  SessionID
 typedef base.ID                  ProviderID
 typedef base.EventID             EventID
-typedef base.ID                  TransferID
 typedef fistful.WithdrawalID     WithdrawalID
 typedef fistful.AdjustmentID     AdjustmentID
 typedef fistful.WalletID         WalletID
@@ -107,7 +106,6 @@ struct StatusChange {
 
 struct TransferChange {
     1: required transfer.Change payload
-    2: optional TransferID id
 }
 
 struct AdjustmentChange {
