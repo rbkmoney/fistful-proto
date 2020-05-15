@@ -38,6 +38,7 @@ struct P2PTemplateState {
     6: required P2PTemplateDetails template_details
     7: optional Blocking blocking
     8: optional ExternalID external_id
+    9: optional context.ContextSet context
 }
 
 struct P2PTemplate {
