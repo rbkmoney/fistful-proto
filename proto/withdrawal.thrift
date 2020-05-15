@@ -6,6 +6,7 @@ namespace java   com.rbkmoney.fistful.withdrawal
 namespace erlang wthd
 
 include "base.thrift"
+include "msgpack.thrift"
 include "fistful.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
@@ -39,6 +40,14 @@ struct WithdrawalParams {
     5: optional ExternalID    external_id
 }
 
+struct Quote {
+    1: required base.Cash cash_from
+    2: required base.Cash cash_to
+    3: required base.Timestamp created_at
+    4: required base.Timestamp expires_on
+    5: optional map<string, msgpack.Value> quote_data
+}
+
 struct Withdrawal {
     5: optional WithdrawalID id
     1: required WalletID wallet_id
@@ -50,6 +59,7 @@ struct Withdrawal {
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
     10: optional Route route
+    11: optional Quote quote
 }
 
 struct WithdrawalState {
