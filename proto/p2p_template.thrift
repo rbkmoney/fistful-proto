@@ -26,6 +26,7 @@ struct P2PTemplateParams {
     2: required IdentityID identity_id
     3: required P2PTemplateDetails template_details
     4: optional ExternalID external_id
+    5: optional context.ContextSet context
 }
 
 struct P2PTemplateState {
