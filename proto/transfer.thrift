@@ -7,7 +7,10 @@ namespace erlang transfer
 
 include "cashflow.thrift"
 
+typedef base.ID TransferID
+
 struct Transfer {
+    2: required TransferID id
     1: required cashflow.FinalCashFlow cashflow
 }
 

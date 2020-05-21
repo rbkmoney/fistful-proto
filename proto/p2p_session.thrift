@@ -38,7 +38,7 @@ union SessionStatus {
 
 struct SessionActive {}
 struct SessionFinished {
-    1: Result result
+    1: required Result result
 }
 
 struct P2PTransfer {
@@ -64,6 +64,11 @@ struct Event {
     1: required base.EventID         event
     2: required base.Timestamp       occured_at
     3: required Change               change
+}
+
+struct TimestampedChange {
+    1: required base.Timestamp       occured_at
+    2: required Change               change
 }
 
 union Change {
