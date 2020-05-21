@@ -5,6 +5,7 @@
 namespace java   com.rbkmoney.fistful.transfer
 namespace erlang transfer
 
+include "base.thrift"
 include "cashflow.thrift"
 
 typedef base.ID TransferID
