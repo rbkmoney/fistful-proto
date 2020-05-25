@@ -18,6 +18,7 @@ include "limit_check.thrift"
 
 typedef base.ID                  SessionID
 typedef base.ID                  ProviderID
+typedef base.ID                  TerminalID
 typedef base.EventID             EventID
 typedef fistful.WithdrawalID     WithdrawalID
 typedef fistful.AdjustmentID     AdjustmentID
@@ -152,6 +153,7 @@ struct RouteChange {
 
 struct Route {
     1: required ProviderID provider_id
+    2: optional TerminalID terminal_id
 }
 
 union ResourceChange {
