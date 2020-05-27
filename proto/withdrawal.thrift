@@ -152,6 +152,7 @@ struct RouteChange {
 
 struct Route {
     1: required ProviderID provider_id
+    2: optional list<ProviderID> pending_providers
 }
 
 union ResourceChange {
