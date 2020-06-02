@@ -94,7 +94,6 @@ union Change {
     8: LimitCheckChange    limit_check
     4: SessionChange       session
     7: AdjustmentChange    adjustment
-    9: StateResetChange    state_reset
 }
 
 struct CreatedChange {
@@ -113,8 +112,6 @@ struct AdjustmentChange {
     1: required AdjustmentID id
     2: required withdrawal_adjustment.Change payload
 }
-
-struct StateResetChange {}
 
 struct LimitCheckChange {
     1: required limit_check.Details details
