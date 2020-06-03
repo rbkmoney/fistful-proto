@@ -52,7 +52,7 @@ struct P2PTemplate {
 }
 
 struct P2PTemplateDetails {
-    1: optional P2PTemplateBody body
+    1: required P2PTemplateBody body
     2: optional P2PTemplateMetadata metadata
 }
 
