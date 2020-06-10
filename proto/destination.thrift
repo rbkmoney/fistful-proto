@@ -91,7 +91,7 @@ service Management {
         throws (
             1: fistful.DestinationNotFound ex1
         )
-    
+
     list<Event> GetEvents(
         1: DestinationID id
         2: EventRange range
@@ -102,6 +102,12 @@ service Management {
 }
 
 /// Source events
+
+struct TimestampedChange {
+    1: required base.Timestamp       occured_at
+    2: required Change               change
+}
+
 struct Event {
     1: required EventID              event_id
     2: required base.Timestamp       occured_at
