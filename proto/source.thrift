@@ -114,6 +114,11 @@ struct Event {
     3: required Change               change
 }
 
+struct TimestampedChange {
+    1: required base.Timestamp       occured_at
+    2: required Change               change
+}
+
 union Change {
     1: Source           created
     2: AccountChange    account

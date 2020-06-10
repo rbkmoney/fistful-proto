@@ -63,6 +63,11 @@ struct Event {
     3: required list<Change> changes
 }
 
+struct TimestampedChange {
+    1: required base.Timestamp occured_at
+    2: required Change change
+}
+
 union Change {
     1: Wallet           created
     2: AccountChange    account

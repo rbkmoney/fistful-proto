@@ -186,6 +186,11 @@ struct EventSinkPayload {
     3: required list<Change> changes
 }
 
+struct TimestampedChange {
+    1: required base.Timestamp occured_at
+    2: required Change change
+}
+
 union Change {
     1: Identity        created
     2: LevelID         level_changed
