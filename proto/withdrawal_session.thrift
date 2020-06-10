@@ -66,6 +66,11 @@ struct Event {
     3: required list<Change> changes
 }
 
+struct TimestampedChange {
+    1: required base.Timestamp       occured_at
+    2: required Change               change
+}
+
 union Change {
     1: Session       created
     2: AdapterState  next_state
