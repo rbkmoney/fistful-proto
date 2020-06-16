@@ -132,6 +132,7 @@ struct BankCard {
     */
     10: optional BankCardExpDate exp_date
     11: optional string cardholder_name
+    12: optional string category
     20: optional CardType card_type
     21: optional BinDataId bin_data_id
 }
