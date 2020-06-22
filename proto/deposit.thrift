@@ -18,6 +18,7 @@ include "limit_check.thrift"
 include "repairer.thrift"
 include "context.thrift"
 include "cashflow.thrift"
+include "account.thrift"
 
 typedef base.EventID            EventID
 typedef fistful.DepositID       DepositID
@@ -41,6 +42,9 @@ struct Deposit {
     8: optional base.DataRevision domain_revision
     9: optional base.PartyRevision party_revision
     10: optional context.ContextSet metadata
+    11: required account.Account wallet_account
+    12: required account.Account source_account
+    13: required cashflow.FinalCashFlow wallet_cash_flow_plan
 }
 
 struct DepositState {
