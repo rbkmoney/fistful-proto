@@ -38,6 +38,7 @@ struct Revert {
 }
 
 struct RevertParams {
+    /** Глобально уникальный идентификатор возврата */
     1: required RevertID             id
     2: required base.Cash            body
     3: optional string               reason
