@@ -15,8 +15,6 @@ include "msgpack.thrift"
 
 typedef fistful.WithdrawalID  WithdrawalID
 typedef base.ID               SessionID
-typedef base.ID               ProviderID
-typedef base.ID               TerminalID
 typedef msgpack.Value         AdapterState
 typedef base.Resource         Resource
 
@@ -26,8 +24,11 @@ struct Session {
     1: required SessionID      id
     2: required SessionStatus  status
     3: required Withdrawal     withdrawal
-    4: required ProviderID     provider
-    5: optional TerminalID     terminal
+    6: required Route          route
+
+    // deprecated
+    4: optional base.ID        provider_legacy
+    5: optional base.ID        terminal_legacy
 }
 
 union SessionStatus {
@@ -56,6 +57,11 @@ struct Withdrawal {
     3: required base.Cash               cash
     4: optional identity.Identity       sender
     5: optional identity.Identity       receiver
+}
+
+struct Route {
+    1: required fistful.ProviderID provider_id
+    2: optional fistful.TerminalID terminal_id
 }
 
 /// Session events
