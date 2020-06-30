@@ -34,12 +34,25 @@ struct Session {
 union SessionStatus {
     1: SessionActive    active
     2: SessionFinished  finished
+    3: SessionSuspended suspended
 }
 
 struct SessionActive {}
 struct SessionFinished {
     1: SessionFinishedStatus status
 }
+struct SessionSuspended {
+    1: optional base.Tag tag
+    2: optional TimeoutBehaviour timeout_behaviour
+}
+
+typedef base.Opaque Callback
+
+union TimeoutBehaviour {
+    1: base.OperationFailure operation_failure
+    2: Callback callback
+}
+
 
 union SessionFinishedStatus {
     1: SessionFinishedSuccess success
