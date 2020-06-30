@@ -12,6 +12,7 @@ include "repairer.thrift"
 include "destination.thrift"
 include "identity.thrift"
 include "msgpack.thrift"
+include "timeout_behaviour.thrift"
 
 typedef fistful.WithdrawalID  WithdrawalID
 typedef base.ID               SessionID
@@ -43,16 +44,8 @@ struct SessionFinished {
 }
 struct SessionSuspended {
     1: optional base.Tag tag
-    2: optional TimeoutBehaviour timeout_behaviour
+    2: optional timeout_behaviour.TimeoutBehaviour timeout_behaviour
 }
-
-typedef base.Opaque Callback
-
-union TimeoutBehaviour {
-    1: base.OperationFailure operation_failure
-    2: Callback callback
-}
-
 
 union SessionFinishedStatus {
     1: SessionFinishedSuccess success
