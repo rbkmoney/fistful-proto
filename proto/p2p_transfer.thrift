@@ -186,7 +186,7 @@ struct Route {
     2: required fistful.ProviderID provider_id
     3: optional fistful.TerminalID terminal_id
 
-    // depracated
+    // deprecated
     1: optional base.ObjectID provider_id_legacy
 }
 
