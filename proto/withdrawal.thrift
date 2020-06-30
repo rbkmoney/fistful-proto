@@ -181,8 +181,8 @@ struct Route {
     4: optional fistful.TerminalID terminal_id
 
     // deprecated
-    1: optional base.ObjectID provider_id_legacy
-    2: optional base.ObjectID terminal_id_legacy
+    1: optional base.ID provider_id_legacy
+    2: optional base.ID terminal_id_legacy
 }
 
 union ResourceChange {

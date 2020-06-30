@@ -30,7 +30,7 @@ struct Session {
     6: required base.PartyRevision  party_revision
 
     // deprecated
-    4: optional base.ID             provider_legacy
+    4: optional base.ObjectID       provider_legacy
 }
 
 union SessionStatus {

@@ -23,8 +23,8 @@ typedef ID IdentityID
 typedef ID WalletID
 typedef i64 Amount
 typedef string SourceName
-typedef i64 ProviderID
-typedef i64 TerminalID
+typedef base.ObjectID ProviderID
+typedef base.ObjectID TerminalID
 
 typedef base.CurrencyRef CurrencyRef
 typedef base.Cash DepositBody
