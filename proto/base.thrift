@@ -25,9 +25,6 @@ struct EventRange {
     2: optional i32     limit
 }
 
-/** Непрозрачный для участника общения набор данных */
-typedef binary Opaque
-
 /** ISO 4217 */
 typedef string CurrencySymbolicCode
 
@@ -242,13 +239,6 @@ struct SubFailure {
     1: required FailureCode  code;
     2: optional SubFailure   sub;
 }
-
-union OperationFailure {
-    1: OperationTimeout operation_timeout
-    2: Failure     failure
-}
-
-struct OperationTimeout {}
 
 /**
  * Данные транзакции
