@@ -78,9 +78,10 @@ struct TimestampedChange {
 }
 
 union Change {
-    1: Session       created
-    2: AdapterState  next_state
-    3: SessionResult finished
+    1: Session        created
+    2: AdapterState   next_state
+    3: SessionResult  finished
+    4: CallbackChange callback
 }
 
 union SessionResult {
@@ -94,6 +95,37 @@ struct SessionResultSuccess {
 
 struct SessionResultFailed {
     1: required base.Failure failure
+}
+
+struct CallbackChange {
+    1: required base.Tag tag
+    2: required CallbackChangePayload payload
+}
+
+union CallbackChangePayload {
+    1: CallbackCreatedChange  created
+    2: CallbackStatusChange   status_changed
+    3: CallbackResultChange   finished
+}
+
+struct CallbackCreatedChange {
+    1: required Callback callback
+}
+
+struct CallbackStatusChange {
+    1: required CallbackStatus status
+}
+
+union CallbackStatus {
+    1: CallbackStatusPending pending
+    2: CallbackStatusSucceeded succeeded
+}
+
+struct CallbackStatusPending {}
+struct CallbackStatusSucceeded {}
+
+struct CallbackResultChange {
+    1: required binary payload
 }
 
 /// Event sink
