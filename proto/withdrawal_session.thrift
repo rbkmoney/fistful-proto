@@ -64,6 +64,10 @@ struct Route {
     2: optional fistful.TerminalID terminal_id
 }
 
+struct Callback {
+    1: required base.Tag tag
+}
+
 /// Session events
 
 struct Event {
