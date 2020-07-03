@@ -53,9 +53,14 @@ struct P2PTransfer {
     7: optional Fees provider_fees
 }
 
-union Fees {
-    1: base.Cash operation_amount
-    2: base.Cash surplus
+struct Fees {
+    1: required map<CashFlowConstant, base.Cash> fees
+}
+
+enum CashFlowConstant {
+    operation_amount = 0
+    /** Комиссия "сверху" - взимается с клиента в дополнение к сумме операции */
+    surplus = 1
 }
 
 struct Callback {
