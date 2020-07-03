@@ -50,6 +50,7 @@ struct P2PTransfer {
     4: required base.Cash cash
     5: optional base.Timestamp deadline
     6: optional Fees merchant_fees
+    7: optional Fees provider_fees
 }
 
 union Fees {
