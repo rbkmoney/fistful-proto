@@ -21,7 +21,9 @@ typedef base.Resource Resource
 
 /// Domain
 
-// Структура, которую вернул нам адаптер в damsel/withdrawals_provider_adapter
+/**
+ * Структура, которую вернул нам адаптер в damsel/withdrawals_provider_adapter.
+ */
 struct Quote {
     1: required base.Cash cash_from
     2: required base.Cash cash_to
