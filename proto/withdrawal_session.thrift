@@ -68,7 +68,7 @@ struct Withdrawal {
     4: optional identity.Identity       sender
     5: optional identity.Identity       receiver
     6: optional SessionID               session_id
-    7: optional Quote            quote
+    7: optional Quote                   quote
 }
 
 struct Route {
