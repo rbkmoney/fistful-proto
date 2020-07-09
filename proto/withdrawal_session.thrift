@@ -12,21 +12,23 @@ include "repairer.thrift"
 include "destination.thrift"
 include "identity.thrift"
 include "msgpack.thrift"
+include "withdrawal.thrift"
 
-typedef fistful.WithdrawalID  WithdrawalID
-typedef base.ID               SessionID
-typedef msgpack.Value         AdapterState
-typedef base.Resource         Resource
+typedef fistful.WithdrawalID WithdrawalID
+typedef base.ID SessionID
+typedef msgpack.Value AdapterState
+typedef base.Resource Resource
+typedef withdrawal.WithdrawalQuote Quote
 
 /// Domain
 
 struct Session {
     1: required SessionID      id
-    2: required SessionStatus  status
     3: required Withdrawal     withdrawal
     6: required Route          route
 
     // deprecated
+    2: optional SessionStatus  status
     4: optional base.ID        provider_legacy
     5: optional base.ID        terminal_legacy
 }
@@ -57,6 +59,8 @@ struct Withdrawal {
     3: required base.Cash               cash
     4: optional identity.Identity       sender
     5: optional identity.Identity       receiver
+    6: optional SessionID               session_id
+    7: optional Quote                   quote
 }
 
 struct Route {
