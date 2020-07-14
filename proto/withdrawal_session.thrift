@@ -68,8 +68,8 @@ struct Withdrawal {
     1: required WithdrawalID            id
     2: required Resource                destination_resource
     3: required base.Cash               cash
-    4: optional Identity                sender
-    5: optional Identity                receiver
+    8: optional Identity                sender
+    9: optional Identity                receiver
     6: optional SessionID               session_id
     7: optional Quote                   quote
 }
@@ -81,7 +81,7 @@ struct Route {
 
 struct Identity {
     1: required fistful.IdentityID identity_id
-    2: optional Challenge challenge
+    2: optional Challenge effective_challenge
 }
 
 struct Challenge {
