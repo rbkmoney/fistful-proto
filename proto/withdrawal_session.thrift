@@ -10,7 +10,6 @@ include "fistful.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "destination.thrift"
-include "identity.thrift"
 include "msgpack.thrift"
 include "context.thrift"
 
@@ -18,6 +17,8 @@ typedef fistful.WithdrawalID WithdrawalID
 typedef base.ID SessionID
 typedef msgpack.Value AdapterState
 typedef base.Resource Resource
+typedef base.ID IdentityToken
+typedef base.ID ChallengeID
 
 /// Domain
 
@@ -67,8 +68,8 @@ struct Withdrawal {
     1: required WithdrawalID            id
     2: required Resource                destination_resource
     3: required base.Cash               cash
-    4: optional identity.Identity       sender
-    5: optional identity.Identity       receiver
+    4: optional Identity                sender
+    5: optional Identity                receiver
     6: optional SessionID               session_id
     7: optional Quote                   quote
 }
@@ -76,6 +77,26 @@ struct Withdrawal {
 struct Route {
     1: required fistful.ProviderID provider_id
     2: optional fistful.TerminalID terminal_id
+}
+
+struct Identity {
+    1: required fistful.IdentityID identity_id
+    2: optional Challenge challenge
+}
+
+struct Challenge {
+    1: optional ChallengeID id
+    2: optional list<ChallengeProof> proofs
+}
+
+enum ProofType {
+    rus_domestic_passport
+    rus_retiree_insurance_cert
+}
+
+struct ChallengeProof {
+    1: optional ProofType     type
+    2: optional IdentityToken token
 }
 
 struct Callback {
