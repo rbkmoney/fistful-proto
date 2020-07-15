@@ -22,6 +22,8 @@ typedef base.ID ProviderID
 typedef base.ID ClassID
 typedef base.ID LevelID
 typedef base.ID ClaimID
+typedef base.ID MasterID
+typedef base.ID Claimant
 typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
@@ -81,6 +83,8 @@ struct Challenge {
     5: optional ProviderID provider_id
     6: optional ClassID class_id
     7: optional ClaimID claim_id
+    8: optional MasterID master_id
+    9: optional Claimant claimant
 }
 
 struct ChallengeState {
