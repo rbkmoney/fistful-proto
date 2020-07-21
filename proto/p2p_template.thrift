@@ -114,6 +114,11 @@ service Management {
     )
         throws (1: fistful.P2PTemplateNotFound ex1)
 
+    context.ContextSet GetContext(1: P2PTemplateID id)
+        throws (
+            1: fistful.P2PTemplateNotFound ex1
+        )
+
     void SetBlocking (1: P2PTemplateID id, 2: Blocking value)
         throws (1: fistful.P2PTemplateNotFound ex1)
 }

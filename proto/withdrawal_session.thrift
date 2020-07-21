@@ -19,6 +19,7 @@ typedef msgpack.Value AdapterState
 typedef base.Resource Resource
 typedef base.ID IdentityToken
 typedef base.ID ChallengeID
+typedef base.EventRange EventRange
 
 /// Domain
 
@@ -33,15 +34,25 @@ struct Quote {
     5: required context.ContextSet quote_data
 }
 
-struct Session {
-    1: required SessionID      id
-    3: required Withdrawal     withdrawal
-    6: required Route          route
+struct SessionState {
+    1: required SessionID id
+    3: required Withdrawal withdrawal
+    6: required Route route
+    7: optional context.ContextSet context
 
     // deprecated
-    2: optional SessionStatus  status
-    4: optional base.ID        provider_legacy
-    5: optional base.ID        terminal_legacy
+    2: optional SessionStatus status
+    4: optional base.ID provider_legacy
+    5: optional base.ID terminal_legacy
+}
+
+struct Session {
+    1: required SessionID id
+    3: required Withdrawal withdrawal
+    6: required Route route
+
+    // deprecated
+    2: optional SessionStatus status
 }
 
 union SessionStatus {
@@ -165,6 +176,16 @@ struct CallbackStatusSucceeded {}
 
 struct CallbackResultChange {
     1: required binary payload
+}
+
+///
+
+service Management {
+    SessionState Get (
+        1: SessionID id
+        2: EventRange range
+    )
+        throws (1: fistful.WithdrawalSessionNotFound ex1)
 }
 
 /// Event sink
