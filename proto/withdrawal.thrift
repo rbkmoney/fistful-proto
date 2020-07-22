@@ -15,6 +15,7 @@ include "cashflow.thrift"
 include "withdrawal_adjustment.thrift"
 include "withdrawal_status.thrift"
 include "limit_check.thrift"
+include "msgpack.thrift"
 
 typedef base.ID                  SessionID
 typedef base.EventID             EventID
@@ -27,6 +28,7 @@ typedef withdrawal_status.Status Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
 typedef base.Timestamp           Timestamp
+typedef msgpack.Value            BinDataId
 
 /// Domain
 
@@ -35,7 +37,33 @@ struct WithdrawalQuote {
     2: required base.Cash cash_to
     3: required base.Timestamp created_at
     4: required base.Timestamp expires_on
-    5: required context.ContextSet quote_data
+    5: required context.Context quote_data
+
+    6: required fistful.ProviderID provider_id
+    7: optional fistful.TerminalID terminal_id
+    8: optional BinDataId resource_id
+    9: required base.Timestamp operation_timestamp
+    10: optional base.DataRevision domain_revision
+    11: optional base.PartyRevision party_revision
+}
+
+struct WithdrawalQuoteParams {
+    1: required WithdrawalID id
+    2: required WalletID wallet_id
+    3: required DestinationID destination_id
+    4: required base.Cash body
+}
+
+struct WithdrawalQuoteState {
+    1: required base.Cash cash_from
+    2: required base.Cash cash_to
+    3: required base.Timestamp created_at
+    4: required base.Timestamp expires_on
+    5: required context.Context quote_data
+
+    6: required fistful.ProviderID provider_id
+    7: optional fistful.TerminalID terminal_id
+    8: optional BinDataId resource_id
 }
 
 struct WithdrawalParams {
@@ -59,7 +87,7 @@ struct Withdrawal {
     9: optional base.PartyRevision party_revision
     10: optional Route route
     11: optional context.ContextSet metadata
-    12: optional WithdrawalQuote quote
+    12: optional WithdrawalQuoteState quote
 }
 
 struct WithdrawalState {
@@ -74,7 +102,7 @@ struct WithdrawalState {
     10: optional base.PartyRevision party_revision
     11: optional Route route
     12: optional context.ContextSet metadata
-    13: optional WithdrawalQuote quote
+    13: optional WithdrawalQuoteState quote
 
     /** Контекст операции заданный при её старте */
     14: required context.ContextSet context
@@ -218,6 +246,19 @@ exception AnotherAdjustmentInProgress {
 }
 
 service Management {
+
+    WithdrawalQuote GetQuote(
+        1: WithdrawalQuoteParams params
+    )
+        throws (
+            1: fistful.WalletNotFound ex1
+            2: fistful.DestinationNotFound ex2
+            3: fistful.DestinationUnauthorized ex3
+            4: fistful.ForbiddenOperationCurrency ex4
+            5: fistful.ForbiddenOperationAmount ex5
+            6: fistful.InvalidOperationAmount ex6
+            7: InconsistentWithdrawalCurrency ex7
+        )
 
     WithdrawalState Create(
         1: WithdrawalParams params

@@ -31,7 +31,7 @@ struct Quote {
     2: required base.Cash cash_to
     3: required base.Timestamp created_at
     4: required base.Timestamp expires_on
-    5: required context.ContextSet quote_data
+    5: required context.Context quote_data
 }
 
 struct SessionState {

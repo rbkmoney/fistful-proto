@@ -61,18 +61,8 @@ struct P2PTransfer {
     3: required Resource receiver
     4: required base.Cash cash
     5: optional base.Timestamp deadline
-    6: optional Fees merchant_fees
-    7: optional Fees provider_fees
-}
-
-struct Fees {
-    1: required map<CashFlowConstant, base.Cash> fees
-}
-
-enum CashFlowConstant {
-    operation_amount = 0
-    /** Комиссия "сверху" - взимается с клиента в дополнение к сумме операции */
-    surplus = 1
+    6: optional base.Fees merchant_fees
+    7: optional base.Fees provider_fees
 }
 
 struct Callback {

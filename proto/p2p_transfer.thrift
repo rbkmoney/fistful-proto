@@ -40,7 +40,7 @@ struct P2PTransfer {
     7: required base.DataRevision domain_revision
     8: required base.PartyRevision party_revision
     9: required base.Timestamp operation_timestamp
-    10: optional P2PQuote quote
+    10: optional P2PQuoteState quote
     11: optional ExternalID external_id
     12: optional base.Timestamp deadline
     13: optional base.ClientInfo client_info
@@ -53,6 +53,7 @@ struct P2PTransferParams {
     3: required Receiver receiver
     4: required base.Cash body
     5: optional ExternalID external_id
+    6: optional P2PQuote quote
 }
 
 struct P2PTransferState {
@@ -66,7 +67,7 @@ struct P2PTransferState {
     7: required base.DataRevision domain_revision
     8: required base.PartyRevision party_revision
     9: required base.Timestamp operation_timestamp
-    10: optional P2PQuote quote
+    10: optional P2PQuoteState quote
     11: optional ExternalID external_id
     12: optional base.Timestamp deadline
     13: optional base.ClientInfo client_info
@@ -103,6 +104,10 @@ struct P2PQuoteParams {
     4: required Resource receiver
 }
 
+struct P2PQuoteState {
+    1: optional base.Fees fees
+}
+
 struct P2PQuote {
     1: required base.Cash body
     2: required base.Timestamp created_at
@@ -112,6 +117,7 @@ struct P2PQuote {
     6: required IdentityID identity_id
     7: required Resource sender
     8: required Resource receiver
+    9: optional base.Fees fees
 }
 
 union Sender {
