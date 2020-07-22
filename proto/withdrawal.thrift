@@ -32,38 +32,41 @@ typedef msgpack.Value            BinDataId
 
 /// Domain
 
-struct WithdrawalQuote {
+union ResourceID {
+    1: BinDataId bank_card
+}
+
+struct Quote {
     1: required base.Cash cash_from
     2: required base.Cash cash_to
     3: required base.Timestamp created_at
     4: required base.Timestamp expires_on
-    5: required context.Context quote_data
+    5: required msgpack.Value quote_data
 
-    6: required fistful.ProviderID provider_id
-    7: optional fistful.TerminalID terminal_id
-    8: optional BinDataId resource_id
-    9: required base.Timestamp operation_timestamp
-    10: optional base.DataRevision domain_revision
-    11: optional base.PartyRevision party_revision
+    6: required Route route
+    7: optional ResourceID resource_id
+    8: required base.Timestamp operation_timestamp
+    9: optional base.DataRevision domain_revision
+    10: optional base.PartyRevision party_revision
 }
 
-struct WithdrawalQuoteParams {
+struct QuoteParams {
     1: required WithdrawalID id
     2: required WalletID wallet_id
     3: required DestinationID destination_id
     4: required base.Cash body
 }
 
-struct WithdrawalQuoteState {
+struct QuoteState {
     1: required base.Cash cash_from
     2: required base.Cash cash_to
     3: required base.Timestamp created_at
     4: required base.Timestamp expires_on
-    5: required context.Context quote_data
+    5: optional context.ContextSet quote_data_legacy
+    6: optional msgpack.Value quote_data
 
-    6: required fistful.ProviderID provider_id
-    7: optional fistful.TerminalID terminal_id
-    8: optional BinDataId resource_id
+    7: optional Route route
+    8: optional ResourceID resource_id
 }
 
 struct WithdrawalParams {
@@ -72,7 +75,7 @@ struct WithdrawalParams {
     3: required DestinationID destination_id
     4: required base.Cash body
     5: optional ExternalID external_id
-    6: optional WithdrawalQuote quote
+    6: optional Quote quote
     7: optional context.ContextSet metadata
 }
 
@@ -87,7 +90,7 @@ struct Withdrawal {
     9: optional base.PartyRevision party_revision
     10: optional Route route
     11: optional context.ContextSet metadata
-    12: optional WithdrawalQuoteState quote
+    12: optional QuoteState quote
 }
 
 struct WithdrawalState {
@@ -102,7 +105,7 @@ struct WithdrawalState {
     10: optional base.PartyRevision party_revision
     11: optional Route route
     12: optional context.ContextSet metadata
-    13: optional WithdrawalQuoteState quote
+    13: optional QuoteState quote
 
     /** Контекст операции заданный при её старте */
     14: required context.ContextSet context
@@ -247,8 +250,8 @@ exception AnotherAdjustmentInProgress {
 
 service Management {
 
-    WithdrawalQuote GetQuote(
-        1: WithdrawalQuoteParams params
+    Quote GetQuote(
+        1: QuoteParams params
     )
         throws (
             1: fistful.WalletNotFound ex1
