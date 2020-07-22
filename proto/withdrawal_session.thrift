@@ -36,14 +36,12 @@ struct Quote {
 
 struct SessionState {
     1: required SessionID id
-    3: required Withdrawal withdrawal
-    6: required Route route
-    7: optional context.ContextSet context
+    2: required Withdrawal withdrawal
+    3: required Route route
+    4: optional context.ContextSet context
 
     // deprecated
-    2: optional SessionStatus status
-    4: optional base.ID provider_legacy
-    5: optional base.ID terminal_legacy
+    5: optional SessionStatus status
 }
 
 struct Session {
@@ -53,6 +51,8 @@ struct Session {
 
     // deprecated
     2: optional SessionStatus status
+    4: optional base.ID provider_legacy
+    5: optional base.ID terminal_legacy
 }
 
 union SessionStatus {
@@ -186,6 +186,11 @@ service Management {
         2: EventRange range
     )
         throws (1: fistful.WithdrawalSessionNotFound ex1)
+
+    context.ContextSet GetContext(1: SessionID id)
+        throws (
+            1: fistful.WithdrawalSessionNotFound ex1
+        )
 }
 
 /// Event sink

@@ -27,13 +27,10 @@ struct SessionState {
     1: required SessionID           id
     2: required SessionStatus       status
     3: required P2PTransfer         p2p_transfer
-    7: required Route               route
+    4: required Route               route
     5: required base.DataRevision   domain_revision
     6: required base.PartyRevision  party_revision
-    8: optional context.ContextSet  context
-
-    // deprecated
-    4: optional base.ObjectID       provider_legacy
+    7: optional context.ContextSet  context
 }
 
 struct Session {
@@ -43,6 +40,9 @@ struct Session {
     7: required Route route
     5: required base.DataRevision domain_revision
     6: required base.PartyRevision party_revision
+
+    // deprecated
+    4: optional base.ObjectID       provider_legacy
 }
 
 union SessionStatus {
@@ -203,6 +203,11 @@ service Management {
         2: EventRange range
     )
         throws (1: fistful.P2PSessionNotFound ex1)
+
+    context.ContextSet GetContext(1: SessionID id)
+        throws (
+            1: fistful.P2PSessionNotFound ex1
+        )
 }
 
 /// Event sink
