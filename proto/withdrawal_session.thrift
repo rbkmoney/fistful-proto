@@ -31,8 +31,10 @@ struct Quote {
     2: required base.Cash cash_to
     3: required base.Timestamp created_at
     4: required base.Timestamp expires_on
-    5: optional context.ContextSet quote_data_legacy
     6: optional msgpack.Value quote_data
+
+    // deprecated
+    5: optional context.ContextSet quote_data_legacy
 }
 
 struct SessionState {
