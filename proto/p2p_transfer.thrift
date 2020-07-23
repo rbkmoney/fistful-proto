@@ -40,7 +40,7 @@ struct P2PTransfer {
     7: required base.DataRevision domain_revision
     8: required base.PartyRevision party_revision
     9: required base.Timestamp operation_timestamp
-    10: optional P2PQuoteState quote
+    10: optional QuoteState quote
     11: optional ExternalID external_id
     12: optional base.Timestamp deadline
     13: optional base.ClientInfo client_info
@@ -53,7 +53,7 @@ struct P2PTransferParams {
     3: required Receiver receiver
     4: required base.Cash body
     5: optional ExternalID external_id
-    6: optional P2PQuote quote
+    6: optional Quote quote
 }
 
 struct P2PTransferState {
@@ -67,7 +67,7 @@ struct P2PTransferState {
     7: required base.DataRevision domain_revision
     8: required base.PartyRevision party_revision
     9: required base.Timestamp operation_timestamp
-    10: optional P2PQuoteState quote
+    10: optional QuoteState quote
     11: optional ExternalID external_id
     12: optional base.Timestamp deadline
     13: optional base.ClientInfo client_info
@@ -97,18 +97,20 @@ struct SessionState {
     2: optional SessionResult result
 }
 
-struct P2PQuoteParams {
+struct QuoteParams {
     1: required base.Cash body
     2: required IdentityID identity_id
     3: required Resource sender
     4: required Resource receiver
 }
 
-struct P2PQuoteState {
-    1: optional base.Fees fees
+struct QuoteState {
+    1: optional base.Timestamp created_at
+    2: optional base.Timestamp expires_on
+    3: optional base.Fees fees
 }
 
-struct P2PQuote {
+struct Quote {
     1: required base.Cash body
     2: required base.Timestamp created_at
     3: required base.Timestamp expires_on
@@ -252,8 +254,8 @@ exception AnotherAdjustmentInProgress {
 
 service Management {
 
-    P2PQuote GetQuote(
-        1: P2PQuoteParams params
+    Quote GetQuote(
+        1: QuoteParams params
     )
         throws (
             1: fistful.IdentityNotFound ex1
