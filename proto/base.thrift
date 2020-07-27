@@ -121,7 +121,7 @@ struct ResourceCryptoWallet {
 }
 
 /**
- * Компактное представление ресурса, для повторяемого получения метаинформации
+ * Компактное представление ресурса для повторяемого получения метаинформации
  */
 union ResourceDescriptor {
     1: ResourceDescriptorBankCard bank_card
