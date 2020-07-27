@@ -108,6 +108,8 @@ struct QuoteState {
     1: optional base.Timestamp created_at
     2: optional base.Timestamp expires_on
     3: optional base.Fees fees
+    4: optional base.ResourceDescriptor sender
+    5: optional base.ResourceDescriptor receiver
 }
 
 struct Quote {
@@ -117,8 +119,8 @@ struct Quote {
     4: required base.DataRevision domain_revision
     5: required base.PartyRevision party_revision
     6: required IdentityID identity_id
-    7: required Resource sender
-    8: required Resource receiver
+    7: required base.ResourceDescriptor sender
+    8: required base.ResourceDescriptor receiver
     9: optional base.Fees fees
 }
 
