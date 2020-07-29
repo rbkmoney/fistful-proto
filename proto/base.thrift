@@ -121,6 +121,17 @@ struct ResourceCryptoWallet {
 }
 
 /**
+ * Компактное представление ресурса для повторяемого получения метаинформации
+ */
+union ResourceDescriptor {
+    1: ResourceDescriptorBankCard bank_card
+}
+
+struct ResourceDescriptorBankCard {
+    1: required BinDataId bin_data_id
+}
+
+/**
  * Банковская карта
  *
  * Сделано по мотивам https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1323

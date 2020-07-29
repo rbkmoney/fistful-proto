@@ -113,6 +113,8 @@ struct QuoteState {
     1: optional base.Timestamp created_at
     2: optional base.Timestamp expires_on
     3: optional base.Fees fees
+    4: optional base.ResourceDescriptor sender
+    5: optional base.ResourceDescriptor receiver
 }
 
 struct Quote {

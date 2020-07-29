@@ -28,13 +28,8 @@ typedef withdrawal_status.Status Status
 typedef base.EventRange          EventRange
 typedef base.Resource            Resource
 typedef base.Timestamp           Timestamp
-typedef msgpack.Value            BinDataId
 
 /// Domain
-
-union ResourceID {
-    1: BinDataId bank_card
-}
 
 struct Quote {
     1: required base.Cash cash_from
@@ -44,7 +39,7 @@ struct Quote {
     5: required msgpack.Value quote_data
 
     6: required Route route
-    7: optional ResourceID resource_id
+    7: optional base.ResourceDescriptor resource
     8: required base.Timestamp operation_timestamp
     9: optional base.DataRevision domain_revision
     10: optional base.PartyRevision party_revision
@@ -65,7 +60,7 @@ struct QuoteState {
     6: optional msgpack.Value quote_data
 
     7: optional Route route
-    8: optional ResourceID resource_id
+    8: optional base.ResourceDescriptor resource
 
     // deprecated
     5: optional context.ContextSet quote_data_legacy
