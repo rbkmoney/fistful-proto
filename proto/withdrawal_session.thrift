@@ -42,6 +42,7 @@ struct SessionState {
     2: required Withdrawal withdrawal
     3: required Route route
     4: optional context.ContextSet context
+    6: optional msgpack.Value adapter_state
 
     // deprecated
     5: optional SessionStatus status
