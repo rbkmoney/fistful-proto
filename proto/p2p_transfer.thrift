@@ -58,7 +58,6 @@ struct P2PTransferParams {
     8: optional base.Timestamp deadline
     9: optional base.ClientInfo client_info
     10: optional context.ContextSet metadata
-    11: optional context.ContextSet context
 }
 
 struct P2PTransferState {

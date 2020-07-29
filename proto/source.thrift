@@ -79,7 +79,10 @@ struct Unauthorized {}
 
 service Management {
 
-    SourceState Create (1: SourceParams params)
+    SourceState Create (
+        1: SourceParams params
+        2: context.ContextSet context
+    )
         throws (
             1: fistful.IDExists ex1
             2: fistful.IdentityNotFound ex2

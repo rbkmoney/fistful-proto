@@ -38,8 +38,6 @@ struct IdentityParams {
     4: required ClassID     cls
     5: optional ExternalID  external_id
     6: optional ContextSet  metadata
-
-    99: optional ContextSet context
 }
 
 struct Identity {
@@ -139,7 +137,9 @@ struct ChallengeProof {
 service Management {
 
     IdentityState Create (
-        1: IdentityParams params)
+        1: IdentityParams params
+        2: context.ContextSet context
+    )
         throws (
             1: fistful.ProviderNotFound      ex1
             2: fistful.IdentityClassNotFound ex2
