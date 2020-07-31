@@ -49,15 +49,11 @@ struct P2PTransfer {
 
 struct P2PTransferParams {
     1: required P2PTransferID id
-    2: required IdentityID identity_id
-    3: required Sender sender
-    4: required Receiver receiver
-    5: required base.Cash body
-    6: optional ExternalID external_id
-    7: optional Quote quote
-    8: optional base.Timestamp deadline
-    9: optional base.ClientInfo client_info
-    10: optional context.ContextSet metadata
+    2: required Sender sender
+    3: required Receiver receiver
+    4: required base.Cash body
+    5: optional ExternalID external_id
+    6: optional Quote quote
 }
 
 struct P2PTransferState {

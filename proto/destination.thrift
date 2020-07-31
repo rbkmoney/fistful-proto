@@ -74,9 +74,7 @@ struct Unauthorized {}
 service Management {
 
     DestinationState Create(
-        1: DestinationParams params
-        2: context.ContextSet context
-    )
+        1: DestinationParams params)
         throws(
             1: fistful.IDExists              ex1
             2: fistful.IdentityNotFound      ex2

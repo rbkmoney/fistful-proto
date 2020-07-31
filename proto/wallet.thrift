@@ -29,7 +29,9 @@ struct WalletParams {
     2: required string name
     3: required AccountParams account_params
     4: optional context.ContextSet metadata
-    5: optional ExternalID external_id
+
+    98: optional ExternalID          external_id
+    99: optional context.ContextSet  context
 }
 
 struct Wallet {
@@ -79,9 +81,7 @@ union AccountChange {
 
 service Management {
     WalletState Create (
-        1: WalletParams params
-        2: context.ContextSet context
-    )
+        1: WalletParams params)
         throws (
             1: fistful.IdentityNotFound     ex1
             2: fistful.CurrencyNotFound     ex2
