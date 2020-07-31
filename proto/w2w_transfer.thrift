@@ -35,6 +35,7 @@ struct W2WTransfer {
     7: required base.PartyRevision party_revision
     8: optional Status status
     9: optional ExternalID external_id
+    10: optional context.ContextSet metadata
 }
 
 struct W2WTransferState {
@@ -47,18 +48,19 @@ struct W2WTransferState {
     7: required base.PartyRevision party_revision
     8: optional Status status
     9: optional ExternalID external_id
+    10: optional context.ContextSet metadata
 
     /** Контекст операции заданный при её старте */
-    10: required context.ContextSet context
+    11: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    11: required cashflow.FinalCashFlow effective_final_cash_flow
+    12: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Перечень корректировок */
-    12: required list<w2w_adjustment.AdjustmentState> adjustments
+    13: required list<w2w_adjustment.AdjustmentState> adjustments
 }
 
 struct W2WTransferParams {
