@@ -228,6 +228,7 @@ enum BankCardPaymentSystem {
     unionpay
     jcb
     nspkmir
+    elo
 }
 
 /**
