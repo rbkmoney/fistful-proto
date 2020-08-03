@@ -74,15 +74,19 @@ struct Unauthorized {}
 service Management {
 
     DestinationState Create(
-        1: DestinationParams params)
+        1: DestinationParams params
+        2: context.ContextSet context
+    )
         throws(
-            1: fistful.IDExists              ex1
             2: fistful.IdentityNotFound      ex2
             3: fistful.CurrencyNotFound      ex3
             4: fistful.PartyInaccessible     ex4
         )
 
-    DestinationState Get(1: DestinationID id)
+    DestinationState Get(
+        1: DestinationID id
+        2: EventRange range
+    )
         throws(
             1: fistful.DestinationNotFound ex1
         )
@@ -91,7 +95,7 @@ service Management {
         throws (
             1: fistful.DestinationNotFound ex1
         )
-    
+
     list<Event> GetEvents(
         1: DestinationID id
         2: EventRange range

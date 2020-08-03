@@ -46,10 +46,12 @@ struct Quote {
 }
 
 struct QuoteParams {
-    1: required WithdrawalID id
-    2: required WalletID wallet_id
-    3: required DestinationID destination_id
+    1: required WalletID wallet_id
+    2: required base.CurrencyRef currency_from
+    3: required base.CurrencyRef currency_to
     4: required base.Cash body
+    5: optional DestinationID destination_id
+    6: optional ExternalID external_id
 }
 
 struct QuoteState {

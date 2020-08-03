@@ -23,6 +23,7 @@ typedef base.Timestamp Timestamp
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef account.AccountParams AccountParams
 typedef fistful.Blocking Blocking
+typedef base.EventRange EventRange
 
 struct WalletParams {
     1: WalletID id
@@ -86,12 +87,14 @@ service Management {
             1: fistful.IdentityNotFound     ex1
             2: fistful.CurrencyNotFound     ex2
             3: fistful.PartyInaccessible    ex3
-            4: fistful.IDExists             ex4
         )
 
-    WalletState Get (1: WalletID id)
+    WalletState Get (
+        1: WalletID id
+        2: EventRange range
+    )
         throws (1: fistful.WalletNotFound ex1)
-    
+
     context.ContextSet GetContext(1: WalletID id)
         throws (
             1: fistful.WalletNotFound ex1

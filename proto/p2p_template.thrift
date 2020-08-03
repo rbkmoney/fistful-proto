@@ -104,7 +104,6 @@ service Management {
             1: fistful.IdentityNotFound ex1
             2: fistful.CurrencyNotFound ex2
             3: fistful.PartyInaccessible ex3
-            4: fistful.IDExists ex4
             5: fistful.InvalidOperationAmount ex5
         )
 
