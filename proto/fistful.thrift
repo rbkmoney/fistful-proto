@@ -57,7 +57,6 @@ exception WalletNotFound            {
 exception WithdrawalNotFound        {}
 exception WithdrawalSessionNotFound {}
 exception MachineAlreadyWorking     {}
-exception IDExists                  {}
 exception DestinationUnauthorized   {}
 
 /** Условия запрещают проводить операцию с такой валютой */

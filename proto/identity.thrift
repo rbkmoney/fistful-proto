@@ -146,7 +146,10 @@ service Management {
             3: fistful.PartyInaccessible     ex3
         )
 
-    IdentityState Get (1: IdentityID id)
+    IdentityState Get (
+        1: IdentityID id
+        2: EventRange range
+    )
         throws (
             1: fistful.IdentityNotFound ex1
         )
@@ -158,7 +161,8 @@ service Management {
 
     ChallengeState StartChallenge (
         1: IdentityID      id
-        2: ChallengeParams params)
+        2: ChallengeParams params
+    )
         throws (
             1: fistful.IdentityNotFound        ex1
             2: fistful.ChallengePending        ex2
@@ -177,7 +181,8 @@ service Management {
 
     list<Event> GetEvents (
         1: IdentityID identity_id
-        2: EventRange range)
+        2: EventRange range
+    )
         throws (
             1: fistful.IdentityNotFound ex1
         )

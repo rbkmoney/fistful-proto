@@ -242,6 +242,15 @@ enum RiskScore {
     fatal = 9999
 }
 
+exception NoResourceInfo {
+    1: required ResourceInfoType ResourceInfoTypetype
+}
+
+enum ResourceInfoType {
+    sender = 1
+    receiver = 2
+}
+
 exception InvalidP2PTransferStatus {
     1: required Status p2p_status
 }
@@ -268,6 +277,7 @@ service Management {
             2: fistful.ForbiddenOperationCurrency ex2
             3: fistful.ForbiddenOperationAmount ex3
             4: fistful.OperationNotPermitted ex4
+            5: NoResourceInfo ex5
         )
 
     P2PTransferState Create(
