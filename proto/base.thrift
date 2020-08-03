@@ -229,6 +229,7 @@ enum BankCardPaymentSystem {
     jcb
     nspkmir
     elo
+    rupay
 }
 
 /**
