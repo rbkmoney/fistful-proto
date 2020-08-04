@@ -230,6 +230,7 @@ enum BankCardPaymentSystem {
     nspkmir
     elo
     rupay
+    ebt
 }
 
 /**
