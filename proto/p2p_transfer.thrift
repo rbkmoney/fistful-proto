@@ -243,7 +243,7 @@ enum RiskScore {
 }
 
 exception NoResourceInfo {
-    1: required ResourceInfoType ResourceInfoTypetype
+    1: required ResourceInfoType type
 }
 
 enum ResourceInfoType {
