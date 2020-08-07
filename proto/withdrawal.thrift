@@ -256,10 +256,8 @@ service Management {
             1: fistful.WalletNotFound ex1
             2: fistful.DestinationNotFound ex2
             3: fistful.DestinationUnauthorized ex3
-            4: fistful.ForbiddenOperationCurrency ex4
-            5: fistful.ForbiddenOperationAmount ex5
-            6: fistful.InvalidOperationAmount ex6
-            7: InconsistentWithdrawalCurrency ex7
+            4: fistful.InvalidOperationAmount ex4
+            5: InconsistentWithdrawalCurrency ex5
         )
 
     WithdrawalState Create(
