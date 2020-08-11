@@ -15,6 +15,8 @@ typedef fistful.DestinationID DestinationID
 typedef fistful.SourceID SourceID
 typedef fistful.IdentityID IdentityID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
+typedef withdrawal_status.Status WithdrawalStatus
+typedef deposit_status.Status DepositStatus
 
 /**
 * Информация о кошельке
@@ -43,22 +45,6 @@ struct StatWithdrawal {
     10: required WithdrawalStatus     status
 }
 
-union WithdrawalStatus {
-    1: WithdrawalPending pending
-    2: WithdrawalSucceeded succeeded
-    3: WithdrawalFailed failed
-}
-
-struct WithdrawalPending {}
-struct WithdrawalSucceeded {}
-struct WithdrawalFailed {
-    1: required Failure failure
-}
-
-struct Failure {
-    // TODO
-}
-
 /**
 * Информация о пополнении
 */
@@ -72,18 +58,6 @@ struct StatDeposit {
     8:  required base.Amount          fee
     9:  required CurrencySymbolicCode currency_symbolic_code
     10: required DepositStatus        status
-}
-
-union DepositStatus {
-    1: DepositPending pending
-    2: DepositSucceeded succeeded
-    3: DepositFailed failed
-}
-
-struct DepositPending {}
-struct DepositSucceeded {}
-struct DepositFailed {
-    1: required Failure failure
 }
 
 /**
