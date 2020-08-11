@@ -98,7 +98,7 @@ struct StatDestination {
     4: optional boolean is_blocked
     5: required IdentityID identity
     6: required CurrencySymbolicCode currency_symbolic_code
-    7: required resource
+    7: required DestinationResource resource
     8: optional base.ExternalID external_id
     9: optional DestinationStatus status
 }
