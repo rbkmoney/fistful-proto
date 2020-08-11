@@ -8,6 +8,7 @@ include "fistful.thrift"
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
 
+typedef fistful.ProviderID ProviderID
 typedef fistful.WalletID WalletID
 typedef fistful.WithdrawalID WithdrawalID
 typedef fistful.DepositID DepositID
@@ -91,15 +92,48 @@ struct DepositFailed {
 */
 
 struct StatDestination {
-    1:  required DestinationID id
+    1: required DestinationID id
+    2: required string name
+    3: optional base.Timestamp created_at
+    4: optional boolean is_blocked
+    5: required IdentityID identity
+    6: required CurrencySymbolicCode currency_symbolic_code
+    7: required resource
+    8: optional base.ExternalID external_id
+    9: optional DestinationStatus status
 }
+
+union DestinationResource {
+    1: base.BankCard bank_card
+    2: base.CryptoWallet crypto_wallet
+}
+
+union DestinationStatus {
+    1: Unauthorized unauthorized
+    2: Authorized authorized
+}
+
+struct Unauthorized {}
+struct Authorized {}
 
 /**
 * Информация о личности
 */
 
+typedef fistful.ID ClassID
+typedef fistful.ID LevelID
+typedef fistful.ID IdentityChallengeID
+
 struct StatIdentity {
-    1:  required IdentityID id
+    1: required IdentityID id
+    2: required string name
+    3: optional base.Timestamp created_at
+    4: required ProviderID provider
+    5: required ClassID class
+    6: optional LevelID level
+    7: optional IdentityChallengeID effectiveChallenge
+    8: optional boolean is_blocked
+    9: optional base.ExternalID external_id
 }
 
 /**
