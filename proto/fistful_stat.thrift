@@ -4,6 +4,8 @@
 
 include "base.thrift"
 include "fistful.thrift"
+include "withdrawal_status.thrift"
+include "deposit_status.thrift"
 
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
