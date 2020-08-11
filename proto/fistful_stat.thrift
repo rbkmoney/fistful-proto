@@ -95,7 +95,7 @@ struct StatDestination {
     1: required DestinationID id
     2: required string name
     3: optional base.Timestamp created_at
-    4: optional boolean is_blocked
+    4: optional bool is_blocked
     5: required IdentityID identity
     6: required CurrencySymbolicCode currency_symbolic_code
     7: required DestinationResource resource
@@ -129,10 +129,10 @@ struct StatIdentity {
     2: required string name
     3: optional base.Timestamp created_at
     4: required ProviderID provider
-    5: required ClassID class
-    6: optional LevelID level
+    5: required ClassID identity_class
+    6: optional LevelID identity_level
     7: optional IdentityChallengeID effectiveChallenge
-    8: optional boolean is_blocked
+    8: optional bool is_blocked
     9: optional base.ExternalID external_id
 }
 
