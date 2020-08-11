@@ -87,6 +87,22 @@ struct DepositFailed {
 }
 
 /**
+* Информация о приёмнике средств
+*/
+
+struct StatDestination {
+    1:  required DestinationID id
+}
+
+/**
+* Информация о личности
+*/
+
+struct StatIdentity {
+    1:  required IdentityID id
+}
+
+/**
 * Данные запроса к сервису. Формат и функциональность запроса зависят от DSL.
  * DSL содержит условия выборки, а также id мерчанта, по которому производится выборка.
  * continuation_token - токен, который передается в случае обращения за следующим блоком данных, соответствующих dsl
@@ -116,6 +132,8 @@ union StatResponseData {
     1: list<StatWallet> wallets
     2: list<StatWithdrawal> withdrawals
     3: list<StatDeposit> deposits
+    4: list<StatDestination> destinations
+    5: list<StatIdentity> identities
 }
 
 /**
@@ -149,5 +167,15 @@ service FistfulStatistics {
      * Возвращает набор данных о пополнениях
      */
     StatResponse GetDeposits(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о приёмниках средств
+     */
+    StatResponse GetDestinations(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о личностях
+     */
+    StatResponse GetIdentities(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
 
 }
