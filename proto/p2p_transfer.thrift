@@ -289,6 +289,7 @@ service Management {
             2: fistful.ForbiddenOperationCurrency ex2
             3: fistful.ForbiddenOperationAmount ex3
             4: fistful.OperationNotPermitted ex4
+            5: NoResourceInfo ex5
         )
 
     P2PTransferState Get(
@@ -299,7 +300,10 @@ service Management {
             1: fistful.P2PNotFound ex1
         )
 
-    context.ContextSet GetContext(1: P2PTransferID id)
+    context.ContextSet GetContext(
+        1: P2PTransferID id
+        2: EventRange range
+    )
         throws (
             1: fistful.P2PNotFound ex1
         )

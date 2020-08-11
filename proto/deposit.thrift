@@ -197,7 +197,10 @@ service Management {
             1: fistful.DepositNotFound ex1
         )
 
-    context.ContextSet GetContext(1: DepositID id)
+    context.ContextSet GetContext(
+        1: DepositID id
+        2: EventRange range
+    )
         throws (
             1: fistful.DepositNotFound ex1
         )

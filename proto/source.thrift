@@ -97,7 +97,10 @@ service Management {
             1: fistful.SourceNotFound ex1
         )
 
-    context.ContextSet GetContext(1: SourceID id)
+    context.ContextSet GetContext(
+        1: SourceID id
+        2: EventRange range
+    )
         throws (
             1: fistful.SourceNotFound ex1
         )
