@@ -287,7 +287,6 @@ service Management {
 
     context.ContextSet GetContext(
         1: WithdrawalID id
-        2: EventRange range
     )
         throws (
             1: fistful.WithdrawalNotFound ex1
