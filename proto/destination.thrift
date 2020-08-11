@@ -90,8 +90,7 @@ service Management {
         )
 
     context.ContextSet GetContext(
-        1: DestinationID id,
-        2: EventRange range
+        1: DestinationID id
     )
         throws (
             1: fistful.DestinationNotFound ex1

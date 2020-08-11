@@ -302,7 +302,6 @@ service Management {
 
     context.ContextSet GetContext(
         1: P2PTransferID id
-        2: EventRange range
     )
         throws (
             1: fistful.P2PNotFound ex1

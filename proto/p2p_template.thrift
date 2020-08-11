@@ -116,7 +116,6 @@ service Management {
 
     context.ContextSet GetContext(
         1: P2PTemplateID id
-        2: EventRange range
     )
         throws (
             1: fistful.P2PTemplateNotFound ex1

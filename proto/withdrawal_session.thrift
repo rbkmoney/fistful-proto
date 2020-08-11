@@ -192,7 +192,6 @@ service Management {
 
     context.ContextSet GetContext(
         1: SessionID id
-        2: EventRange range
     )
         throws (
             1: fistful.WithdrawalSessionNotFound ex1

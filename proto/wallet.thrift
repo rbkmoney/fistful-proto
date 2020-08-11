@@ -97,7 +97,6 @@ service Management {
 
     context.ContextSet GetContext(
         1: WalletID id
-        2: EventRange range
     )
         throws (
             1: fistful.WalletNotFound ex1

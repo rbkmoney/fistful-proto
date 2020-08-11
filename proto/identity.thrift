@@ -155,8 +155,7 @@ service Management {
         )
 
     context.ContextSet GetContext(
-        1: IdentityID id,
-        2: EventRange range
+        1: IdentityID id
     )
         throws (
             1: fistful.IdentityNotFound ex1
