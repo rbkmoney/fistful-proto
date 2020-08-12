@@ -59,6 +59,7 @@ struct SourceParams {
     3: required CurrencyRef currency
     4: required Resource resource
     6: optional context.ContextSet metadata
+    7: optional ExternalID external_id
 }
 
 union Resource {
