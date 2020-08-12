@@ -16,6 +16,9 @@ typedef fistful.DestinationID DestinationID
 typedef fistful.SourceID SourceID
 typedef fistful.IdentityID IdentityID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
+typedef fistful.ID ClassID
+typedef fistful.ID LevelID
+typedef fistful.ID IdentityChallengeID
 
 /**
 * Информация о кошельке
@@ -119,11 +122,6 @@ struct Authorized {}
 /**
 * Информация о личности
 */
-
-typedef fistful.ID ClassID
-typedef fistful.ID LevelID
-typedef fistful.ID IdentityChallengeID
-
 struct StatIdentity {
     1: required IdentityID id
     2: required string name
@@ -131,7 +129,7 @@ struct StatIdentity {
     4: required ProviderID provider
     5: required ClassID identity_class
     6: optional LevelID identity_level
-    7: optional IdentityChallengeID effectiveChallenge
+    7: optional IdentityChallengeID effective_challenge
     8: optional bool is_blocked
     9: optional base.ExternalID external_id
 }
@@ -205,11 +203,11 @@ service FistfulStatistics {
     /**
      * Возвращает набор данных о приёмниках средств
      */
-    StatResponse GetDestinations(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
+    StatResponse GetDestinations(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
 
     /**
      * Возвращает набор данных о личностях
      */
-    StatResponse GetIdentities(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
+    StatResponse GetIdentities(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
 
 }
