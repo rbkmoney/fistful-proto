@@ -17,6 +17,7 @@ include "context.thrift"
 
 typedef fistful.WalletID WalletID
 typedef account.Account Account
+typedef account.AccountBalance AccountBalance
 typedef base.ExternalID ExternalID
 typedef base.ID ContractID
 typedef base.Timestamp Timestamp
@@ -101,6 +102,11 @@ service Management {
         throws (
             1: fistful.WalletNotFound ex1
         )
+
+    AccountBalance GetAccountBalance (
+        1: WalletID id
+    )
+        throws (1: fistful.WalletNotFound ex1)
 }
 
 /// Event sink
