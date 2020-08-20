@@ -231,7 +231,7 @@ exception InconsistentWithdrawalCurrency {
 
 exception NoDestinationResourceInfo {}
 
-exception ProviderMismatch {
+exception IdentityProvidersMismatch {
     1: required fistful.ProviderID wallet_provider
     2: required fistful.ProviderID destination_provider
 }
@@ -265,7 +265,7 @@ service Management {
             5: fistful.ForbiddenOperationAmount ex5
             6: fistful.InvalidOperationAmount ex6
             7: InconsistentWithdrawalCurrency ex7
-            8: ProviderMismatch ex8 
+            8: IdentityProvidersMismatch ex8 
         )
 
     WithdrawalState Create(
@@ -281,7 +281,7 @@ service Management {
             7: fistful.InvalidOperationAmount ex7
             8: InconsistentWithdrawalCurrency ex8
             9: NoDestinationResourceInfo ex9
-           10: ProviderMismatch ex10 
+            10: IdentityProvidersMismatch ex10 
         )
 
     WithdrawalState Get(
