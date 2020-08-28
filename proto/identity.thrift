@@ -21,45 +21,77 @@ typedef base.ID ContractID
 typedef base.ID ProviderID
 typedef base.ID ClassID
 typedef base.ID LevelID
+typedef base.ID ClaimID
+typedef base.ID MasterID
+typedef base.ID Claimant
 typedef base.ID ChallengeClassID
 typedef base.ExternalID ExternalID
 typedef context.ContextSet ContextSet
 typedef base.EventRange EventRange
+typedef base.Timestamp Timestamp
+typedef fistful.Blocking Blocking
 
 struct IdentityParams {
-    1: required PartyID     party
-    2: required ProviderID  provider
-    3: required ClassID     cls
-    4: optional ExternalID  external_id
-
-    99: optional ContextSet context
+    1: IdentityID           id
+    2: required PartyID     party
+    3: required ProviderID  provider
+    4: required ClassID     cls
+    5: optional ExternalID  external_id
+    6: optional ContextSet  metadata
 }
 
 struct Identity {
+    6:  optional IdentityID  id
     1:  required PartyID     party
     2:  required ProviderID  provider
     3:  required ClassID     cls
     4:  optional ContractID  contract
     5:  optional ExternalID  external_id
-    6:  optional IdentityID  id
-    7:  optional ChallengeID effective_challenge
-    8:  optional bool        blocked
-    9:  optional LevelID     level
-
-    99: optional ContextSet  context
+    10: optional Timestamp   created_at
+    11: optional ContextSet  metadata
 }
 
-struct IdentityEvent {
+struct IdentityState {
+    6:  optional IdentityID id
+    1:  required PartyID party_id
+    2:  required ProviderID provider_id
+    3:  required ClassID class_id
+    4:  optional ContractID contract_id
+    5:  optional ExternalID external_id
+    7:  optional ChallengeID effective_challenge_id
+    8:  optional Blocking blocking
+    9:  optional LevelID level_id
+    10: optional Timestamp created_at
+    11: optional ContextSet metadata
+
+    /** Контекст сущности заданный при её старте */
+    12: optional ContextSet context
+}
+
+struct Event {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp       occured_at
     3: required Change               change
 }
 
 struct Challenge {
-    1: required ChallengeClassID     cls
+    3: optional ChallengeID id
+    1: required ChallengeClassID cls
     2: optional list<ChallengeProof> proofs
-    3: optional ChallengeID          id
-    4: optional ChallengeStatus      status
+    5: optional ProviderID provider_id
+    6: optional ClassID class_id
+    7: optional ClaimID claim_id
+    8: optional MasterID master_id
+    9: optional Claimant claimant
+}
+
+struct ChallengeState {
+    3: optional ChallengeID id
+    1: required ChallengeClassID cls
+    2: optional list<ChallengeProof> proofs
+    4: optional ChallengeStatus status
+    5: optional ProviderID provider_id
+    6: optional ClassID class_id
 }
 
 struct ChallengeParams {
@@ -104,23 +136,35 @@ struct ChallengeProof {
 
 service Management {
 
-    Identity Create (
-        1: IdentityID     id
-        2: IdentityParams params)
+    IdentityState Create (
+        1: IdentityParams params
+        2: context.ContextSet context
+    )
         throws (
             1: fistful.ProviderNotFound      ex1
             2: fistful.IdentityClassNotFound ex2
             3: fistful.PartyInaccessible     ex3
         )
 
-    Identity Get (1: IdentityID id)
+    IdentityState Get (
+        1: IdentityID id
+        2: EventRange range
+    )
         throws (
             1: fistful.IdentityNotFound ex1
         )
 
-    Challenge StartChallenge (
+    context.ContextSet GetContext(
+        1: IdentityID id
+    )
+        throws (
+            1: fistful.IdentityNotFound ex1
+        )
+
+    ChallengeState StartChallenge (
         1: IdentityID      id
-        2: ChallengeParams params)
+        2: ChallengeParams params
+    )
         throws (
             1: fistful.IdentityNotFound        ex1
             2: fistful.ChallengePending        ex2
@@ -132,25 +176,31 @@ service Management {
             8: fistful.PartyInaccessible       ex8
         )
 
-    list<Challenge> GetChallenges(1: IdentityID  id)
+    list<ChallengeState> GetChallenges(1: IdentityID  id)
         throws (
             1: fistful.IdentityNotFound  ex1
         )
 
-    list<IdentityEvent> GetEvents (
+    list<Event> GetEvents (
         1: IdentityID identity_id
-        2: EventRange range)
+        2: EventRange range
+    )
         throws (
             1: fistful.IdentityNotFound ex1
         )
 }
 
-/// Wallet events
+/// Identity events
 
-struct Event {
+struct EventSinkPayload {
     1: required eventsink.SequenceID sequence
     2: required base.Timestamp occured_at
     3: required list<Change> changes
+}
+
+struct TimestampedChange {
+    1: required base.Timestamp occured_at
+    2: required Change change
 }
 
 union Change {
@@ -176,7 +226,7 @@ struct SinkEvent {
     1: required eventsink.EventID    id
     2: required base.Timestamp       created_at
     3: required IdentityID           source
-    4: required Event                payload
+    4: required EventSinkPayload     payload
 }
 
 service EventSink {

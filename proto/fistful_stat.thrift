@@ -8,6 +8,7 @@ include "fistful.thrift"
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
 
+typedef fistful.ProviderID ProviderID
 typedef fistful.WalletID WalletID
 typedef fistful.WithdrawalID WithdrawalID
 typedef fistful.DepositID DepositID
@@ -15,6 +16,9 @@ typedef fistful.DestinationID DestinationID
 typedef fistful.SourceID SourceID
 typedef fistful.IdentityID IdentityID
 typedef base.CurrencySymbolicCode CurrencySymbolicCode
+typedef fistful.ID ClassID
+typedef fistful.ID LevelID
+typedef fistful.ID IdentityChallengeID
 
 /**
 * Информация о кошельке
@@ -36,6 +40,7 @@ struct StatWithdrawal {
     3:  required IdentityID           identity_id
     4:  required WalletID             source_id
     5:  required DestinationID        destination_id
+    6:  optional base.ExternalID      external_id
     7:  required base.Amount          amount
     8:  required base.Amount          fee
     9:  required CurrencySymbolicCode currency_symbolic_code
@@ -86,6 +91,50 @@ struct DepositFailed {
 }
 
 /**
+* Информация о приёмнике средств
+*/
+
+struct StatDestination {
+    1: required DestinationID id
+    2: required string name
+    3: optional base.Timestamp created_at
+    4: optional bool is_blocked
+    5: required IdentityID identity
+    6: required CurrencySymbolicCode currency_symbolic_code
+    7: required DestinationResource resource
+    8: optional base.ExternalID external_id
+    9: optional DestinationStatus status
+}
+
+union DestinationResource {
+    1: base.BankCard bank_card
+    2: base.CryptoWallet crypto_wallet
+}
+
+union DestinationStatus {
+    1: Unauthorized unauthorized
+    2: Authorized authorized
+}
+
+struct Unauthorized {}
+struct Authorized {}
+
+/**
+* Информация о личности
+*/
+struct StatIdentity {
+    1: required IdentityID id
+    2: required string name
+    3: optional base.Timestamp created_at
+    4: required ProviderID provider
+    5: required ClassID identity_class
+    6: optional LevelID identity_level
+    7: optional IdentityChallengeID effective_challenge
+    8: optional bool is_blocked
+    9: optional base.ExternalID external_id
+}
+
+/**
 * Данные запроса к сервису. Формат и функциональность запроса зависят от DSL.
  * DSL содержит условия выборки, а также id мерчанта, по которому производится выборка.
  * continuation_token - токен, который передается в случае обращения за следующим блоком данных, соответствующих dsl
@@ -115,6 +164,8 @@ union StatResponseData {
     1: list<StatWallet> wallets
     2: list<StatWithdrawal> withdrawals
     3: list<StatDeposit> deposits
+    4: list<StatDestination> destinations
+    5: list<StatIdentity> identities
 }
 
 /**
@@ -148,5 +199,15 @@ service FistfulStatistics {
      * Возвращает набор данных о пополнениях
      */
     StatResponse GetDeposits(1: StatRequest req) throws (1: InvalidRequest ex1, 3: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о приёмниках средств
+     */
+    StatResponse GetDestinations(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о личностях
+     */
+    StatResponse GetIdentities(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
 
 }
