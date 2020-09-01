@@ -252,8 +252,6 @@ exception AnotherAdjustmentInProgress {
     1: required AdjustmentID another_adjustment_id
 }
 
-exception WalletInaccessible {}
-
 service Management {
 
     Quote GetQuote(
@@ -284,7 +282,7 @@ service Management {
             8: InconsistentWithdrawalCurrency ex8
             9: NoDestinationResourceInfo ex9
             10: IdentityProvidersMismatch ex10 
-            11: WalletInaccessible ex11
+            11: fistful.WalletInaccessible ex11
         )
 
     WithdrawalState Get(

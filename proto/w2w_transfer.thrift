@@ -146,6 +146,7 @@ service Management {
             2: fistful.InvalidOperationAmount ex2
             3: fistful.ForbiddenOperationCurrency ex3
             4: InconsistentW2WTransferCurrency ex4
+            5: fistful.WalletInaccessible ex5
         )
 
     W2WTransferState Get(

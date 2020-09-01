@@ -42,6 +42,9 @@ exception DestinationNotFound       {}
 exception DepositNotFound           {}
 exception SourceUnauthorized        {}
 exception PartyInaccessible         {}
+exception WalletInaccessible {
+    1: required WalletID id
+}
 exception ProviderNotFound          {}
 exception IdentityClassNotFound     {}
 exception ChallengeNotFound         {}
