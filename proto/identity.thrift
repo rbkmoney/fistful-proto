@@ -38,6 +38,7 @@ struct IdentityParams {
     4: required ClassID     cls
     5: optional ExternalID  external_id
     6: optional ContextSet  metadata
+    7: optional string      name // _will_ become required after migration!
 }
 
 struct Identity {
@@ -49,6 +50,7 @@ struct Identity {
     5:  optional ExternalID  external_id
     10: optional Timestamp   created_at
     11: optional ContextSet  metadata
+    12: optional string      name // _will_ become required after migration!
 }
 
 struct IdentityState {
