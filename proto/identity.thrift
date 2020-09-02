@@ -33,7 +33,7 @@ typedef fistful.Blocking Blocking
 
 struct IdentityParams {
     1: IdentityID           id
-    7: optional string      name // will become required after migration!
+    7: required string      name
     2: required PartyID     party
     3: required ProviderID  provider
     4: required ClassID     cls
@@ -43,7 +43,19 @@ struct IdentityParams {
 
 struct Identity {
     6:  optional IdentityID  id
-    12: optional string      name // will become required after migration!
+    12: required string      name // will become required after migration!
+    1:  required PartyID     party
+    2:  required ProviderID  provider
+    3:  required ClassID     cls
+    4:  optional ContractID  contract
+    5:  optional ExternalID  external_id
+    10: optional Timestamp   created_at
+    11: optional ContextSet  metadata
+}
+
+struct Identity_v1 {
+    6:  optional IdentityID  id
+    12: optional string      name
     1:  required PartyID     party
     2:  required ProviderID  provider
     3:  required ClassID     cls
@@ -55,7 +67,7 @@ struct Identity {
 
 struct IdentityState {
     6:  optional IdentityID id
-    13: optional string name // will become required after migration!
+    13: required string name
     1:  required PartyID party_id
     2:  required ProviderID provider_id
     3:  required ClassID class_id
@@ -207,7 +219,7 @@ struct TimestampedChange {
 }
 
 union Change {
-    1: Identity        created
+    1: Identity_v1     created
     2: LevelID         level_changed
     3: ChallengeChange identity_challenge
     4: ChallengeID     effective_challenge_changed
