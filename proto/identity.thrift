@@ -43,7 +43,7 @@ struct IdentityParams {
 
 struct Identity {
     6:  optional IdentityID  id
-    12: required string      name // will become required after migration!
+    12: required string      name
     1:  required PartyID     party
     2:  required ProviderID  provider
     3:  required ClassID     cls
@@ -55,7 +55,7 @@ struct Identity {
 
 struct Identity_v1 {
     6:  optional IdentityID  id
-    12: optional string      name
+    12: optional string      name //will become required after migration!
     1:  required PartyID     party
     2:  required ProviderID  provider
     3:  required ClassID     cls
