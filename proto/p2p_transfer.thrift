@@ -123,8 +123,8 @@ struct Quote {
     4: required base.DataRevision domain_revision
     5: required base.PartyRevision party_revision
     6: required IdentityID identity_id
-    7: required Resource sender
-    8: required Resource receiver
+    7: required base.ResourceDescriptor sender
+    8: required base.ResourceDescriptor receiver
     9: optional base.Fees fees
 }
 
