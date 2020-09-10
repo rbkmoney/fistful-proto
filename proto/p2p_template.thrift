@@ -10,6 +10,7 @@ include "fistful.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
+include "p2p_transfer.thrift"
 
 /// Domain
 
@@ -68,6 +69,27 @@ struct P2PTemplateMetadata {
     1: required context.ContextSet value
 }
 
+/// P2PTemplate Quote
+
+struct P2PTemplateQuoteParams {
+    1: required base.Resource sender
+    2: required base.Resource receiver
+    3: required base.Cash body
+}
+
+/// P2PTemplate Transfer
+
+struct P2PTemplateTransferParams {
+    1: required p2p_transfer.P2PTransferID id
+    2: required p2p_transfer.Sender sender
+    3: required p2p_transfer.Receiver receiver
+    4: required base.Cash body
+    5: optional p2p_transfer.Quote quote
+    6: optional base.Timestamp deadline
+    7: optional base.ClientInfo client_info
+    8: optional context.ContextSet metadata
+}
+
 /// P2PTemplate events
 
 struct Event {
@@ -97,6 +119,7 @@ struct BlockingChange {
 ///
 
 service Management {
+
     P2PTemplateState Create (
         1: P2PTemplateParams params
         2: context.ContextSet context
@@ -121,8 +144,39 @@ service Management {
             1: fistful.P2PTemplateNotFound ex1
         )
 
-    void SetBlocking (1: P2PTemplateID id, 2: Blocking value)
-        throws (1: fistful.P2PTemplateNotFound ex1)
+    void SetBlocking (
+        1: P2PTemplateID id,
+        2: Blocking value
+    )
+        throws (
+            1: fistful.P2PTemplateNotFound ex1
+        )
+
+    p2p_transfer.Quote GetQuote(
+        1: P2PTemplateID id
+        2: P2PTemplateQuoteParams params
+    )
+        throws (
+            1: fistful.P2PTemplateNotFound ex1
+            2: fistful.IdentityNotFound ex2
+            3: fistful.ForbiddenOperationCurrency ex3
+            4: fistful.ForbiddenOperationAmount ex4
+            5: fistful.OperationNotPermitted ex5
+            6: p2p_transfer.NoResourceInfo ex6
+        )
+
+    p2p_transfer.P2PTransferState CreateTransfer(
+        1: P2PTemplateID id
+        2: P2PTemplateTransferParams params
+    )
+        throws (
+            1: fistful.P2PTemplateNotFound ex1
+            2: fistful.IdentityNotFound ex2
+            3: fistful.ForbiddenOperationCurrency ex3
+            4: fistful.ForbiddenOperationAmount ex4
+            5: fistful.OperationNotPermitted ex5
+            6: p2p_transfer.NoResourceInfo ex6
+        )
 }
 
 /// Event sink
