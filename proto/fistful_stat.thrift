@@ -8,7 +8,6 @@ include "fistful.thrift"
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
 
-typedef fistful.ProviderID ProviderID
 typedef fistful.WalletID WalletID
 typedef fistful.WithdrawalID WithdrawalID
 typedef fistful.DepositID DepositID
@@ -19,6 +18,7 @@ typedef base.CurrencySymbolicCode CurrencySymbolicCode
 typedef fistful.ID ClassID
 typedef fistful.ID LevelID
 typedef fistful.ID IdentityChallengeID
+typedef fistful.ID IdentityProviderID
 
 /**
 * Информация о кошельке
@@ -126,7 +126,7 @@ struct StatIdentity {
     1: required IdentityID id
     2: required string name
     3: optional base.Timestamp created_at
-    4: required ProviderID provider
+    4: required IdentityProviderID provider
     5: required ClassID identity_class
     6: optional LevelID identity_level
     7: optional IdentityChallengeID effective_challenge
