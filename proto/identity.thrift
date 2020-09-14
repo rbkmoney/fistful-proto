@@ -33,6 +33,7 @@ typedef fistful.Blocking Blocking
 
 struct IdentityParams {
     1: IdentityID           id
+    7: required string      name
     2: required PartyID     party
     3: required ProviderID  provider
     4: required ClassID     cls
@@ -42,6 +43,7 @@ struct IdentityParams {
 
 struct Identity {
     6:  optional IdentityID  id
+    12: optional string      name //will become required after migration!
     1:  required PartyID     party
     2:  required ProviderID  provider
     3:  required ClassID     cls
@@ -53,6 +55,7 @@ struct Identity {
 
 struct IdentityState {
     6:  optional IdentityID id
+    13: required string name
     1:  required PartyID party_id
     2:  required ProviderID provider_id
     3:  required ClassID class_id
