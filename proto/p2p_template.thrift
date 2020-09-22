@@ -168,6 +168,7 @@ service Management {
     p2p_transfer.P2PTransferState CreateTransfer(
         1: P2PTemplateID id
         2: P2PTemplateTransferParams params
+        3: context.ContextSet context
     )
         throws (
             1: fistful.P2PTemplateNotFound ex1
