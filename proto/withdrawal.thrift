@@ -195,7 +195,8 @@ union SessionResult {
 }
 
 struct SessionSucceeded {
-    1: required base.TransactionInfo trx_info
+    // deprecated
+    1: optional base.TransactionInfo trx_info
 }
 
 struct SessionFailed {

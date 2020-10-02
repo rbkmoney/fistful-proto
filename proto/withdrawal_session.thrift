@@ -131,10 +131,11 @@ struct TimestampedChange {
 }
 
 union Change {
-    1: Session        created
-    2: AdapterState   next_state
-    3: SessionResult  finished
+    1: Session created
+    2: AdapterState next_state
+    3: SessionResult finished
     4: CallbackChange callback
+    5: TransactionBoundChange transaction_bound
 }
 
 union SessionResult {
@@ -143,7 +144,8 @@ union SessionResult {
 }
 
 struct SessionResultSuccess {
-    1: required base.TransactionInfo trx_info
+    // deprecated
+    1: optional base.TransactionInfo trx_info
 }
 
 struct SessionResultFailed {
@@ -153,6 +155,10 @@ struct SessionResultFailed {
 struct CallbackChange {
     1: required base.Tag tag
     2: required CallbackChangePayload payload
+}
+
+struct TransactionBoundChange {
+    1: required base.TransactionInfo trx_info
 }
 
 union CallbackChangePayload {
