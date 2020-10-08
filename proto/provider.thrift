@@ -28,10 +28,10 @@ struct IdentityClass {
 ///
 
 service Management {
-    Provider Get (
+    Provider GetProvider (
         1: ProviderID id
     )
         throws (1: fistful.ProviderNotFound ex1)
 
-    list<Provider> List ()
+    list<Provider> ListProviders ()
 }
