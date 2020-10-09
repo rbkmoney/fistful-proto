@@ -188,6 +188,7 @@ struct UserInteractionStatusFinished {}
 ///
 
 service Management {
+
     SessionState Get (
         1: SessionID id
         2: EventRange range
@@ -199,6 +200,14 @@ service Management {
     )
         throws (
             1: fistful.P2PSessionNotFound ex1
+        )
+
+    list<Event> GetEvents(
+        1: SessionID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.P2PNotFound ex1
         )
 }
 
