@@ -27,6 +27,8 @@ struct IdentityClass {
 
 ///
 
+// Временное решение, которое будет удалено после выполнения https://rbkmoney.atlassian.net/browse/FF-235
+
 service Management {
     Provider GetProvider (
         1: ProviderID id
