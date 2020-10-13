@@ -207,7 +207,7 @@ service Management {
         2: EventRange range
     )
         throws (
-            1: fistful.P2PNotFound ex1
+            1: fistful.P2PSessionNotFound ex1
         )
 }
 
