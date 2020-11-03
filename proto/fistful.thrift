@@ -35,6 +35,7 @@ enum Blocking {
     blocked
 }
 
+exception PartyNotFound             {}
 exception IdentityNotFound          {}
 exception CurrencyNotFound          {}
 exception SourceNotFound            {}
