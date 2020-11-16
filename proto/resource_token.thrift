@@ -3,12 +3,12 @@
  */
 
 namespace java com.rbkmoney.fistful.resource_token
-namespace erlang retok
+namespace erlang rst
 
 include "base.thrift"
 
 /**
- *  Токен пользовательского платежного ресурса. Токен содержит чувствительные данные, которые сериализуются
+ *  Токен пользовательского платёжного ресурса. Токен содержит чувствительные данные, которые сериализуются
  *  в thrift-binary и шифруются перед отправкой пользователю.  Токен может иметь срок действия, по истечении которого
  *  становится недействительным.
  */
@@ -18,7 +18,7 @@ struct ResourceToken {
 }
 
 /**
- *  Данные платежного ресурса
+ *  Данные платёжного ресурса
  */
 union ResourcePayload {
     1: BankCardPayload bank_card_payload
