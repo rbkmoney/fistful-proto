@@ -76,11 +76,11 @@ struct Fees {
      1: required map<CashFlowConstant, Cash> fees
  }
 
-  enum CashFlowConstant {
-     operation_amount = 0
-     /** Комиссия "сверху" - взимается с клиента в дополнение к сумме операции */
-     surplus = 1
- }
+enum CashFlowConstant {
+    operation_amount = 0
+    /** Комиссия "сверху" - взимается с клиента в дополнение к сумме операции */
+    surplus = 1
+}
 
  /** Контактная информация. **/
 struct ContactInfo {
