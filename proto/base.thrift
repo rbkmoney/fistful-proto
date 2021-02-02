@@ -72,16 +72,6 @@ typedef string Token
 /** Отображение из строки в строку */
 typedef map<string, string> StringMap
 
-struct Fees {
-    1: required map<CashFlowConstant, Cash> fees
-}
-
-enum CashFlowConstant {
-    operation_amount = 0
-    /** Комиссия "сверху" - взимается с клиента в дополнение к сумме операции */
-    surplus = 1
-}
-
 /** Контактная информация. **/
 struct ContactInfo {
     1: optional string phone_number
@@ -231,6 +221,8 @@ enum BankCardPaymentSystem {
     elo
     rupay
     ebt
+    dummy  // Несуществующая платежная система для использования в непродовом окружении
+    uzcard
 }
 
 /**
