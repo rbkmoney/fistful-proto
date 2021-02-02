@@ -82,7 +82,7 @@ enum CashFlowConstant {
     surplus = 1
 }
 
- /** Контактная информация. **/
+/** Контактная информация. **/
 struct ContactInfo {
     1: optional string phone_number
     2: optional string email
