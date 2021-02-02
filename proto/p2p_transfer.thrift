@@ -17,7 +17,6 @@ include "p2p_status.thrift"
 include "limit_check.thrift"
 
 typedef base.ID                  SessionID
-typedef base.ObjectID            ProviderID
 typedef base.EventID             EventID
 typedef fistful.P2PTransferID    P2PTransferID
 typedef fistful.AdjustmentID     AdjustmentID
@@ -41,7 +40,7 @@ struct P2PTransfer {
     7: required base.DataRevision domain_revision
     8: required base.PartyRevision party_revision
     9: required base.Timestamp operation_timestamp
-    10: optional P2PQuote quote
+    10: optional QuoteState quote
     11: optional ExternalID external_id
     12: optional base.Timestamp deadline
     13: optional base.ClientInfo client_info
@@ -50,10 +49,15 @@ struct P2PTransfer {
 
 struct P2PTransferParams {
     1: required P2PTransferID id
-    2: required Sender sender
-    3: required Receiver receiver
-    4: required base.Cash body
-    5: optional ExternalID external_id
+    2: required IdentityID identity_id
+    3: required Sender sender
+    4: required Receiver receiver
+    5: required base.Cash body
+    6: optional ExternalID external_id
+    7: optional Quote quote
+    8: optional base.Timestamp deadline
+    9: optional base.ClientInfo client_info
+    10: optional context.ContextSet metadata
 }
 
 struct P2PTransferState {
@@ -67,7 +71,7 @@ struct P2PTransferState {
     7: required base.DataRevision domain_revision
     8: required base.PartyRevision party_revision
     9: required base.Timestamp operation_timestamp
-    10: optional P2PQuote quote
+    10: optional QuoteState quote
     11: optional ExternalID external_id
     12: optional base.Timestamp deadline
     13: optional base.ClientInfo client_info
@@ -97,8 +101,32 @@ struct SessionState {
     2: optional SessionResult result
 }
 
-/// Пока используется как признак того, что операция была проведена по котировке
-struct P2PQuote {}
+struct QuoteParams {
+    1: required base.Cash body
+    2: required IdentityID identity_id
+    3: required Resource sender
+    4: required Resource receiver
+}
+
+struct QuoteState {
+    1: optional base.Timestamp created_at
+    2: optional base.Timestamp expires_on
+    3: optional base.Fees fees
+    4: optional base.ResourceDescriptor sender
+    5: optional base.ResourceDescriptor receiver
+}
+
+struct Quote {
+    1: required base.Cash body
+    2: required base.Timestamp created_at
+    3: required base.Timestamp expires_on
+    4: required base.DataRevision domain_revision
+    5: required base.PartyRevision party_revision
+    6: required IdentityID identity_id
+    7: required Resource sender
+    8: required Resource receiver
+    9: optional base.Fees fees
+}
 
 union Sender {
     1: RawResource resource
@@ -184,7 +212,11 @@ struct RouteChange {
 }
 
 struct Route {
-    1: required ProviderID provider_id
+    2: required fistful.ProviderID provider_id
+    3: optional fistful.TerminalID terminal_id
+
+    // deprecated
+    1: optional base.ObjectID provider_id_legacy
 }
 
 struct ResourceChange {
@@ -210,6 +242,15 @@ enum RiskScore {
     fatal = 9999
 }
 
+exception NoResourceInfo {
+    1: required ResourceInfoType type
+}
+
+enum ResourceInfoType {
+    sender = 1
+    receiver = 2
+}
+
 exception InvalidP2PTransferStatus {
     1: required Status p2p_status
 }
@@ -228,6 +269,17 @@ exception AnotherAdjustmentInProgress {
 
 service Management {
 
+    Quote GetQuote(
+        1: QuoteParams params
+    )
+        throws (
+            1: fistful.IdentityNotFound ex1
+            2: fistful.ForbiddenOperationCurrency ex2
+            3: fistful.ForbiddenOperationAmount ex3
+            4: fistful.OperationNotPermitted ex4
+            5: NoResourceInfo ex5
+        )
+
     P2PTransferState Create(
         1: P2PTransferParams params
         2: context.ContextSet context
@@ -236,6 +288,8 @@ service Management {
             1: fistful.IdentityNotFound ex1
             2: fistful.ForbiddenOperationCurrency ex2
             3: fistful.ForbiddenOperationAmount ex3
+            4: fistful.OperationNotPermitted ex4
+            5: NoResourceInfo ex5
         )
 
     P2PTransferState Get(
@@ -246,7 +300,9 @@ service Management {
             1: fistful.P2PNotFound ex1
         )
 
-    context.ContextSet GetContext(1: P2PTransferID id)
+    context.ContextSet GetContext(
+        1: P2PTransferID id
+    )
         throws (
             1: fistful.P2PNotFound ex1
         )

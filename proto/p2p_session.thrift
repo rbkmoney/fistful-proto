@@ -12,23 +12,37 @@ include "repairer.thrift"
 include "destination.thrift"
 include "msgpack.thrift"
 include "user_interaction.thrift"
+include "context.thrift"
 
 typedef fistful.P2PTransferID P2PTransferID
 typedef base.ID               SessionID
-typedef base.ObjectID         ProviderID
 typedef binary                AdapterState
 typedef base.Resource         Resource
 typedef base.ID               UserInteractionID
+typedef base.EventRange       EventRange
 
 /// Domain
 
-struct Session {
+struct SessionState {
     1: required SessionID           id
     2: required SessionStatus       status
     3: required P2PTransfer         p2p_transfer
-    4: required ProviderID          provider
+    4: required Route               route
     5: required base.DataRevision   domain_revision
     6: required base.PartyRevision  party_revision
+    7: optional context.ContextSet  context
+}
+
+struct Session {
+    1: required SessionID id
+    2: required SessionStatus status
+    3: required P2PTransfer p2p_transfer
+    7: required Route route
+    5: required base.DataRevision domain_revision
+    6: required base.PartyRevision party_revision
+
+    // deprecated
+    4: optional base.ObjectID       provider_legacy
 }
 
 union SessionStatus {
@@ -42,11 +56,13 @@ struct SessionFinished {
 }
 
 struct P2PTransfer {
-    1: required P2PTransferID           id
-    2: required Resource                sender
-    3: required Resource                receiver
-    4: required base.Cash               cash
-    5: optional base.Timestamp          deadline
+    1: required P2PTransferID id
+    2: required Resource sender
+    3: required Resource receiver
+    4: required base.Cash cash
+    5: optional base.Timestamp deadline
+    6: optional base.Fees merchant_fees
+    7: optional base.Fees provider_fees
 }
 
 struct Callback {
@@ -56,6 +72,11 @@ struct Callback {
 struct UserInteraction {
     1: required UserInteractionID id
     2: required user_interaction.UserInteraction user_interaction
+}
+
+struct Route {
+    1: required fistful.ProviderID provider_id
+    2: optional fistful.TerminalID terminal_id
 }
 
 /// Session events
@@ -163,6 +184,32 @@ union UserInteractionStatus {
 
 struct UserInteractionStatusPending {}
 struct UserInteractionStatusFinished {}
+
+///
+
+service Management {
+
+    SessionState Get (
+        1: SessionID id
+        2: EventRange range
+    )
+        throws (1: fistful.P2PSessionNotFound ex1)
+
+    context.ContextSet GetContext(
+        1: SessionID id
+    )
+        throws (
+            1: fistful.P2PSessionNotFound ex1
+        )
+
+    list<Event> GetEvents(
+        1: SessionID id
+        2: EventRange range
+    )
+        throws (
+            1: fistful.P2PSessionNotFound ex1
+        )
+}
 
 /// Event sink
 

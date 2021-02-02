@@ -197,7 +197,9 @@ service Management {
             1: fistful.DepositNotFound ex1
         )
 
-    context.ContextSet GetContext(1: DepositID id)
+    context.ContextSet GetContext(
+        1: DepositID id
+    )
         throws (
             1: fistful.DepositNotFound ex1
         )

@@ -59,6 +59,7 @@ struct SourceParams {
     3: required CurrencyRef currency
     4: required Resource resource
     6: optional context.ContextSet metadata
+    7: optional ExternalID external_id
 }
 
 union Resource {
@@ -79,24 +80,31 @@ struct Unauthorized {}
 
 service Management {
 
-    SourceState Create (1: SourceParams params)
+    SourceState Create (
+        1: SourceParams params
+        2: context.ContextSet context
+    )
         throws (
-            1: fistful.IDExists ex1
             2: fistful.IdentityNotFound ex2
             3: fistful.CurrencyNotFound ex3
             4: fistful.PartyInaccessible ex4
         )
 
-    SourceState Get (1: SourceID id)
+    SourceState Get (
+        1: SourceID id
+        2: EventRange range
+    )
         throws (
             1: fistful.SourceNotFound ex1
         )
-    
-    context.ContextSet GetContext(1: SourceID id)
+
+    context.ContextSet GetContext(
+        1: SourceID id
+    )
         throws (
             1: fistful.SourceNotFound ex1
         )
-    
+
     list<Event> GetEvents(
         1: SourceID id
         2: EventRange range

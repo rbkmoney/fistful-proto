@@ -35,6 +35,7 @@ struct W2WTransfer {
     7: required base.PartyRevision party_revision
     8: optional Status status
     9: optional ExternalID external_id
+    10: optional context.ContextSet metadata
 }
 
 struct W2WTransferState {
@@ -47,18 +48,19 @@ struct W2WTransferState {
     7: required base.PartyRevision party_revision
     8: optional Status status
     9: optional ExternalID external_id
+    10: optional context.ContextSet metadata
 
     /** Контекст операции заданный при её старте */
-    10: required context.ContextSet context
+    11: required context.ContextSet context
 
     /**
       * Набор проводок, который отражает предполагаемое движение денег между счетами.
       * Может меняться в процессе прохождения операции или после применения корректировок.
       */
-    11: required cashflow.FinalCashFlow effective_final_cash_flow
+    12: required cashflow.FinalCashFlow effective_final_cash_flow
 
     /** Перечень корректировок */
-    12: required list<w2w_adjustment.AdjustmentState> adjustments
+    13: required list<w2w_adjustment.AdjustmentState> adjustments
 }
 
 struct W2WTransferParams {
@@ -74,6 +76,11 @@ struct Event {
     1: required EventID event_id
     2: required base.Timestamp occured_at
     3: required Change change
+}
+
+struct TimestampedChange {
+    1: required base.Timestamp       occured_at
+    2: required Change               change
 }
 
 union Change {
@@ -139,6 +146,7 @@ service Management {
             2: fistful.InvalidOperationAmount ex2
             3: fistful.ForbiddenOperationCurrency ex3
             4: InconsistentW2WTransferCurrency ex4
+            5: fistful.WalletInaccessible ex5
         )
 
     W2WTransferState Get(
@@ -149,7 +157,9 @@ service Management {
             1: fistful.W2WNotFound ex1
         )
 
-    context.ContextSet GetContext(1: W2WTransferID id)
+    context.ContextSet GetContext(
+        1: W2WTransferID id
+    )
         throws (
             1: fistful.W2WNotFound ex1
         )

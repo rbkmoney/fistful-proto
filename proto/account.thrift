@@ -26,3 +26,11 @@ struct Account {
     2: required base.CurrencyRef currency
     4: required AccounterAccountID accounter_account_id
 }
+
+struct AccountBalance {
+    1: required AccountID id
+    2: required base.CurrencyRef currency
+    3: required base.Amount expected_min
+    4: required base.Amount current
+    5: required base.Amount expected_max
+}

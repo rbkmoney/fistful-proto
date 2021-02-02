@@ -23,6 +23,8 @@ typedef ID IdentityID
 typedef ID WalletID
 typedef i64 Amount
 typedef string SourceName
+typedef base.ObjectID ProviderID
+typedef base.ObjectID TerminalID
 
 typedef base.CurrencyRef CurrencyRef
 typedef base.Cash DepositBody
@@ -33,6 +35,7 @@ enum Blocking {
     blocked
 }
 
+exception PartyNotFound             {}
 exception IdentityNotFound          {}
 exception CurrencyNotFound          {}
 exception SourceNotFound            {}
@@ -40,6 +43,9 @@ exception DestinationNotFound       {}
 exception DepositNotFound           {}
 exception SourceUnauthorized        {}
 exception PartyInaccessible         {}
+exception WalletInaccessible {
+    1: required WalletID id
+}
 exception ProviderNotFound          {}
 exception IdentityClassNotFound     {}
 exception ChallengeNotFound         {}
@@ -55,7 +61,6 @@ exception WalletNotFound            {
 exception WithdrawalNotFound        {}
 exception WithdrawalSessionNotFound {}
 exception MachineAlreadyWorking     {}
-exception IDExists                  {}
 exception DestinationUnauthorized   {}
 
 /** Условия запрещают проводить операцию с такой валютой */

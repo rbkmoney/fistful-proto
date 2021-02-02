@@ -72,6 +72,16 @@ typedef string Token
 /** Отображение из строки в строку */
 typedef map<string, string> StringMap
 
+struct Fees {
+    1: required map<CashFlowConstant, Cash> fees
+}
+
+enum CashFlowConstant {
+    operation_amount = 0
+    /** Комиссия "сверху" - взимается с клиента в дополнение к сумме операции */
+    surplus = 1
+}
+
 /** Контактная информация. **/
 struct ContactInfo {
     1: optional string phone_number
@@ -111,6 +121,17 @@ struct ResourceCryptoWallet {
 }
 
 /**
+ * Компактное представление ресурса для повторяемого получения метаинформации
+ */
+union ResourceDescriptor {
+    1: ResourceDescriptorBankCard bank_card
+}
+
+struct ResourceDescriptorBankCard {
+    1: required BinDataId bin_data_id
+}
+
+/**
  * Банковская карта
  *
  * Сделано по мотивам https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1323
@@ -132,6 +153,7 @@ struct BankCard {
     */
     10: optional BankCardExpDate exp_date
     11: optional string cardholder_name
+    12: optional string category
     20: optional CardType card_type
     21: optional BinDataId bin_data_id
 }
@@ -206,6 +228,9 @@ enum BankCardPaymentSystem {
     unionpay
     jcb
     nspkmir
+    elo
+    rupay
+    ebt
 }
 
 /**

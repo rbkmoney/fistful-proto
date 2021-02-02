@@ -38,6 +38,7 @@ struct AdjustmentState {
 }
 
 struct AdjustmentParams {
+     /** Глобально уникальный идентификатор корректировки */
      1: required AdjustmentID id
      2: required ChangeRequest change
      3: optional ExternalID external_id
