@@ -73,8 +73,8 @@ typedef string Token
 typedef map<string, string> StringMap
 
 struct Fees {
-     1: required map<CashFlowConstant, Cash> fees
- }
+    1: required map<CashFlowConstant, Cash> fees
+}
 
 enum CashFlowConstant {
     operation_amount = 0
