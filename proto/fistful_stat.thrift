@@ -4,6 +4,8 @@
 
 include "base.thrift"
 include "fistful.thrift"
+include "deposit_revert.thrift"
+include "deposit_adjustment.thrift"
 
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
@@ -19,6 +21,8 @@ typedef fistful.ID ClassID
 typedef fistful.ID LevelID
 typedef fistful.ID IdentityChallengeID
 typedef fistful.ID IdentityProviderID
+typedef deposit_revert.Revert StatDepositRevert
+typedef deposit_adjustment.Adjustment StatDepositAdjustment
 
 /**
 * Информация о кошельке
@@ -166,6 +170,8 @@ union StatResponseData {
     3: list<StatDeposit> deposits
     4: list<StatDestination> destinations
     5: list<StatIdentity> identities
+    6: list<StatDepositRevert> deposit_reverts
+    7: list<StatDepositAdjustment> deposit_adjustments
 }
 
 /**
@@ -209,5 +215,15 @@ service FistfulStatistics {
      * Возвращает набор данных о личностях
      */
     StatResponse GetIdentities(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о возвратах
+     */
+    StatResponse GetDepositReverts(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
+
+    /**
+     * Возвращает набор данных о корректировках
+     */
+    StatResponse GetDepositAdjustments(1: StatRequest req) throws (1: InvalidRequest ex1, 2: BadToken ex3)
 
 }
