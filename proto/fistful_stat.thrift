@@ -4,8 +4,6 @@
 
 include "base.thrift"
 include "fistful.thrift"
-include "deposit_revert.thrift"
-include "deposit_adjustment.thrift"
 
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
@@ -21,8 +19,7 @@ typedef fistful.ID ClassID
 typedef fistful.ID LevelID
 typedef fistful.ID IdentityChallengeID
 typedef fistful.ID IdentityProviderID
-typedef deposit_revert.Revert StatDepositRevert
-typedef deposit_adjustment.Adjustment StatDepositAdjustment
+typedef fistful.DepositRevertID RevertID
 
 /**
 * Информация о кошельке
@@ -146,6 +143,141 @@ struct StatIdentity {
 struct StatRequest {
     1: required string dsl
     2: optional string continuation_token
+}
+
+struct StatDepositRevert {
+     1: required RevertID            id
+     2: required WalletID            wallet_id
+     3: required SourceID            source_id
+     4: required DepositRevertStatus status
+     5: required base.Cash           body
+     6: required base.Timestamp      created_at
+     7: required base.DataRevision   domain_revision
+     8: required base.PartyRevision  party_revision
+     9: optional string              reason
+    10: optional base.ExternalID     external_id
+}
+
+union DepositRevertStatus {
+    1: DepositRevertPending   pending
+    2: DepositRevertSucceeded succeeded
+    3: DepositRevertFailed    failed
+}
+
+struct DepositRevertPending {}
+struct DepositRevertSucceeded {}
+struct DepositRevertFailed {
+    1: required Failure failure
+}
+
+struct StatDepositAdjustment {
+     1: required fistful.AdjustmentID         id
+     2: required DepositAdjustmentStatus      status
+     3: required DepositAdjustmentChangesPlan changes_plan
+     4: required base.Timestamp               created_at
+     5: required base.DataRevision            domain_revision
+     6: required base.PartyRevision           party_revision
+     7: optional base.ExternalID              external_id
+     8: required base.Timestamp               operation_timestamp
+}
+
+struct DepositAdjustmentChangesPlan {
+    1: optional DepositAdjustmentCashFlowChangePlan new_cash_flow
+    2: optional DepositAdjustmentStatusChangePlan   new_status
+}
+
+struct DepositAdjustmentCashFlowChangePlan {
+    1: required DepositAdjustmentFinalCashFlow old_cash_flow_inverted
+    2: required DepositAdjustmentFinalCashFlow new_cash_flow
+}
+
+struct DepositAdjustmentFinalCashFlow {
+    1: required list<DepositAdjustmentFinalCashFlowPosting> postings
+}
+
+struct DepositAdjustmentFinalCashFlowPosting {
+    1: required DepositAdjustmentFinalCashFlowAccount source
+    2: required DepositAdjustmentFinalCashFlowAccount destination
+    3: required base.Cash                             volume
+    4: optional string                                details
+}
+
+struct DepositAdjustmentFinalCashFlowAccount {
+    1: required DepositAdjustmentCashFlowAccount account_type
+    3: optional DepositAdjustmentAccount         account
+
+    # Deprecated
+    2: required fistful.AccountID account_id
+}
+
+struct DepositAdjustmentAccount {
+    3: required fistful.AccountID  id
+    1: required base.ID            identity
+    2: required base.CurrencyRef   currency
+    4: required i64                accounter_account_id
+}
+
+union DepositAdjustmentCashFlowAccount {
+    1: DepositAdjustmentMerchantCashFlowAccount merchant
+    2: DepositAdjustmentProviderCashFlowAccount provider
+    3: DepositAdjustmentSystemCashFlowAccount   system
+    4: DepositAdjustmentExternalCashFlowAccount external
+    5: DepositAdjustmentWalletCashFlowAccount   wallet
+}
+
+enum DepositAdjustmentMerchantCashFlowAccount {
+    settlement
+    guarantee
+    payout
+}
+
+enum DepositAdjustmentProviderCashFlowAccount {
+    settlement
+}
+
+enum DepositAdjustmentSystemCashFlowAccount {
+    settlement
+    subagent
+}
+
+enum DepositAdjustmentExternalCashFlowAccount {
+    income
+    outcome
+}
+
+enum DepositAdjustmentWalletCashFlowAccount {
+    sender_source
+    sender_settlement
+    receiver_settlement
+    receiver_destination
+}
+
+struct DepositAdjustmentStatusChangePlan {
+    1: required DepositAdjustmentStatusChangePlanStatus new_status
+}
+
+union DepositAdjustmentStatusChangePlanStatus {
+    1: DepositAdjustmentStatusChangePlanPending   pending
+    2: DepositAdjustmentStatusChangePlanSucceeded succeeded
+    3: DepositAdjustmentStatusChangePlanFailed    failed
+}
+
+struct DepositAdjustmentStatusChangePlanPending {}
+struct DepositAdjustmentStatusChangePlanSucceeded {}
+struct DepositAdjustmentStatusChangePlanFailed {
+    1: required Failure failure
+}
+
+union DepositAdjustmentStatus {
+    1: DepositAdjustmentPending    pending
+    2: DepositAdjustmentSucceeded  succeeded
+    3: DepositAdjustmentFailed     failed
+}
+
+struct DepositAdjustmentPending {}
+struct DepositAdjustmentSucceeded {}
+struct DepositAdjustmentFailed {
+    1: required Failure failure
 }
 
 /**
