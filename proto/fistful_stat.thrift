@@ -4,6 +4,7 @@
 
 include "base.thrift"
 include "fistful.thrift"
+include "cashflow.thrift"
 
 namespace java com.rbkmoney.fistful.fistful_stat
 namespace erlang fistfulstat
@@ -187,69 +188,8 @@ struct DepositAdjustmentChangesPlan {
 }
 
 struct DepositAdjustmentCashFlowChangePlan {
-    1: required DepositAdjustmentFinalCashFlow old_cash_flow_inverted
-    2: required DepositAdjustmentFinalCashFlow new_cash_flow
-}
-
-struct DepositAdjustmentFinalCashFlow {
-    1: required list<DepositAdjustmentFinalCashFlowPosting> postings
-}
-
-struct DepositAdjustmentFinalCashFlowPosting {
-    1: required DepositAdjustmentFinalCashFlowAccount source
-    2: required DepositAdjustmentFinalCashFlowAccount destination
-    3: required base.Cash                             volume
-    4: optional string                                details
-}
-
-struct DepositAdjustmentFinalCashFlowAccount {
-    1: required DepositAdjustmentCashFlowAccount account_type
-    3: optional DepositAdjustmentAccount         account
-
-    # Deprecated
-    2: required fistful.AccountID account_id
-}
-
-struct DepositAdjustmentAccount {
-    3: required fistful.AccountID  id
-    1: required base.ID            identity
-    2: required base.CurrencyRef   currency
-    4: required i64                accounter_account_id
-}
-
-union DepositAdjustmentCashFlowAccount {
-    1: DepositAdjustmentMerchantCashFlowAccount merchant
-    2: DepositAdjustmentProviderCashFlowAccount provider
-    3: DepositAdjustmentSystemCashFlowAccount   system
-    4: DepositAdjustmentExternalCashFlowAccount external
-    5: DepositAdjustmentWalletCashFlowAccount   wallet
-}
-
-enum DepositAdjustmentMerchantCashFlowAccount {
-    settlement
-    guarantee
-    payout
-}
-
-enum DepositAdjustmentProviderCashFlowAccount {
-    settlement
-}
-
-enum DepositAdjustmentSystemCashFlowAccount {
-    settlement
-    subagent
-}
-
-enum DepositAdjustmentExternalCashFlowAccount {
-    income
-    outcome
-}
-
-enum DepositAdjustmentWalletCashFlowAccount {
-    sender_source
-    sender_settlement
-    receiver_settlement
-    receiver_destination
+    1: required cashflow.FinalCashFlow old_cash_flow_inverted
+    2: required cashflow.FinalCashFlow new_cash_flow
 }
 
 struct DepositAdjustmentStatusChangePlan {
