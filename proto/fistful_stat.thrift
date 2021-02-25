@@ -188,9 +188,9 @@ struct DepositAdjustmentChangesPlan {
 }
 
 struct DepositAdjustmentCashChangePlan {
-    1: required base.Cash body
-    2: required i64 fee
-    3: required i64 provider_fee
+    1: required base.Cash amount
+    2: required base.Cash fee
+    3: required base.Cash provider_fee
 }
 
 struct DepositAdjustmentStatusChangePlan {
