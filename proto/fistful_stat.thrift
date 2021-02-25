@@ -183,13 +183,14 @@ struct StatDepositAdjustment {
 }
 
 struct DepositAdjustmentChangesPlan {
-    1: optional DepositAdjustmentCashFlowChangePlan new_cash_flow
+    1: optional DepositAdjustmentCashChangePlan new_cash
     2: optional DepositAdjustmentStatusChangePlan   new_status
 }
 
-struct DepositAdjustmentCashFlowChangePlan {
-    1: required cashflow.FinalCashFlow old_cash_flow_inverted
-    2: required cashflow.FinalCashFlow new_cash_flow
+struct DepositAdjustmentCashChangePlan {
+    1: required base.Cash body
+    2: required i64 fee
+    3: required i64 provider_fee
 }
 
 struct DepositAdjustmentStatusChangePlan {
@@ -211,7 +212,6 @@ struct DepositAdjustmentStatusChangePlanFailed {
 union DepositAdjustmentStatus {
     1: DepositAdjustmentPending    pending
     2: DepositAdjustmentSucceeded  succeeded
-    3: DepositAdjustmentFailed     failed
 }
 
 struct DepositAdjustmentPending {}
