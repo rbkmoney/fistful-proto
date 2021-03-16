@@ -157,6 +157,7 @@ struct StatDepositRevert {
      8: required base.PartyRevision  party_revision
      9: optional string              reason
     10: optional base.ExternalID     external_id
+    11: required DepositID           deposit_id
 }
 
 union DepositRevertStatus {
@@ -180,6 +181,7 @@ struct StatDepositAdjustment {
      6: required base.PartyRevision           party_revision
      7: optional base.ExternalID              external_id
      8: required base.Timestamp               operation_timestamp
+     9: required DepositID                    deposit_id
 }
 
 struct DepositAdjustmentChangesPlan {
