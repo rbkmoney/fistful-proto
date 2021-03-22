@@ -174,7 +174,7 @@ exception RevertNotFound {
     1: required RevertID id
 }
 
-service Management {
+service DepositManagement {
 
     DepositState Create(
         1: DepositParams params

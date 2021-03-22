@@ -79,7 +79,7 @@ union AccountChange {
 
 ///
 
-service Management {
+service WalletManagement {
     WalletState Create (
         1: WalletParams params
         2: context.ContextSet context
