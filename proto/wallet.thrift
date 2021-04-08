@@ -12,6 +12,7 @@ include "identity.thrift"
 include "eventsink.thrift"
 include "repairer.thrift"
 include "context.thrift"
+include "msgpack.thrift"
 
 /// Domain
 
