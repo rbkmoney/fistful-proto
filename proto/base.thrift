@@ -99,6 +99,7 @@ struct ClientInfo {
 union Resource {
     1: ResourceBankCard bank_card
     2: ResourceCryptoWallet crypto_wallet
+    3: ResourceDigitalWallet digital_wallet
 }
 
 struct ResourceBankCard {
@@ -120,6 +121,10 @@ struct ResourceCryptoWallet {
     1: required CryptoWallet crypto_wallet
 }
 
+struct ResourceDigitalWallet {
+    1: required DigitalWallet digital_wallet
+}
+
 /**
  * Компактное представление ресурса для повторяемого получения метаинформации
  */
@@ -130,6 +135,20 @@ union ResourceDescriptor {
 struct ResourceDescriptorBankCard {
     1: required BinDataId bin_data_id
 }
+
+/**
+ *  Электронный кошелёк
+ */
+struct DigitalWallet {
+    1: required string id
+    2: optional DigitalData data
+}
+
+union DigitalData {
+    1: DigitalDataWebmoney webmoney
+}
+
+struct DigitalDataWebmoney {}
 
 /**
  * Банковская карта
@@ -175,7 +194,6 @@ struct CryptoWallet {
     /** Legacy */
     2: required CryptoCurrency currency
 }
-
 
 /**
  * Криптовалюта
