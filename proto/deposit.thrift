@@ -18,6 +18,7 @@ include "limit_check.thrift"
 include "repairer.thrift"
 include "context.thrift"
 include "cashflow.thrift"
+include "msgpack.thrift"
 
 typedef base.EventID            EventID
 typedef fistful.DepositID       DepositID
