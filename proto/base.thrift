@@ -40,6 +40,9 @@ typedef ID ExternalID
 typedef i64 DataRevision
 typedef i64 PartyRevision
 
+/* Идентификатор платёжной системы из справочника (dominant) */
+typedef ID PaymentSystemID
+
 /**
  * Идентификатор валюты
  *
@@ -162,7 +165,7 @@ struct BankCard {
     1: required Token token
     3: optional string bin
     4: optional string masked_pan
-    2: optional BankCardPaymentSystem payment_system
+    2: optional LegacyBankCardPaymentSystem payment_system_deprecated
     6: optional Residence issuer_country
     7: optional string bank_name
     /*
@@ -175,6 +178,7 @@ struct BankCard {
     12: optional string category
     20: optional CardType card_type
     21: optional BinDataId bin_data_id
+    22: optional PaymentSystemID payment_system
 }
 
 /** Дата экспирации */
@@ -233,7 +237,7 @@ struct CryptoDataUSDT {}
  *
  * Украдено из https://github.com/rbkmoney/damsel/blob/8235b6f6/proto/domain.thrift#L1282
  */
-enum BankCardPaymentSystem {
+enum LegacyBankCardPaymentSystem {
     visa
     mastercard
     visaelectron
