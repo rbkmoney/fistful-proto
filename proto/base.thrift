@@ -141,7 +141,7 @@ struct ResourceDescriptorBankCard {
  */
 struct DigitalWallet {
     1: required string id
-    2: optional DigitalData data
+    2: required DigitalData data
 }
 
 union DigitalData {
