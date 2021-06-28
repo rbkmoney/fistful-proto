@@ -111,6 +111,7 @@ struct StatDestination {
 union DestinationResource {
     1: base.BankCard bank_card
     2: base.CryptoWallet crypto_wallet
+    3: base.DigitalWallet digital_wallet
 }
 
 union DestinationStatus {
