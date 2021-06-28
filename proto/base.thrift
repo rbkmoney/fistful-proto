@@ -40,9 +40,6 @@ typedef ID ExternalID
 typedef i64 DataRevision
 typedef i64 PartyRevision
 
-/* Идентификатор платёжной системы из справочника (dominant) */
-typedef ID PaymentSystemID
-
 /**
  * Идентификатор валюты
  *
@@ -159,7 +156,12 @@ struct BankCard {
     12: optional string category
     20: optional CardType card_type
     21: optional BinDataId bin_data_id
-    22: optional PaymentSystemRef payment_system
+    /*
+    Not used anywhere, so removed to avoid potetial backward
+    incompablity
+    22: optional PaymentSystemID payment_system
+     */
+    23: optional PaymentSystemRef payment_system
 }
 
 /** Дата экспирации */
