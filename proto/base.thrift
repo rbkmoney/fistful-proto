@@ -178,7 +178,7 @@ struct BankCard {
     12: optional string category
     20: optional CardType card_type
     21: optional BinDataId bin_data_id
-    22: optional PaymentSystemID payment_system
+    22: optional PaymentSystemRef payment_system
 }
 
 /** Дата экспирации */
@@ -255,6 +255,10 @@ enum LegacyBankCardPaymentSystem {
     ebt
     dummy  // Несуществующая платежная система для использования в непродовом окружении
     uzcard
+}
+
+struct PaymentSystemRef {
+    1: required string id
 }
 
 /**
