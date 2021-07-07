@@ -54,13 +54,19 @@ union WithdrawalFailure {
     1: LimitExceeded  account_limit_exceeded
     2: LimitExceeded  provider_limit_exceeded
     3: GeneralFailure no_route_found
-    4: GeneralFailure quote_expired
+    4: QuoteError     quote_error
+    5: GeneralFailure unknown
 }
 
 union LimitExceeded {
   1: GeneralFailure unknown
   2: GeneralFailure amount
   3: GeneralFailure number
+}
+
+union QuoteError {
+  1: GeneralFailure unknown
+  2: GeneralFailure inconsistent_data
 }
 
 struct GeneralFailure {}
