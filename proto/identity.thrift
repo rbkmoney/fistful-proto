@@ -161,26 +161,6 @@ service Management {
             1: fistful.IdentityNotFound ex1
         )
 
-    ChallengeState StartChallenge (
-        1: IdentityID      id
-        2: ChallengeParams params
-    )
-        throws (
-            1: fistful.IdentityNotFound        ex1
-            2: fistful.ChallengePending        ex2
-            3: fistful.ChallengeClassNotFound  ex3
-            4: fistful.ChallengeLevelIncorrect ex4
-            5: fistful.ChallengeConflict       ex5
-            6: fistful.ProofNotFound           ex6
-            7: fistful.ProofInsufficient       ex7
-            8: fistful.PartyInaccessible       ex8
-        )
-
-    list<ChallengeState> GetChallenges(1: IdentityID  id)
-        throws (
-            1: fistful.IdentityNotFound  ex1
-        )
-
     list<Event> GetEvents (
         1: IdentityID identity_id
         2: EventRange range
