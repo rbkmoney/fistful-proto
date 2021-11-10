@@ -17,7 +17,7 @@ struct Provider {
     1: required ProviderID id
     2: required string name
     3: required list<string> residences
-    4: required map<IdentityClassID, IdentityClass> identity_classes
+    # 4: required map<IdentityClassID, IdentityClass> identity_classes
 }
 
 struct IdentityClass {
