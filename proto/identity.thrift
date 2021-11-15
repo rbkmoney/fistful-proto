@@ -93,12 +93,6 @@ struct ChallengeState {
     6: optional ClassID class_id
 }
 
-struct ChallengeParams {
-    1: required ChallengeID          id
-    2: required ChallengeClassID     cls
-    3: required list<ChallengeProof> proofs
-}
-
 union ChallengeStatus {
     1: ChallengePending   pending
     2: ChallengeCancelled cancelled
