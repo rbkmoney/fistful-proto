@@ -78,6 +78,13 @@ struct StatDeposit {
     8:  required base.Amount          fee
     9:  required CurrencySymbolicCode currency_symbolic_code
     10: required DepositStatus        status
+    11: optional RevertStatus         revert_status
+}
+
+enum RevertStatus {
+    none
+    partial
+    full
 }
 
 union DepositStatus {
