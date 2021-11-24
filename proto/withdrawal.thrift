@@ -350,12 +350,42 @@ service EventSink {
 /// Repair
 
 union RepairScenario {
-    1: AddEventsRepair add_events
+    1: AddEventsRepair          add_events
+    2: WithdrawalRepairRouting  routing
 }
 
 struct AddEventsRepair {
     1: required list<Change>             events
     2: optional repairer.ComplexAction  action
+}
+
+union WithdrawalRepairRouting {
+    1: WithdrawalRepairRouteChanged             route_changed
+    2: WithdrawalRepairRouteNotFound            route_not_found
+    3: WithdrawalRepairRouteInconsistentQuote   route_inconsistent_quote
+}
+
+struct WithdrawalRepairRouteChanged {
+    1: required Route route
+}
+
+struct WithdrawalRepairRouteNotFound {}
+
+struct WithdrawalRepairRouteInconsistentQuote {
+    1: required InconsistentQuoteType qoute_type
+}
+
+union InconsistentQuoteType {
+    1: InconsistentQuoteProvider provider_id
+    2: InconsistentQuoteTerminal terminal_id
+}
+
+struct InconsistentQuoteProvider {
+    1: required fistful.ProviderID provider_id
+}
+
+struct InconsistentQuoteTerminal {
+    1: required fistful.TerminalID terminal_id
 }
 
 service Repairer {
@@ -365,3 +395,4 @@ service Repairer {
             2: fistful.MachineAlreadyWorking ex2
         )
 }
+
