@@ -36,7 +36,6 @@ struct IdentityParams {
     7: required string      name
     2: required PartyID     party
     3: required ProviderID  provider
-    4: required ClassID     cls
     5: optional ExternalID  external_id
     6: optional ContextSet  metadata
 }
@@ -46,7 +45,6 @@ struct Identity {
     12: optional string      name //will become required after migration!
     1:  required PartyID     party
     2:  required ProviderID  provider
-    3:  required ClassID     cls
     4:  optional ContractID  contract
     5:  optional ExternalID  external_id
     10: optional Timestamp   created_at
@@ -58,10 +56,8 @@ struct IdentityState {
     13: required string name
     1:  required PartyID party_id
     2:  required ProviderID provider_id
-    3:  required ClassID class_id
     4:  optional ContractID contract_id
     5:  optional ExternalID external_id
-    7:  optional ChallengeID effective_challenge_id
     8:  optional Blocking blocking
     9:  optional LevelID level_id
     10: optional Timestamp created_at
@@ -95,12 +91,6 @@ struct ChallengeState {
     4: optional ChallengeStatus status
     5: optional ProviderID provider_id
     6: optional ClassID class_id
-}
-
-struct ChallengeParams {
-    1: required ChallengeID          id
-    2: required ChallengeClassID     cls
-    3: required list<ChallengeProof> proofs
 }
 
 union ChallengeStatus {
@@ -163,26 +153,6 @@ service Management {
     )
         throws (
             1: fistful.IdentityNotFound ex1
-        )
-
-    ChallengeState StartChallenge (
-        1: IdentityID      id
-        2: ChallengeParams params
-    )
-        throws (
-            1: fistful.IdentityNotFound        ex1
-            2: fistful.ChallengePending        ex2
-            3: fistful.ChallengeClassNotFound  ex3
-            4: fistful.ChallengeLevelIncorrect ex4
-            5: fistful.ChallengeConflict       ex5
-            6: fistful.ProofNotFound           ex6
-            7: fistful.ProofInsufficient       ex7
-            8: fistful.PartyInaccessible       ex8
-        )
-
-    list<ChallengeState> GetChallenges(1: IdentityID  id)
-        throws (
-            1: fistful.IdentityNotFound  ex1
         )
 
     list<Event> GetEvents (
