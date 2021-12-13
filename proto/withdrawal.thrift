@@ -351,7 +351,7 @@ service EventSink {
 
 union RepairScenario {
     1: AddEventsRepair  add_events
-    2: RepairRouting    routing
+    2: RoutingRepair    routing
 }
 
 struct AddEventsRepair {
@@ -359,16 +359,16 @@ struct AddEventsRepair {
     2: optional repairer.ComplexAction  action
 }
 
-union WithdrawalRepairRouting {
-    1: WithdrawalRepairRouteChanged             route_changed
-    2: WithdrawalRepairRouteNotFound            route_not_found
+union RoutingRepair {
+    1: RoutingRepairRouteChanged    route_changed
+    2: RoutingRepairRouteNotFound   route_not_found
 }
 
-struct WithdrawalRepairRouteChanged {
+struct RoutingRepairRouteChanged {
     1: required Route route
 }
 
-struct WithdrawalRepairRouteNotFound {
+struct RoutingRepairRouteNotFound {
     1: optional string reason
 }
 
