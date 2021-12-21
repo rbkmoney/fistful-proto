@@ -368,9 +368,7 @@ struct RoutingRepairRouteChanged {
     1: required Route route
 }
 
-struct RoutingRepairRouteNotFound {
-    1: optional string reason
-}
+struct RoutingRepairRouteNotFound {}
 
 service Repairer {
     void Repair(1: WithdrawalID id, 2: RepairScenario scenario)
