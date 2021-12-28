@@ -350,7 +350,8 @@ service EventSink {
 /// Repair
 
 union RepairScenario {
-    1: AddEventsRepair add_events
+    1: AddEventsRepair  add_events
+    2: RoutingRepair    routing
 }
 
 struct AddEventsRepair {
@@ -358,10 +359,22 @@ struct AddEventsRepair {
     2: optional repairer.ComplexAction  action
 }
 
+union RoutingRepair {
+    1: RoutingRepairRouteChanged    route_changed
+    2: RoutingRepairRouteNotFound   route_not_found
+}
+
+struct RoutingRepairRouteChanged {
+    1: required Route route
+}
+
+struct RoutingRepairRouteNotFound {}
+
 service Repairer {
     void Repair(1: WithdrawalID id, 2: RepairScenario scenario)
         throws (
             1: fistful.WithdrawalNotFound ex1
             2: fistful.MachineAlreadyWorking ex2
+            3: fistful.RepairScenarioFailed ex3
         )
 }
