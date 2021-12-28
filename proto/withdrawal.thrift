@@ -375,5 +375,6 @@ service Repairer {
         throws (
             1: fistful.WithdrawalNotFound ex1
             2: fistful.MachineAlreadyWorking ex2
+            3: fistful.RepairScenarioFailed ex3
         )
 }
